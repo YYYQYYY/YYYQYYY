@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CountDownProgress">
+        <!--实心圆的颜色-->
+        <attr name="circleSolidColor" format="color" />
+        <!--边框圆的颜色-->
+        <attr name="circleBorderColor" format="color" />
+        <!--进度条的颜色-->
+        <attr name="progressColor" format="color" />
+        <!--文字的颜色-->
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="AutoTabLayout">
+        <attr name="auto_textSize_base_width" format="boolean" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_td_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edt_td_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="名字" />
+
+            <EditText
+                android:id="@+id/edt_td_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="日期" />
+
+            <EditText
+                android:id="@+id/edt_td_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="级别" />
+
+            <EditText
+                android:id="@+id/edt_td_group_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="组别" />
+
+            <EditText
+                android:id="@+id/edt_td_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="次数" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_edit_task_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_done"
+            app:fabSize="normal"
+            app:layout_anchor="@id/content_layout"
+            app:layout_anchorGravity="bottom|right|end" />
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
