@@ -29,6 +29,7 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,9 +41,9 @@ import timber.log.Timber;
 
 public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter> implements TrainingDiaryContract.View {
     private RxPermissions mRxPermissions;
-    private ArrayList<JsonBean> mOptions1Items = new ArrayList<>();
-    private ArrayList<ArrayList<String>> mOptions2Items = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> mOptions3Items = new ArrayList<>();
+    private List<JsonBean> mOptions1Items = new ArrayList<>();
+    private List<List<String>> mOptions2Items = new ArrayList<>();
+    private List<List<List<Integer>>> mOptions3Items = new ArrayList<>();
     private int mOption1, mOption2, mOption3;
 
     @BindView(R.id.edt_td_id)
@@ -76,6 +77,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         int count = Integer.valueOf(mTdCount.getText().toString());
         TrainingDiary trainingDiary = new TrainingDiary(id, date, name, level, groupNo, count);
         saveTrainingDiary(TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this), trainingDiary);
+        killMyself();
     }
 
     private void saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
@@ -204,39 +206,38 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     }
 
     private void initJsonData() {
-        ArrayList<String> lvl2List = null;
-        ArrayList<ArrayList<String>> lvl3List = null;
-        ArrayList<String> lvl3ItemList = null;
+        List<String> lvl2List = null;
+        List<List<Integer>> lvl3List = null;
+        List<Integer> lvl3ItemList = null;
 
         String jsonData = CharacterHandler.getAssetsJson(this, "training_data.json");
-        ArrayList<JsonBean> jsonBean = parseData(jsonData);
+        List<JsonBean> level1List = parseData(jsonData);
 
         //添加一级数据
-        mOptions1Items = jsonBean;
+        mOptions1Items = level1List;
 
         //遍历一级数据
-        for (int i = 0; i < jsonBean.size(); i++) {
+        for (JsonBean level1Value : level1List) {
             //二级数据列表
             lvl2List = new ArrayList<>();
             //三级数据列表
             lvl3List = new ArrayList<>();
 
             //遍历二级数据
-            for (int c = 0; c < jsonBean.get(i).getCityList().size(); c++) {
+            for (JsonBean.Level2Bean level2Bean : level1Value.getLevel2List()) {
                 //添加二级数据
-                lvl2List.add(jsonBean.get(i).getCityList().get(c).getName());
+                lvl2List.add(level2Bean.getLevel2Key());
 
                 //三级数据列表
                 lvl3ItemList = new ArrayList<>();
 
-                if (jsonBean.get(i).getCityList().get(c).getArea() == null
-                        || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
-                    lvl3ItemList.add("");
+                if (level2Bean.getLevel3List() == null || level2Bean.getLevel3List().size() == 0) {
+                    lvl3ItemList.add(0);
                 } else {
                     //遍历三级数据
-                    for (int d = 0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {
+                    for (Integer level3Value : level2Bean.getLevel3List()) {
                         //添加三级数据
-                        lvl3ItemList.add(jsonBean.get(i).getCityList().get(c).getArea().get(d));
+                        lvl3ItemList.add(level3Value);
                     }
                 }
                 //添加三级数据列表
@@ -251,19 +252,19 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         }
     }
 
-    private ArrayList<JsonBean> parseData(String result) {
-        ArrayList<JsonBean> detail = new ArrayList<>();
+    private List<JsonBean> parseData(String result) {
+        List<JsonBean> resultList = new ArrayList<>();
         try {
             JSONArray data = new JSONArray(result);
             Gson gson = new Gson();
             for (int i = 0; i < data.length(); i++) {
                 JsonBean entity = gson.fromJson(data.optJSONObject(i).toString(), JsonBean.class);
-                detail.add(entity);
+                resultList.add(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return detail;
+        return resultList;
     }
 
 }
