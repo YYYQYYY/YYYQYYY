@@ -5,28 +5,18 @@ package com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity;
  */
 
 public class TrainingDiary {
-    private int id;
     private String date;
     private String name;
-    private int level;
+    private String level;
     private int groupNo;
     private int count;
 
-    public TrainingDiary(int id, String date, String name, int level, int groupNo, int count) {
-        this.id = id;
+    public TrainingDiary(String date, String name, String level, int groupNo, int count) {
         this.date = date;
         this.name = name;
         this.level = level;
         this.groupNo = groupNo;
         this.count = count;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDate() {
@@ -45,11 +35,11 @@ public class TrainingDiary {
         this.name = name;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 

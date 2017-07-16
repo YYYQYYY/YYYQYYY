@@ -2,10 +2,12 @@ package com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,59 +38,73 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static com.yuqinyidev.android.framework.utils.Preconditions.checkNotNull;
+
 /**
+ * 保存日志
  * Created by RDX64 on 2017/6/29.
  */
 
 public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter> implements TrainingDiaryContract.View {
+    private static final String[][] mUpRule = {
+            {"初级目标：1组，10次\n中极目标：2组，各25次\n升级目标：3组，各50次", "初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各40次", "初级目标：1组，10次\n中极目标：2组，各15次\n升级目标：3组，各30次", "初级目标：1组，8次\n中极目标：2组，各12次\n升级目标：2组，各25次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各20次", "初级目标：1组，5次\n中极目标：6组，各10次\n升级目标：1组，各100次"},
+            {"初级目标：1组，10次\n中极目标：2组，各25次\n升级目标：3组，各50次", "初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各40次", "初级目标：1组，10次\n中极目标：2组，各15次\n升级目标：3组，各30次", "初级目标：1组，8次\n中极目标：2组，各35次\n升级目标：3组，各50次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各30次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各50次"},
+            {"初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各40次", "初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各30次", "初级目标：1组，10次\n中极目标：2组，各15次\n升级目标：3组，各20次", "初级目标：1组，8次\n中极目标：2组，各11次\n升级目标：3组，各15次", "初级目标：1组，5次\n中极目标：2组，各8次\n升级目标：3组，各10次", "初级目标：1组，5次\n中极目标：2组，各8次\n升级目标：3组，各10次", "初级目标：1组，5次\n中极目标：2组，各7次\n升级目标：3组，各8次", "初级目标：1组，4次\n中极目标：2组，各11次\n升级目标：2组，各8次", "初级目标：1组，3次\n中极目标：2组，各5次\n升级目标：2组，各7次", "初级目标：1组，1次\n中极目标：2组，各3次\n升级目标：2组，各6次"},
+            {"初级目标：1组，10次\n中极目标：2组，各25次\n升级目标：3组，各40次", "初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各35次", "初级目标：1组，10次\n中极目标：2组，各15次\n升级目标：3组，各30次", "初级目标：1组，8次\n中极目标：2组，各15次\n升级目标：3组，各25次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各15次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各15次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各15次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各15次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：2组，各30次"},
+            {"初级目标：1组，10次\n中极目标：2组，各25次\n升级目标：3组，各50次", "初级目标：1组，10次\n中极目标：2组，各20次\n升级目标：3组，各40次", "初级目标：1组，8次\n中极目标：2组，各15次\n升级目标：3组，各30次", "初级目标：1组，8次\n中极目标：2组，各15次\n升级目标：3组，各25次", "初级目标：1组，8次\n中极目标：2组，各15次\n升级目标：3组，各20次", "初级目标：1组，6次\n中极目标：2组，各10次\n升级目标：2组，各15次", "初级目标：1组，3次\n中极目标：2组，各6次\n升级目标：2组，各10次", "初级目标：1组，2次\n中极目标：2组，各4次\n升级目标：2组，各8次", "初级目标：1组，1次\n中极目标：2组，各3次\n升级目标：2组，各6次", "初级目标：1组，1次\n中极目标：2组，各3次\n升级目标：2组，各30次"},
+            {"初级标准：30秒\n中极标准：1分钟\n升级标准：2分钟", "初级标准：10秒\n中极标准：30秒\n升级标准：1分钟", "初级标准：30秒\n中极标准：1分钟\n升级标准：2分钟", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各20次", "初级目标：1组，5次\n中极目标：2组，各10次\n升级目标：3组，各15次", "初级目标：1组，5次\n中极目标：2组，各9次\n升级目标：2组，各12次", "初级目标：1组，5次\n中极目标：2组，各8次\n升级目标：2组，各10次", "初级目标：1组，4次\n中极目标：2组，各6次\n升级目标：2组，各8次", "初级目标：1组，3次\n中极目标：2组，各4次\n升级目标：2组，各6次", "初级目标：1组，1次\n中极目标：2组，各2次\n升级目标：1组，各5次"},
+    };
+
     private RxPermissions mRxPermissions;
     private List<JsonBean> mOptions1Items = new ArrayList<>();
     private List<List<String>> mOptions2Items = new ArrayList<>();
     private List<List<List<Integer>>> mOptions3Items = new ArrayList<>();
     private int mOption1, mOption2, mOption3;
     private TimePickerView pvCustomTime;
+    private OptionsPickerView pvOptions;
 
-    @BindView(R.id.edt_td_id)
-    EditText mTdId;
-    @BindView(R.id.edt_td_name)
-    EditText mTdName;
-    @BindView(R.id.edt_td_date)
-    EditText mTdDate;
-    @BindView(R.id.edt_td_level)
-    EditText mTdLevel;
-    @BindView(R.id.edt_td_group_no)
-    EditText mTdGroupNo;
+    @BindView(R.id.txv_td_up_rule)
+    TextView mTxvTdUpRule;
+    @BindView(R.id.txv_td_date)
+    TextView mTxvTdDate;
+    @BindView(R.id.txv_td_program)
+    TextView mTxvTdProgram;
+    @BindView(R.id.txv_td_level)
+    TextView mTxvTdLevel;
+    @BindView(R.id.txv_td_group)
+    TextView mTxvTdGroup;
     @BindView(R.id.edt_td_count)
-    EditText mTdCount;
-    @BindView(R.id.txv_address)
-    TextView mTxvAddress;
-    @BindView(R.id.txv_date)
-    TextView mTxvDate;
+    EditText mEdtTdCount;
 
-    @OnClick(R.id.txv_address)
+    @OnClick({R.id.txv_td_program, R.id.txv_td_level, R.id.txv_td_group})
     public void chooseTrainingPicker() {
         showTrainingPickerView();
     }
 
-    @OnClick(R.id.txv_date)
+    @OnClick(R.id.txv_td_date)
     public void chooseTrainingDatePicker() {
         showTrainingDatePickerView();
     }
 
     @OnClick(R.id.fab_edit_task_done)
     public void saveTrainingDiary() {
-        int id = Integer.valueOf(mTdId.getText().toString());
-        String name = mTdName.getText().toString();
-        String date = mTdDate.getText().toString();
-        int level = Integer.valueOf(mTdLevel.getText().toString());
-        int groupNo = Integer.valueOf(mTdGroupNo.getText().toString());
-        int count = Integer.valueOf(mTdCount.getText().toString());
-        TrainingDiary trainingDiary = new TrainingDiary(id, date, name, level, groupNo, count);
+        String date = mTxvTdDate.getText().toString();
+        String name = mTxvTdProgram.getText().toString();
+        String level = mTxvTdLevel.getText().toString();
+
+        Pattern p = Pattern.compile("[^0-9]");
+        Matcher m = p.matcher(mTxvTdGroup.getText().toString());
+        int groupNo = Integer.valueOf(m.replaceAll("").trim());
+        int count = Integer.valueOf(mEdtTdCount.getText().toString());
+        TrainingDiary trainingDiary = new TrainingDiary(date, name, level, groupNo, count);
         saveTrainingDiary(TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this), trainingDiary);
         killMyself();
     }
@@ -96,8 +112,8 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     private void saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+
         ContentValues values = new ContentValues();
-        values.put(TrainingDiaryEntity.COLUMN_NAME_ID, trainingDiary.getId());
         values.put(TrainingDiaryEntity.COLUMN_NAME_NAME, trainingDiary.getName());
         values.put(TrainingDiaryEntity.COLUMN_NAME_DATE, trainingDiary.getDate());
         values.put(TrainingDiaryEntity.COLUMN_NAME_LEVEL, trainingDiary.getLevel());
@@ -107,6 +123,33 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         db.insert(TrainingDiaryEntity.TABLE_NAME, null, values);
 
         db.close();
+    }
+
+    public boolean checkTrainingDiary(SQLiteDatabase db, @NonNull TrainingDiary trainingDiary) {
+        String whereClause = TrainingDiaryEntity.COLUMN_NAME_DATE + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_NAME + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_LEVEL + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_GROUP_NO + " = ?";
+        String[] whereClauseArgs = {
+                trainingDiary.getDate(),
+                trainingDiary.getName(),
+                trainingDiary.getLevel(),
+                String.valueOf(trainingDiary.getGroupNo())
+        };
+        String[] projection = {
+                TrainingDiaryEntity.COLUMN_NAME_NAME,
+                TrainingDiaryEntity.COLUMN_NAME_DATE,
+                TrainingDiaryEntity.COLUMN_NAME_LEVEL,
+                TrainingDiaryEntity.COLUMN_NAME_GROUP_NO
+        };
+
+//    public Cursor query(String table, String[] columns, String selection,
+//                        String[] selectionArgs, String groupBy, String having,
+//                        String orderBy)
+
+        Cursor cursor = db.query(TrainingDiaryEntity.TABLE_NAME, projection, whereClause, whereClauseArgs, null, null, null);
+
+        return (cursor != null && cursor.getCount() > 0);
     }
 
     @Override
@@ -128,19 +171,30 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     public void initData(Bundle savedInstanceState) {
 //        mPresenter.getTrainingDiary(id);
         Intent intent = getIntent();
-        int tdId = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_ID, -1);
-        String name = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_NAME);
         String date = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_DATE);
-        int level = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_LEVEL, -1);
+        String name = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_NAME);
+        String level = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_LEVEL);
         int groupNo = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO, -1);
         int count = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_COUNT, -1);
-        mTdId.setText(String.valueOf(tdId));
-        mTdName.setText(name);
-        mTdDate.setText(date);
-        mTdLevel.setText(String.valueOf(level));
-        mTdGroupNo.setText(String.valueOf(groupNo));
-        mTdCount.setText(String.valueOf(count));
+        if (!TextUtils.isEmpty(date)) {
+            mTxvTdDate.setText(date);
+        }
+        if (!TextUtils.isEmpty(level)) {
+            mTxvTdLevel.setText(level);
+        }
+        if (groupNo != -1) {
+            mTxvTdGroup.setText("第" + groupNo + "组");
+        }
+        if (count != -1) {
+            mEdtTdCount.setText(String.valueOf(count));
+        }
         initJsonData();
+        if (!TextUtils.isEmpty(name)) {
+            mTxvTdProgram.setText(name);
+            mTxvTdUpRule.setText(mUpRule[mOption1][mOption2]);
+        } else {
+            mTxvTdUpRule.setText("初级目标：\n中极目标：\n升级目标：");
+        }
     }
 
     @Override
@@ -194,6 +248,8 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         this.mOptions1Items = null;
         this.mOptions2Items = null;
         this.mOptions3Items = null;
+        this.pvCustomTime = null;
+        this.pvOptions = null;
     }
 
     private void showTrainingDatePickerView() {
@@ -203,7 +259,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                mTxvDate.setText(getTime(date));
+                mTxvTdDate.setText(getTime(date));
             }
         })
                 .setDate(startDate)
@@ -229,7 +285,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                     }
                 })
                 .setType(new boolean[]{true, true, true, false, false, false})
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isCenterLabel(false)
                 .setDividerColor(Color.RED)
                 .build();
 
@@ -237,25 +293,49 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     }
 
     private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd", Locale.getDefault());
         return format.format(date);
     }
 
     private void showTrainingPickerView() {
-        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+        pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String text = mOptions1Items.get(mOption1 = options1).getPickerViewText() +
-                        mOptions2Items.get(options1).get(mOption2 = options2) +
-                        mOptions3Items.get(options1).get(options2).get(mOption3 = options3);
-                mTxvAddress.setText(text);
+                mTxvTdProgram.setText(mOptions1Items.get(mOption1 = options1).getPickerViewText());
+                mTxvTdLevel.setText(mOptions2Items.get(options1).get(mOption2 = options2));
+                mTxvTdGroup.setText("第" + mOptions3Items.get(options1).get(options2).get(mOption3 = options3) + "组");
+                mTxvTdUpRule.setText(mUpRule[options1][options2]);
             }
-        }).setTitleText("")
+        })
+                .setTitleText("选择训练项目")
+                .setLayoutRes(R.layout.custom_pickerview_training_program, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.txv_done);
+                        ImageView imvCancel = (ImageView) v.findViewById(R.id.imv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvOptions.returnData();
+                                pvOptions.dismiss();
+                            }
+                        });
+
+                        imvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvOptions.dismiss();
+                            }
+                        });
+                    }
+                })
+//                .isDialog(true)
                 .setDividerColor(Color.GRAY)
                 .setTextColorCenter(Color.GRAY)
-                .setContentTextSize(13)
+                .setContentTextSize(20)
                 .setOutSideCancelable(false)
+                .isCenterLabel(false)
+                .setLabels("", "", "组")
                 .build();
 
         pvOptions.setPicker(mOptions1Items, mOptions2Items, mOptions3Items);//三级选择器

@@ -61,4 +61,5 @@ public class MainMenuActivity extends BaseActivity {
         three.setIcon(R.drawable.ic_notifications_black_24dp);
         four.setIcon(R.drawable.ic_mine_black_24dp);
     }
+
 }

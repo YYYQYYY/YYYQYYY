@@ -29,13 +29,16 @@ public class TrainingDiariesDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TrainingDiaryEntity.TABLE_NAME + " (" +
-                    TrainingDiaryEntity.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    TrainingDiaryEntity.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
                     TrainingDiaryEntity.COLUMN_NAME_DATE + TEXT_TYPE + COMMA_SEP +
-                    TrainingDiaryEntity.COLUMN_NAME_LEVEL + INTEGER_TYPE + COMMA_SEP +
+                    TrainingDiaryEntity.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+                    TrainingDiaryEntity.COLUMN_NAME_LEVEL + TEXT_TYPE + COMMA_SEP +
                     TrainingDiaryEntity.COLUMN_NAME_GROUP_NO + INTEGER_TYPE + COMMA_SEP +
-                    TrainingDiaryEntity.COLUMN_NAME_COUNT + INTEGER_TYPE +
-                    " )";
+                    TrainingDiaryEntity.COLUMN_NAME_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    " PRIMARY KEY (" + TrainingDiaryEntity.COLUMN_NAME_DATE + "," +
+                    TrainingDiaryEntity.COLUMN_NAME_NAME + "," +
+                    TrainingDiaryEntity.COLUMN_NAME_LEVEL + "," +
+                    TrainingDiaryEntity.COLUMN_NAME_GROUP_NO +
+                    "))";
 
     private TrainingDiariesDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

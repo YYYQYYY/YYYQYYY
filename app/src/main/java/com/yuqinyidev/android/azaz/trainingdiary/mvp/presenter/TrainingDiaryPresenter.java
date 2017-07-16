@@ -55,7 +55,6 @@ public class TrainingDiaryPresenter extends BasePresenter<TrainingDiaryContract.
             public void onItemClick(View view, int viewType, Object data, int position) {
                 TrainingDiary trainingDiary = mTrainingDiaries.get(position);
                 Intent intent = new Intent(mApplication, SaveTrainingDiaryActivity.class);
-                intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_ID, trainingDiary.getId());
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_NAME, trainingDiary.getName());
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_DATE, trainingDiary.getDate());
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_LEVEL, trainingDiary.getLevel());
@@ -104,8 +103,8 @@ public class TrainingDiaryPresenter extends BasePresenter<TrainingDiaryContract.
                 });
     }
 
-    public void getTrainingDiary(int id) {
-        mModel.getTrainingDiaryById(TrainingDiariesDbHelper.getInstance(mApplication), id,
+    public void getTrainingDiary(TrainingDiary trainingDiary) {
+        mModel.getTrainingDiary(TrainingDiariesDbHelper.getInstance(mApplication), trainingDiary,
                 new TrainingDiaryContract.Model.GetTrainingDiaryCallback() {
                     @Override
                     public void onTrainingDiaryLoaded(TrainingDiary TrainingDiary) {

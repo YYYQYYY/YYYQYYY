@@ -45,7 +45,7 @@ public interface TrainingDiaryContract {
 
         void getTrainingDiaries(TrainingDiariesDbHelper dbHelper, @NonNull LoadTrainingDiariesCallback callback);
 
-        void getTrainingDiaryById(TrainingDiariesDbHelper dbHelper, @NonNull int trainingDiaryId, @NonNull GetTrainingDiaryCallback callback);
+        void getTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary, @NonNull GetTrainingDiaryCallback callback);
 
         void saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary);
 

@@ -16,8 +16,8 @@ import java.util.List;
 
 public class TrainingDiaryAdapter extends DefaultAdapter<TrainingDiary> {
 
-    public TrainingDiaryAdapter(List<TrainingDiary> infos) {
-        super(infos);
+    public TrainingDiaryAdapter(List<TrainingDiary> trainingDiaryList) {
+        super(trainingDiaryList);
     }
 
     @Override

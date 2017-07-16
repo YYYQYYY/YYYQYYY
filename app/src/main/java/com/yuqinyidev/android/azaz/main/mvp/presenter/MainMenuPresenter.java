@@ -3,10 +3,7 @@ package com.yuqinyidev.android.azaz.main.mvp.presenter;
 import android.app.Application;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
-import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
-import com.yuqinyidev.android.azaz.demo.mvp.ui.adapter.UserAdapter;
 import com.yuqinyidev.android.azaz.main.mvp.contract.MainMenuContract;
 import com.yuqinyidev.android.azaz.main.mvp.model.entity.AppItem;
 import com.yuqinyidev.android.azaz.main.mvp.ui.adapter.MainMenuAdapter;
@@ -15,7 +12,6 @@ import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.integration.AppManager;
 import com.yuqinyidev.android.framework.mvp.presenter.BasePresenter;
 import com.yuqinyidev.android.framework.utils.PermissionUtil;
-import com.yuqinyidev.android.framework.utils.RxUtils;
 import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -23,14 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-
-import static com.yuqinyidev.android.framework.utils.UiUtils.startActivity;
 
 /**
  * Created by RDX64 on 2017/7/2.
@@ -62,7 +51,7 @@ public class MainMenuPresenter extends BasePresenter<MainMenuContract.Model, Mai
             @Override
             public void onItemClick(View view, int viewType, Object data, int position) {
                 AppItem appItem = mAppItems.get(position);
-                Toast.makeText(view.getContext(), "You clicked view: " + appItem.getAppItemName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(), "You clicked view: " + appItem.getAppItemName(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(mApplication, TrainingDiaryActivity.class);
                 UiUtils.startActivity(intent);

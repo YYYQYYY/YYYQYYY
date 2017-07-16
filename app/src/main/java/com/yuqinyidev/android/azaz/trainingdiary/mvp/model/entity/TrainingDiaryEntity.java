@@ -8,7 +8,6 @@ import android.provider.BaseColumns;
 
 public class TrainingDiaryEntity implements BaseColumns {
     public static final String TABLE_NAME = "TrainingDiaries";
-    public static final String COLUMN_NAME_ID = "td_id";
     public static final String COLUMN_NAME_NAME = "td_name";
     public static final String COLUMN_NAME_DATE = "td_date";
     public static final String COLUMN_NAME_LEVEL = "td_level";

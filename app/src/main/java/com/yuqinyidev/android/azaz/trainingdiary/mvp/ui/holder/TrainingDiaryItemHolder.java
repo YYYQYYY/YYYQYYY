@@ -1,5 +1,6 @@
 package com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.holder;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,8 +29,11 @@ public class TrainingDiaryItemHolder extends BaseHolder<TrainingDiary> {
 
     @Override
     public void setData(TrainingDiary data, int position) {
-        String tdInfo = data.getDate() + "，" + data.getName() + "，第" + data.getLevel() + "式，第" + data.getGroupNo() + "组，共练习" + data.getCount() + "次";
-        Observable.just(tdInfo).subscribe(s -> mTxvInfo.setText(s));
+        String tdInfo = data.getName() + "\n" + data.getDate() + "\n" + data.getLevel() + "，第" + data.getGroupNo() + "组，共练习" + data.getCount() + "次";
+        Observable.just(tdInfo).subscribe(s -> {
+            mTxvInfo.setText(s);
+            Log.d("TrainingDiaryItemHolder", s);
+        });
     }
 
     @Override

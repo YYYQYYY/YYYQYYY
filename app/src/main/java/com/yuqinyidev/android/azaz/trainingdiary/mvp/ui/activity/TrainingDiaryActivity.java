@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
@@ -19,12 +20,18 @@ import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.utils.UiUtils;
+import com.yuqinyidev.android.framework.widget.ItemRemoveRecyclerView;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
+
+import static android.view.View.VISIBLE;
 
 /**
  * Created by RDX64 on 2017/6/29.
@@ -35,7 +42,7 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     private RxPermissions mRxPermissions;
 
     @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    ItemRemoveRecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.coordinatorLayout)
@@ -112,6 +119,7 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     @Override
     public void setAdapter(DefaultAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setItem_delete(R.id.item_delete);
         initRecycleView();
     }
 
@@ -130,6 +138,20 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
         DefaultAdapter.releaseAllHolder(mRecyclerView);
         super.onDestroy();
         this.mRxPermissions = null;
+    }
+
+    private void autoRefresh() {
+        try {
+            Field mCircleView = SwipeRefreshLayout.class.getDeclaredField("mCircleView");
+            mCircleView.setAccessible(true);
+            View progress = (View) mCircleView.get(this);
+            progress.setVisibility(VISIBLE);
+            Method setRefreshing = SwipeRefreshLayout.class.getDeclaredMethod("setRefreshing", boolean.class, boolean.class);
+            setRefreshing.setAccessible(true);
+            setRefreshing.invoke(this, true, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initRecycleView() {

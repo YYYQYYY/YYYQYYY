@@ -35,10 +35,10 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
     @Override
     public List<TrainingDiary> getTrainingDiaries(TrainingDiariesDbHelper dbHelper) {
         List<TrainingDiary> trainingDiaries = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        checkNotNull(db);
 
         String[] projection = {
-                TrainingDiaryEntity.COLUMN_NAME_ID,
                 TrainingDiaryEntity.COLUMN_NAME_NAME,
                 TrainingDiaryEntity.COLUMN_NAME_DATE,
                 TrainingDiaryEntity.COLUMN_NAME_LEVEL,
@@ -50,13 +50,12 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                int id = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_ID));
                 String name = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_NAME));
                 String date = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_DATE));
-                int level = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_LEVEL));
+                String level = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_LEVEL));
                 int groupNo = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO));
                 int count = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_COUNT));
-                TrainingDiary TrainingDiary = new TrainingDiary(id, name, date, level, groupNo, count);
+                TrainingDiary TrainingDiary = new TrainingDiary(date, name, level, groupNo, count);
                 trainingDiaries.add(TrainingDiary);
             }
         }
@@ -73,10 +72,10 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
     public void getTrainingDiaries(TrainingDiariesDbHelper dbHelper, @NonNull LoadTrainingDiariesCallback callback) {
         checkNotNull(callback);
         List<TrainingDiary> trainingDiaries = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        checkNotNull(db);
 
         String[] projection = {
-                TrainingDiaryEntity.COLUMN_NAME_ID,
                 TrainingDiaryEntity.COLUMN_NAME_NAME,
                 TrainingDiaryEntity.COLUMN_NAME_DATE,
                 TrainingDiaryEntity.COLUMN_NAME_LEVEL,
@@ -88,13 +87,12 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                int id = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_ID));
                 String name = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_NAME));
                 String date = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_DATE));
-                int level = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_LEVEL));
+                String level = c.getString(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_LEVEL));
                 int groupNo = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO));
                 int count = c.getInt(c.getColumnIndexOrThrow(TrainingDiaryEntity.COLUMN_NAME_COUNT));
-                TrainingDiary TrainingDiary = new TrainingDiary(id, name, date, level, groupNo, count);
+                TrainingDiary TrainingDiary = new TrainingDiary(date, name, level, groupNo, count);
                 trainingDiaries.add(TrainingDiary);
             }
         }
@@ -112,7 +110,7 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
     }
 
     @Override
-    public void getTrainingDiaryById(TrainingDiariesDbHelper dbHelper, @NonNull int trainingDiaryId, @NonNull GetTrainingDiaryCallback callback) {
+    public void getTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary, @NonNull GetTrainingDiaryCallback callback) {
 
     }
 
@@ -120,9 +118,9 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
     public void saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
         checkNotNull(trainingDiary);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        checkNotNull(db);
 
         ContentValues values = new ContentValues();
-        values.put(TrainingDiaryEntity.COLUMN_NAME_ID, trainingDiary.getId());
         values.put(TrainingDiaryEntity.COLUMN_NAME_NAME, trainingDiary.getName());
         values.put(TrainingDiaryEntity.COLUMN_NAME_DATE, trainingDiary.getDate());
         values.put(TrainingDiaryEntity.COLUMN_NAME_LEVEL, trainingDiary.getLevel());
@@ -137,11 +135,19 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
     @Override
     public void deleteTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        checkNotNull(db);
+        String whereClause = TrainingDiaryEntity.COLUMN_NAME_DATE + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_NAME + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_LEVEL + " = ? AND "
+                + TrainingDiaryEntity.COLUMN_NAME_GROUP_NO + " = ?";
+        String[] whereClauseArgs = {
+                trainingDiary.getDate(),
+                trainingDiary.getName(),
+                trainingDiary.getLevel(),
+                String.valueOf(trainingDiary.getGroupNo())
+        };
 
-        String selection = TrainingDiaryEntity.COLUMN_NAME_ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(trainingDiary.getId())};
-
-        db.delete(TrainingDiaryEntity.TABLE_NAME, selection, selectionArgs);
+        db.delete(TrainingDiaryEntity.TABLE_NAME, whereClause, whereClauseArgs);
 
         db.close();
     }

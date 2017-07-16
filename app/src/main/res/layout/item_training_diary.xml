@@ -6,14 +6,45 @@
     android:layout_marginBottom="15dp"
     android:layout_marginRight="15dp">
 
-    <TextView
-        android:id="@+id/txv_training_dairy_info"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:text="SS"
-        android:textColor="@color/colorPrimary"
-        android:textSize="36sp" />
+        android:layout_height="100dp"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:id="@+id/item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txv_training_dairy_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="SS"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/item_delete"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#88ff0000"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#55000000" />
+
+    </RelativeLayout>
 
 </com.yuqinyidev.android.framework.widget.autolayout.AutoCardView>
