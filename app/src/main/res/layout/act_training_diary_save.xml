@@ -115,9 +115,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="点击输入训练次数"
+                    android:inputType="number|numberSigned"
                     android:lines="1"
                     android:maxLines="1"
                     android:minLines="1"
+                    android:singleLine="true"
                     android:textSize="30sp" />
 
             </LinearLayout>

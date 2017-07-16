@@ -27,7 +27,7 @@ public class MainMenuModel extends BaseModel implements MainMenuContract.Model {
     public List<AppItem> getAppItems() {
         List<AppItem> appItemList = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
-            appItemList.add(new AppItem("训练日志", R.drawable.apple_pic));
+            appItemList.add(new AppItem("训练日记", R.drawable.apple_pic));
         }
         return appItemList;
     }

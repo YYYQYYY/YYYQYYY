@@ -8,9 +8,7 @@ import android.view.View;
 
 public interface RecyListViewOnItemClick {
 
-    void onItemClick(View view, int position);
-
-    void onDeleteClick(int position);
+    void onDeleteClick(View view, int position);
 
 }
 

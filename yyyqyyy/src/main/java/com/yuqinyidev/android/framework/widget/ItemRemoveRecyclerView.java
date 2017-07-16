@@ -49,7 +49,7 @@ public class ItemRemoveRecyclerView extends RecyclerView {
     /**
      * 设置删除监听
      */
-    public void setmListener(RecyListViewOnItemClick mListener) {
+    public void setListener(RecyListViewOnItemClick mListener) {
         this.mListener = mListener;
     }
 
@@ -116,7 +116,7 @@ public class ItemRemoveRecyclerView extends RecyclerView {
                     mDelete = (TextView) mItemLayout.findViewById(item_delete);
                     mMaxLength = mDelete.getWidth();
                     mDelete.setOnClickListener(v -> {
-                        mListener.onItemClick(v, mPosition);
+                        mListener.onDeleteClick(v, mPosition);
                         mItemLayout.scrollTo(0, 0);
                         mDeleteBtnState = 0;
                     });

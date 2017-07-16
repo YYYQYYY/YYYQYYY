@@ -60,6 +60,7 @@ public class TrainingDiaryPresenter extends BasePresenter<TrainingDiaryContract.
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_LEVEL, trainingDiary.getLevel());
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO, trainingDiary.getGroupNo());
                 intent.putExtra(TrainingDiaryEntity.COLUMN_NAME_COUNT, trainingDiary.getCount());
+                intent.putExtra("is_add", false);
                 UiUtils.startActivity(intent);
             }
         });

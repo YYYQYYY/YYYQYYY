@@ -21,6 +21,7 @@ import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.utils.UiUtils;
 import com.yuqinyidev.android.framework.widget.ItemRemoveRecyclerView;
+import com.yuqinyidev.android.framework.widget.RecyListViewOnItemClick;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -51,6 +52,7 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     @OnClick(R.id.fab_add_task)
     public void saveTrainingDiary() {
         Intent intent = new Intent(TrainingDiaryActivity.this, SaveTrainingDiaryActivity.class);
+        intent.putExtra("is_add", true);
         UiUtils.startActivity(intent);
     }
 
@@ -120,6 +122,12 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     public void setAdapter(DefaultAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setItem_delete(R.id.item_delete);
+        mRecyclerView.setListener(new RecyListViewOnItemClick() {
+            @Override
+            public void onDeleteClick(View view, int position) {
+//                mRecyclerView.notifyItemRemoved(position);
+            }
+        });
         initRecycleView();
     }
 

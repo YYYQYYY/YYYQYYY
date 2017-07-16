@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -70,7 +72,10 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     private int mOption1, mOption2, mOption3;
     private TimePickerView pvCustomTime;
     private OptionsPickerView pvOptions;
+    private boolean mIsAdd;
 
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.txv_td_up_rule)
     TextView mTxvTdUpRule;
     @BindView(R.id.txv_td_date)
@@ -86,12 +91,16 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
 
     @OnClick({R.id.txv_td_program, R.id.txv_td_level, R.id.txv_td_group})
     public void chooseTrainingPicker() {
-        showTrainingPickerView();
+        if (mIsAdd) {
+            showTrainingPickerView();
+        }
     }
 
     @OnClick(R.id.txv_td_date)
     public void chooseTrainingDatePicker() {
-        showTrainingDatePickerView();
+        if (mIsAdd) {
+            showTrainingDatePickerView();
+        }
     }
 
     @OnClick(R.id.fab_edit_task_done)
@@ -105,13 +114,17 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         int groupNo = Integer.valueOf(m.replaceAll("").trim());
         int count = Integer.valueOf(mEdtTdCount.getText().toString());
         TrainingDiary trainingDiary = new TrainingDiary(date, name, level, groupNo, count);
-        saveTrainingDiary(TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this), trainingDiary);
-        killMyself();
+        if (saveTrainingDiary(TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this), trainingDiary) < 1) {
+            Snackbar.make(mCoordinatorLayout, "数据保存失败", Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(mCoordinatorLayout, "数据保存成功", Snackbar.LENGTH_SHORT).show();
+            killMyself();
+        }
     }
 
-    private void saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
+    private long saveTrainingDiary(TrainingDiariesDbHelper dbHelper, @NonNull TrainingDiary trainingDiary) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+        long result;
 
         ContentValues values = new ContentValues();
         values.put(TrainingDiaryEntity.COLUMN_NAME_NAME, trainingDiary.getName());
@@ -120,9 +133,25 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         values.put(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO, trainingDiary.getGroupNo());
         values.put(TrainingDiaryEntity.COLUMN_NAME_COUNT, trainingDiary.getCount());
 
-        db.insert(TrainingDiaryEntity.TABLE_NAME, null, values);
+        if (checkTrainingDiary(db, trainingDiary)) {
+            String whereClause = TrainingDiaryEntity.COLUMN_NAME_DATE + " = ? AND "
+                    + TrainingDiaryEntity.COLUMN_NAME_NAME + " = ? AND "
+                    + TrainingDiaryEntity.COLUMN_NAME_LEVEL + " = ? AND "
+                    + TrainingDiaryEntity.COLUMN_NAME_GROUP_NO + " = ?";
+            String[] whereClauseArgs = {
+                    trainingDiary.getDate(),
+                    trainingDiary.getName(),
+                    trainingDiary.getLevel(),
+                    String.valueOf(trainingDiary.getGroupNo())
+            };
+            result = db.update(TrainingDiaryEntity.TABLE_NAME, values, whereClause, whereClauseArgs);
+        } else {
+            result = db.insert(TrainingDiaryEntity.TABLE_NAME, null, values);
+        }
 
         db.close();
+
+        return result;
     }
 
     public boolean checkTrainingDiary(SQLiteDatabase db, @NonNull TrainingDiary trainingDiary) {
@@ -143,13 +172,12 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                 TrainingDiaryEntity.COLUMN_NAME_GROUP_NO
         };
 
-//    public Cursor query(String table, String[] columns, String selection,
-//                        String[] selectionArgs, String groupBy, String having,
-//                        String orderBy)
-
         Cursor cursor = db.query(TrainingDiaryEntity.TABLE_NAME, projection, whereClause, whereClauseArgs, null, null, null);
-
-        return (cursor != null && cursor.getCount() > 0);
+        boolean result = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) {
+            cursor.close();
+        }
+        return result;
     }
 
     @Override
@@ -171,11 +199,13 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     public void initData(Bundle savedInstanceState) {
 //        mPresenter.getTrainingDiary(id);
         Intent intent = getIntent();
+        mIsAdd = intent.getBooleanExtra("is_add", true);
         String date = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_DATE);
         String name = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_NAME);
         String level = intent.getStringExtra(TrainingDiaryEntity.COLUMN_NAME_LEVEL);
         int groupNo = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO, -1);
         int count = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_COUNT, -1);
+
         if (!TextUtils.isEmpty(date)) {
             mTxvTdDate.setText(date);
         }

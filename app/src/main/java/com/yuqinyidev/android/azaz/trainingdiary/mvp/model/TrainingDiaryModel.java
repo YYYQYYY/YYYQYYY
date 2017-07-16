@@ -83,7 +83,7 @@ public class TrainingDiaryModel extends BaseModel implements TrainingDiaryContra
                 TrainingDiaryEntity.COLUMN_NAME_COUNT
         };
 
-        Cursor c = db.query(TrainingDiaryEntity.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor c = db.query(TrainingDiaryEntity.TABLE_NAME, projection, null, null, null, null, TrainingDiaryEntity.COLUMN_NAME_DATE + " DESC");
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {

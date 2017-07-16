@@ -1,11 +1,18 @@
 package com.yuqinyidev.android.azaz.splash.mvp.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.main.mvp.ui.activity.MainMenuActivity;
@@ -23,6 +30,8 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 import com.yuqinyidev.android.framework.widget.CountDownProgressView;
 import com.yuqinyidev.android.framework.widget.imageloader.ImageLoader;
 import com.yuqinyidev.android.framework.widget.imageloader.glide.GlideImageConfig;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -147,8 +156,8 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mImageLoader.clear(mAppComponent.application(),
-                GlideImageConfig.builder().imageView(mImvSplash).build());
+//        mImageLoader.clear(mAppComponent.application(),
+//                GlideImageConfig.builder().imageView(mImvSplash).build());
         this.mRxPermissions = null;
         this.mAppComponent = null;
         this.mImageLoader = null;
@@ -162,11 +171,46 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     }
 
     private void displaySplash(String picUrl) {
-        mImageLoader.loadImage(
-                mAppComponent.appManager().getCurrentActivity() == null ?
-                        mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
-                GlideImageConfig.builder().url(picUrl).imageView(mImvSplash).build()
-        );
+        new getImageCacheAsyncTask(this).execute(picUrl);
+
+//        mImageLoader.loadImage(
+//                mAppComponent.appManager().getCurrentActivity() == null ?
+//                        mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
+//                GlideImageConfig.builder().url(picUrl).imageView(mImvSplash).build()
+//        );
         txvJump.start();
+    }
+
+    private class getImageCacheAsyncTask extends AsyncTask<String, Void, File> {
+        private final Context context;
+
+        public getImageCacheAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected File doInBackground(String... params) {
+            String imgUrl = params[0];
+            try {
+                return Glide.with(context)
+                        .load(imgUrl)
+                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get();
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(File result) {
+            if (result == null) {
+                return;
+            }
+            //此path就是对应文件的缓存路径
+            String path = result.getPath();
+            Log.e("path", path);
+            Bitmap bmp = BitmapFactory.decodeFile(path);
+            mImvSplash.setImageBitmap(bmp);
+        }
     }
 }
