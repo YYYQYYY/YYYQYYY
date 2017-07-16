@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
@@ -28,7 +31,10 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +51,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     private List<List<String>> mOptions2Items = new ArrayList<>();
     private List<List<List<Integer>>> mOptions3Items = new ArrayList<>();
     private int mOption1, mOption2, mOption3;
+    private TimePickerView pvCustomTime;
 
     @BindView(R.id.edt_td_id)
     EditText mTdId;
@@ -59,12 +66,18 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     @BindView(R.id.edt_td_count)
     EditText mTdCount;
     @BindView(R.id.txv_address)
-    TextView mTvAddress;
-
+    TextView mTxvAddress;
+    @BindView(R.id.txv_date)
+    TextView mTxvDate;
 
     @OnClick(R.id.txv_address)
     public void chooseTrainingPicker() {
-        showPickerView();
+        showTrainingPickerView();
+    }
+
+    @OnClick(R.id.txv_date)
+    public void chooseTrainingDatePicker() {
+        showTrainingDatePickerView();
     }
 
     @OnClick(R.id.fab_edit_task_done)
@@ -183,7 +196,52 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         this.mOptions3Items = null;
     }
 
-    private void showPickerView() {
+    private void showTrainingDatePickerView() {
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2099, 11, 31);
+        pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                mTxvDate.setText(getTime(date));
+            }
+        })
+                .setDate(startDate)
+                .setRangDate(startDate, endDate)
+                .setLayoutRes(R.layout.custom_pickerview_date, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.txv_done);
+                        ImageView ivCancel = (ImageView) v.findViewById(R.id.imv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime.returnData();
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                        ivCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(Color.RED)
+                .build();
+
+        pvCustomTime.show();
+    }
+
+    private String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd");
+        return format.format(date);
+    }
+
+    private void showTrainingPickerView() {
         OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -191,7 +249,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                 String text = mOptions1Items.get(mOption1 = options1).getPickerViewText() +
                         mOptions2Items.get(options1).get(mOption2 = options2) +
                         mOptions3Items.get(options1).get(options2).get(mOption3 = options3);
-                mTvAddress.setText(text);
+                mTxvAddress.setText(text);
             }
         }).setTitleText("")
                 .setDividerColor(Color.GRAY)

@@ -2,9 +2,9 @@ package com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -14,24 +14,17 @@ import com.yuqinyidev.android.azaz.trainingdiary.di.component.DaggerTrainingDiar
 import com.yuqinyidev.android.azaz.trainingdiary.di.module.TrainingDiaryModule;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.contract.TrainingDiaryContract;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiary;
-import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiaryEntity;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.presenter.TrainingDiaryPresenter;
 import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.utils.UiUtils;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
-
-import static android.R.attr.id;
-import static android.R.attr.name;
 
 /**
  * Created by RDX64 on 2017/6/29.
@@ -45,6 +38,8 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout mCoordinatorLayout;
 
     @OnClick(R.id.fab_add_task)
     public void saveTrainingDiary() {
@@ -100,7 +95,8 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+//        UiUtils.snackbarText(message);//会遮住
+        Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
