@@ -52,6 +52,14 @@
                 android:layout_height="wrap_content"
                 android:hint="次数" />
 
+            <TextView
+                android:id="@+id/txv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="点击选择地址"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton

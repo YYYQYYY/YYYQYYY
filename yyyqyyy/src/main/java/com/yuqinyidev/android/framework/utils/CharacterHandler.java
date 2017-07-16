@@ -1,5 +1,7 @@
 package com.yuqinyidev.android.framework.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -8,6 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -82,5 +88,29 @@ public class CharacterHandler {
             message = strBody;
         }
         return message;
+    }
+
+    /**
+     * 读取assets中的json文件
+     *
+     * @param context
+     * @param fileName
+     * @return
+     */
+    public static String getAssetsJson(Context context, String fileName) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            AssetManager assetManager = context.getAssets();
+            InputStream inputStream = assetManager.open(fileName);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bufferedInputStream.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return baos.toString();
     }
 }
