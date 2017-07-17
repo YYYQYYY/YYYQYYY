@@ -53,7 +53,7 @@ public class MainMenuPresenter extends BasePresenter<MainMenuContract.Model, Mai
                 AppItem appItem = mAppItems.get(position);
 //                Toast.makeText(view.getContext(), "You clicked view: " + appItem.getAppItemName(), Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(mApplication, TrainingDiaryActivity.class);
+                Intent intent = new Intent(mApplication, appItem.getAppItemClazz());
                 UiUtils.startActivity(intent);
             }
         });

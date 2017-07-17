@@ -15,6 +15,8 @@ import com.yuqinyidev.android.framework.integration.ConfigModule;
 import com.yuqinyidev.android.framework.integration.ManifestParser;
 import com.yuqinyidev.android.framework.widget.imageloader.glide.GlideImageConfig;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,8 @@ public class AppDelegate implements App {
         }
         mComponentCallbacks = new AppComponentCallbacks(mApplication, mAppComponent);
         mApplication.registerComponentCallbacks(mComponentCallbacks);
+
+        LitePal.initialize(mApplication);
     }
 
     public void onTerminate() {

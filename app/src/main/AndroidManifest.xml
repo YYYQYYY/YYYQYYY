@@ -48,10 +48,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".demo.mvp.ui.activity.UserActivity"></activity>
-        <activity android:name=".main.mvp.ui.activity.MainMenuActivity"></activity>
-        <activity android:name=".trainingdiary.mvp.ui.activity.TrainingDiaryActivity"></activity>
-        <activity android:name=".trainingdiary.mvp.ui.activity.SaveTrainingDiaryActivity"></activity>
+
+        <activity android:name=".demo.mvp.ui.activity.UserActivity" />
+        <activity android:name=".main.mvp.ui.activity.MainMenuActivity" />
+        <activity android:name=".trainingdiary.mvp.ui.activity.TrainingDiaryActivity" />
+        <activity android:name=".trainingdiary.mvp.ui.activity.SaveTrainingDiaryActivity" />
+
+        <activity android:name=".weather.mvp.ui.activity.WeatherMainActivity" />
+        <activity android:name=".weather.mvp.ui.activity.WeatherActivity" />
+
+        <service
+            android:name=".weather.mvp.model.service.AutoUpdateWeatherService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

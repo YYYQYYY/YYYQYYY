@@ -7,10 +7,12 @@ package com.yuqinyidev.android.azaz.main.mvp.model.entity;
 public class AppItem {
     private String name;
     private int imageId;
+    private Class<?> clazz;
 
-    public AppItem(String name, int imageId) {
+    public AppItem(String name, int imageId, Class<?> clazz) {
         this.name = name;
         this.imageId = imageId;
+        this.clazz = clazz;
     }
 
     public String getAppItemName() {
@@ -19,5 +21,9 @@ public class AppItem {
 
     public int getAppItemImageId() {
         return imageId;
+    }
+
+    public Class<?> getAppItemClazz() {
+        return clazz;
     }
 }

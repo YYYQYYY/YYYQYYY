@@ -121,6 +121,7 @@ dependencies {
     }
     compile rootProject.ext.dependencies["androideventbus"]
     compile rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["litepal"]
 
     //test
     compile rootProject.ext.dependencies["timber"]
