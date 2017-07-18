@@ -2,6 +2,9 @@ package com.yuqinyidev.android.framework.utils;
 
 import android.support.annotation.NonNull;
 
+import com.yuqinyidev.android.framework.R;
+
+import java.lang.reflect.Field;
 import java.util.Random;
 
 /**
@@ -19,6 +22,21 @@ public class Utility {
             stringBuilder.append(name);
         }
         return stringBuilder.toString();
+    }
+
+    public static int getDrawable(Class<?> clazz, String id) {
+        Field f;
+        try {
+            f = clazz.getField(id);
+            return f.getInt(null);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

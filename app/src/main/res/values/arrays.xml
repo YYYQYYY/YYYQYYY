@@ -15,4 +15,9 @@
         <item>3</item>
     </integer-array>
 
+    <array name="app_items">
+        <item>1训练日记1,R.drawable.apple_pic,com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity.TrainingDiaryActivity</item>
+        <item>2天气预报2,R.drawable.apple_pic,com.yuqinyidev.android.azaz.weather.mvp.ui.activity.WeatherMainActivity</item>
+    </array>
+
 </resources>

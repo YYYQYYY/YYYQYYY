@@ -7,11 +7,14 @@ import android.os.Bundle;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.demo.mvp.presenter.UserPresenter;
+import com.yuqinyidev.android.azaz.main.mvp.model.entity.AppItem;
 import com.yuqinyidev.android.azaz.main.mvp.ui.adapter.MyFragmentPagerAdapter;
 import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
+import com.yuqinyidev.android.framework.utils.Utility;
 import com.yuqinyidev.android.framework.widget.NoScrollViewPager;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 
 public class MainMenuActivity extends BaseActivity {
@@ -27,6 +30,9 @@ public class MainMenuActivity extends BaseActivity {
 
     @BindView(R.id.main_menu_tab_layout)
     TabLayout mTabLayout;
+
+// TODO:测试数组资源   @BindArray(R.array.app_items)
+//    String[] appItems;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -60,6 +66,19 @@ public class MainMenuActivity extends BaseActivity {
         two.setIcon(R.drawable.ic_dashboard_black_24dp);
         three.setIcon(R.drawable.ic_notifications_black_24dp);
         four.setIcon(R.drawable.ic_mine_black_24dp);
+//        if (appItems != null) {
+//            String[] appItem = null;
+//            for (String appItemA : appItems) {
+//                appItem = appItemA.split(",");
+//                try {
+//                    if (appItem.length == 3) {
+//                        AppItem a = new AppItem(appItem[0], Utility.getDrawable(R.drawable.class, "apple_pic"), Class.forName(appItem[2]));
+//                    }
+//                } catch (ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
 }

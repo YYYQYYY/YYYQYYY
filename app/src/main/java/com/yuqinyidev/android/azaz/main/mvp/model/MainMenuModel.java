@@ -28,10 +28,10 @@ public class MainMenuModel extends BaseModel implements MainMenuContract.Model {
     @Override
     public List<AppItem> getAppItems() {
         List<AppItem> appItemList = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            appItemList.add(new AppItem("训练日记", R.drawable.apple_pic, TrainingDiaryActivity.class));
-            appItemList.add(new AppItem("天气预报", R.drawable.apple_pic, WeatherMainActivity.class));
-        }
+
+        appItemList.add(new AppItem("训练日记", R.drawable.apple_pic, TrainingDiaryActivity.class));
+        appItemList.add(new AppItem("天气预报", R.drawable.apple_pic, WeatherMainActivity.class));
+
         return appItemList;
     }
 }
