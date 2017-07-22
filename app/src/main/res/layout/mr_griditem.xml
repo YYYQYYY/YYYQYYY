@@ -6,7 +6,7 @@
 		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
 		android:textSize="15sp" android:textColor="@color/white" />
 
-	<com.totyu.hz.memorandum.customcontrol.BorderTextView
+	<com.yuqinyidev.android.azaz.memorandum.mvp.ui.customcontrol.MR_BorderTextView
 		android:id="@+id/txvMainEventCount" android:layout_width="18dp"
 		android:layout_height="13dp" android:layout_alignParentRight="true"
 		android:textSize="10sp" android:textColor="@color/white"

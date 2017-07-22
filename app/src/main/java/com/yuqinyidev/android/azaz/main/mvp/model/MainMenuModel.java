@@ -4,6 +4,7 @@ import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity.KBMainActivity;
 import com.yuqinyidev.android.azaz.main.mvp.contract.MainMenuContract;
 import com.yuqinyidev.android.azaz.main.mvp.model.entity.AppItem;
+import com.yuqinyidev.android.azaz.memorandum.mvp.ui.activity.MR_MemorandumMain;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity.TrainingDiaryActivity;
 import com.yuqinyidev.android.azaz.weather.mvp.ui.activity.WeatherMainActivity;
 import com.yuqinyidev.android.framework.di.scope.FragmentScope;
@@ -33,6 +34,7 @@ public class MainMenuModel extends BaseModel implements MainMenuContract.Model {
         appItemList.add(new AppItem("训练日记", R.drawable.apple_pic, TrainingDiaryActivity.class));
         appItemList.add(new AppItem("天气预报", R.drawable.apple_pic, WeatherMainActivity.class));
         appItemList.add(new AppItem("晨光看书", R.drawable.apple_pic, KBMainActivity.class));
+        appItemList.add(new AppItem("记事本", R.drawable.apple_pic, MR_MemorandumMain.class));
 
         return appItemList;
     }
