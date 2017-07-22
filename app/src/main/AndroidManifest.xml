@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name="com.yuqinyidev.android.framework.base.BaseApplication"
@@ -56,6 +57,32 @@
 
         <activity android:name=".weather.mvp.ui.activity.WeatherMainActivity" />
         <activity android:name=".weather.mvp.ui.activity.WeatherActivity" />
+
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBBookShelfActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBReadTxtActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBSettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBVirualDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" />
+
 
         <service
             android:name=".weather.mvp.model.service.AutoUpdateWeatherService"

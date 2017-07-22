@@ -11,4 +11,9 @@
 
     <drawable name="touchFeedback">#CFD8DC</drawable>
 
+    <drawable name="white">#FFFFFFFF</drawable>
+    <drawable name="black">#000000</drawable>
+    <drawable name="other">#fff00f</drawable>
+    <drawable name="blue">#0000FF</drawable>
+
 </resources>

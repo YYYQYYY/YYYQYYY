@@ -1,4 +1,39 @@
 <resources>
     <string name="app_name">安卓安卓</string>
     <string name="splash_jump">跳过</string>
+
+    <!-- menu_main.xml -->
+    <string name="setting">设置</string>
+    <string name="about">关于...</string>
+    <string name="exit">退出</string>
+
+    <!-- menu_bookshelf.xml -->
+    <string name="refresh">刷新</string>
+    <string name="addfolder">添加目录</string>
+
+    <!-- menu_reader.xml -->
+    <string name="nightmode">夜间模式</string>
+    <string name="skipto">跳转至...</string>
+    <string name="savebookmark">增加书签</string>
+    <string name="viewbookmark">浏览书签</string>
+    <string name="brightness">亮度</string>
+    <string name="back">返回</string>
+
+    <!-- main.xml -->
+    <string name="copyright">CopyRight 2011 小雨晨光工作室</string>
+
+    <!-- setting.xml -->
+    <string name="viewfont">文字预览</string>
+    <string name="selectfontsize">请选择文字大小</string>
+    <string name="selectfontcolor">请选择文字颜色</string>
+    <string name="selectbackground">请选择背景风格</string>
+
+    <!-- bookmarklist.xml -->
+    <string name="cancel">取消</string>
+    <string name="gomark">跳转</string>
+    <string name="delete">删除</string>
+
+    <!-- bookmark_dialog.xml -->
+    <string name="sure">确定</string>
+
 </resources>

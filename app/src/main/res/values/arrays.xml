@@ -20,4 +20,80 @@
         <item>2天气预报2,R.drawable.apple_pic,com.yuqinyidev.android.azaz.weather.mvp.ui.activity.WeatherMainActivity</item>
     </array>
 
+    <string-array name="fontcolor">
+        <item>黑色</item>
+        <item>白色</item>
+        <item>灰色</item>
+        <item>黄色</item>
+        <item>绿色</item>
+        <item>蓝色</item>
+        <item>红色</item>
+    </string-array>
+
+    <string-array name="fontsize">
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+        <item>26</item>
+        <item>28</item>
+    </string-array>
+
+    <string-array name="background">
+        <item>蓝月星光</item>
+        <item>清新绿叶</item>
+        <item>黄色书皮</item>
+        <item>黑夜灯桥</item>
+    </string-array>
+
+    <string-array name="menu_bookshelf_file">
+        <item>打开</item>
+        <item>重命名</item>
+        <item>删除</item>
+        <item>取消</item>
+    </string-array>
+
+    <string-array name="menu_bookshelf_folder">
+        <item>打开</item>
+        <item>重命名</item>
+        <item>取消</item>
+    </string-array>
+
+    <array name="imageEnds">
+        <item>.png</item>
+        <item>.gif</item>
+        <item>.jpg</item>
+        <item>.jpeg</item>
+        <item>.bmp</item>
+    </array>
+    <array name="audioEnds">
+        <item>.mp3</item>
+        <item>.wav</item>
+        <item>.ogg</item>
+        <item>.midi</item>
+    </array>
+    <array name="packageEnds">
+        <item>.jar</item>
+        <item>.zip</item>
+        <item>.rar</item>
+        <item>.gz</item>
+    </array>
+    <array name="textEnds">
+        <item>.txt</item>
+    </array>
+    <array name="htmlEnds">
+        <item>.htm</item>
+        <item>.html</item>
+        <item>.php</item>
+    </array>
+    <array name="umdEnds">
+        <item>.umd</item>
+    </array>
+    <array name="zipEnds">
+        <item>.jar</item>
+        <item>.zip</item>
+    </array>
+
 </resources>

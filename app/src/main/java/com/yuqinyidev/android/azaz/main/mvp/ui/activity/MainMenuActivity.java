@@ -1,12 +1,17 @@
 package com.yuqinyidev.android.azaz.main.mvp.ui.activity;
 
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.demo.mvp.presenter.UserPresenter;
+import com.yuqinyidev.android.azaz.kanbook.KBConstants;
+import com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity.KBMainActivity;
 import com.yuqinyidev.android.azaz.main.mvp.model.entity.AppItem;
 import com.yuqinyidev.android.azaz.main.mvp.ui.adapter.MyFragmentPagerAdapter;
 import com.yuqinyidev.android.framework.base.BaseActivity;
@@ -16,6 +21,8 @@ import com.yuqinyidev.android.framework.widget.NoScrollViewPager;
 
 import butterknife.BindArray;
 import butterknife.BindView;
+
+import static com.yuqinyidev.android.framework.utils.UiUtils.killAll;
 
 public class MainMenuActivity extends BaseActivity {
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
@@ -34,6 +41,29 @@ public class MainMenuActivity extends BaseActivity {
 // TODO:测试数组资源   @BindArray(R.array.app_items)
 //    String[] appItems;
 
+    private boolean isClickedExit = false;
+
+        @Override
+    public void onBackPressed() {
+        if (isClickedExit) {
+            isClickedExit = false;
+            killAll();
+            System.exit(0);
+        } else {
+            Toast toast = Toast.makeText(MainMenuActivity.this,
+                    KBConstants.EXIT_TOAST_DETAIL, Toast.LENGTH_LONG);
+            DisplayMetrics dm = getResources().getDisplayMetrics();
+            int mScreenHeight = dm.heightPixels;
+            toast.setGravity(0, 0, mScreenHeight / 3);
+            toast.show();
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    isClickedExit = false;
+                }
+            }, 2000);
+            isClickedExit = true;
+        }
+    }
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
     }
