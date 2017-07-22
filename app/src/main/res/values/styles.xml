@@ -15,4 +15,25 @@
         <item name="android:activityCloseExitAnimation">@anim/right_out</item>
     </style>
 
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="AudioFileInfoOverlayText">
+        <item name="android:paddingLeft">4px</item>
+        <item name="android:paddingBottom">4px</item>
+        <item name="android:textColor">#f1f1f1</item>
+        <item name="android:textSize">60sp</item>
+        <item name="android:shadowColor">#4d4d4d</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-3</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
 </resources>

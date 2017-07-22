@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layMain" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	android:background="@color/black">
+
+	<RelativeLayout android:id="@+id/layMainTitle"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:text="" android:id="@+id/txvMainTitle1"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true" android:textSize="25sp"
+			android:textColor="#3333FF" android:textStyle="bold" />
+
+		<TextView android:text="" android:id="@+id/txvMainTitle2"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_alignParentRight="true" android:textSize="25sp"
+			android:textColor="#3333FF" android:textStyle="bold" />
+
+	</RelativeLayout>
+
+	<GridView android:id="@+id/grvMainTitle" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:numColumns="7"
+		android:horizontalSpacing="1dp" android:columnWidth="90dp"
+		android:stretchMode="columnWidth" android:layout_gravity="center"
+		android:listSelector="@drawable/grid_selector" android:focusable="false" />
+
+	<ViewFlipper android:id="@+id/viewFlipper1"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:layout_marginTop="2dp" android:layout_marginBottom="5dp">
+
+		<GridView android:id="@+id/grvMainCalendar"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:numColumns="7" android:verticalSpacing="1dp"
+			android:horizontalSpacing="1dp" android:columnWidth="90dp"
+			android:stretchMode="columnWidth" android:layout_gravity="center"
+			android:listSelector="@drawable/grid_selector" />
+
+	</ViewFlipper>
+
+	<TableLayout android:layout_height="wrap_content"
+		android:id="@+id/layMainEvent" android:layout_width="fill_parent"
+		android:layout_marginTop="5dp">
+
+		<TextView android:text="@string/events" android:id="@+id/txvMainTitleEvent"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:background="#6699FF" android:textColor="#000000" />
+
+		<ListView android:id="@+id/lsvMainEvent"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:listSelector="@drawable/listview_selector" />
+
+	</TableLayout>
+
+	<TableLayout android:layout_height="wrap_content"
+		android:id="@+id/layMainEvent" android:layout_width="fill_parent"
+		android:layout_marginTop="5dp">
+
+		<TextView android:text="@string/memo1" android:id="@+id/txvMainTitleMemo"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:background="#6699FF" android:textColor="#000000" />
+
+		<ListView android:id="@+id/lsvMainMemo"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:listSelector="@drawable/listview_selector" />
+
+	</TableLayout>
+
+</LinearLayout>

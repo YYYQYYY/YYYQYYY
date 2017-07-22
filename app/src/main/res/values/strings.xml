@@ -36,4 +36,106 @@
     <!-- bookmark_dialog.xml -->
     <string name="sure">确定</string>
 
+    <string name="events">Important Events</string>
+    <string name="memo1">Tasks &amp; Memo</string>
+    <string name="testmemo">testmemo</string>
+    <string name="OptionMain">OptionMain</string>
+    <string name="Sun">Sun</string>
+    <string name="Mon">Mon</string>
+    <string name="Tue">Tue</string>
+    <string name="Wed">Wed</string>
+    <string name="Thu">Thu</string>
+    <string name="Fri">Fri</string>
+    <string name="Sta">Sta</string>
+    <string name="Dt">Date &amp; Time</string>
+    <string name="bgd_title">
+		<b>Background</b>
+	</string>
+    <string name="bgd_option">
+		<b>set Background</b>
+	</string>
+    <string name="bgd_dtl">set background with picture</string>
+    <string name="hdy_title">
+		<b>Holidays</b>
+	</string>
+    <string name="hdy_option">
+		<b>set Holidays</b>
+	</string>
+    <string name="hdy_dtl">select national holidays</string>
+    <string name="date_title">
+		<b>Date &amp; Time</b>
+	</string>
+    <string name="date_option">set The First Day</string>
+    <string name="date_dtl">set The First Day for week</string>
+    <string name="abt_title">
+		<b>About</b>
+	</string>
+    <string name="abt_option">
+		<b>About Memorandum</b>
+	</string>
+    <string name="abt_dtl">version information,etc.</string>
+    <string name="abt_info">Memorandum\nversion:\t1.0alpha\nEmail:\tnwcfleshwound@gmail.com\n
+	</string>
+    <string name="abt_close">Close</string>
+    <string name="hdy_title1">
+		<b>National Holidays</b>
+	</string>
+    <string name="hdy_aqe">
+		<b>Acquire</b>
+	</string>
+    <string name="hdy_cel">
+		<b>Cancel</b>
+	</string>
+    <string name="bgd_enbgd">Enable Background</string>
+    <string name="bgd_color">Background color transparency.</string>
+    <string name="bgd_spbp">
+		<b>\u0020\u0020select portrait\u0020\u0020\n background picture</b>
+	</string>
+    <string name="bgd_upd">
+		<b>Update</b>
+	</string>
+    <string name="china">China</string>
+    <string name="jpan">Jpan</string>
+    <string name="america">America</string>
+    <string name="mon">Monday</string>
+    <string name="tue">Tuesday</string>
+    <string name="wed">Wednesday</string>
+    <string name="thu">Thursday</string>
+    <string name="fri">Friday</string>
+    <string name="sat">Saturday</string>
+    <string name="sun">Sunday</string>
+    <string name="previousEvent"> ＜＜  </string>
+    <string name="newEvent">New Event</string>
+    <string name="nextEvent"> ＞＞  </string>
+    <string name="memoList">Memo List</string>
+    <string name="eventList">Event List</string>
+    <string name="into_eventlist">Event List</string>
+    <string name="into_memolist">Memo List</string>
+    <string name="newMemo">New Memo</string>
+    <string name="memo">Memo</string>
+    <string name="memo_">Memo:</string>
+    <string name="title">Title:</string>
+    <string name="time">Time:</string>
+    <string name="where">Where:</string>
+    <string name="status">Status:</string>
+    <string name="important">Important</string>
+    <string name="complete">Complete</string>
+    <string name="memocontent">Memo:</string>
+    <string name="update">Update</string>
+    <string name="cancle">Cancle</string>
+    <string name="durDate">Dur Date:</string>
+    <string name="create">Create</string>
+    <string name="event">Event</string>
+    <string name="memoAlarttitle">Waring!</string>
+    <string name="memoAlartContent">Are you sure complete this?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dateFomat">--/--/--(---)</string>
+    <string name="timeFomat">--:--</string>
+    <string name="aboutinfo">This is an example.</string>
+    <string name="Delete">Delete</string>
+    <string name="deleteAll">Delete All</string>
+    <string name="select_dialog">which do you choose?</string>
+    <string name="deleteConfirn">Are you sure to delete?</string>
+
 </resources>

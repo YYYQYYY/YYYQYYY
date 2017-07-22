@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="green">#00BB00</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#2828FF</color>
+    <color name="lightgreen">#A6FFFF</color>
+    <color name="grey">#ADADAD</color>
+    <color name="lightblue">#D9FFFF</color>
+    <color name="lightpink">#FFECF5</color>
+
+    <color name="grid_sun">#FFCC99</color>
+    <color name="grid_sta">#CC00FF</color>
+    <color name="grid_mon">#6699FF</color>
+    <color name="grid_oth">#A9A9A9</color>
+    <color name="grid_today">#4F9D9D</color>
+    <color name="grid_holiday">#000079</color>
+    <color name="grid_event">#FFFFFF</color>
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>

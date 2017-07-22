@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:background="@color/white" android:layout_width="200dip" android:layout_height="100dip" android:layout_gravity="center_vertical|center_horizontal">
+    <TextView android:textSize="30sp" android:layout_height="50dip" android:text="@string/Delete" android:id="@+id/Delete" android:layout_width="fill_parent"></TextView>
+	<TextView android:layout_height="50dip" android:text="@string/deleteAll" android:id="@+id/deleteAll" android:layout_width="fill_parent" android:textSize="30sp"></TextView>
+
+	
+</LinearLayout>

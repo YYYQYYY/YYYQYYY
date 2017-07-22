@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="39dp" android:layout_height="36dp">
+
+	<TextView android:id="@+id/txvMainDay" android:layout_width="18dp"
+		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+		android:textSize="15sp" android:textColor="@color/white" />
+
+	<com.totyu.hz.memorandum.customcontrol.BorderTextView
+		android:id="@+id/txvMainEventCount" android:layout_width="18dp"
+		android:layout_height="13dp" android:layout_alignParentRight="true"
+		android:textSize="10sp" android:textColor="@color/white"
+		android:gravity="center" android:layout_margin="1dp" />
+
+	<TextView android:id="@+id/txvMainDisplay1"
+		android:layout_width="wrap_content" android:layout_height="11dp"
+		android:layout_below="@id/txvMainEventCount" android:textSize="8sp"
+		android:textColor="@color/white" />
+
+	<TextView android:id="@+id/txvMainDisplay2"
+		android:layout_width="wrap_content" android:layout_height="11dp"
+		android:layout_below="@id/txvMainDisplay1" android:textSize="8sp"
+		android:textColor="@color/white" />
+
+	<TextView android:id="@+id/txvThisDate" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:visibility="gone" />
+
+</RelativeLayout>
