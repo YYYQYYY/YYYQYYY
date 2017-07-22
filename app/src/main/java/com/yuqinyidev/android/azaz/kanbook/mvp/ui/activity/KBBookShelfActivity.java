@@ -11,6 +11,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,7 +68,7 @@ public class KBBookShelfActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.kb_bookshelf);
 
         mKBDBAdapter = new KBDBAdapter(this);
@@ -401,6 +403,11 @@ public class KBBookShelfActivity extends Activity {
                         KBConstants.ACTIVITY_START_KEY_RENAME_FOLDER);
                 startActivityForResult(intent, CHOICE_ITEM_RENAME);
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
     }
 
     private void openFile() {

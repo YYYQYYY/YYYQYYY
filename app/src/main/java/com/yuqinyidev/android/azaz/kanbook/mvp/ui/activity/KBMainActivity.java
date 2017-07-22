@@ -105,8 +105,10 @@ public class KBMainActivity extends Activity {
         imgBookShelf.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(KBMainActivity.this,
-                        KBBookShelfActivity.class), REQUEST_CODE_BOOKSHELF);
+//                startActivityForResult(new Intent(KBMainActivity.this,
+//                        KBBookShelfActivity.class), REQUEST_CODE_BOOKSHELF);
+                startActivity(new Intent(KBMainActivity.this,
+                        KBBookShelfActivity.class));
             }
         });
 

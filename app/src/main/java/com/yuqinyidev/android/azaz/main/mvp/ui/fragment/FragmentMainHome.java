@@ -97,6 +97,6 @@ public class FragmentMainHome extends BaseFragment<MainMenuPresenter> implements
     }
 
     private void initRecycleView() {
-        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(getActivity(), 2));
+        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(getActivity(), 3));
     }
 }

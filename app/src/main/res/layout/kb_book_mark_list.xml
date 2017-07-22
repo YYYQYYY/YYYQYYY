@@ -18,7 +18,7 @@
 
 		</TableRow>
 
-		<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content"
+		<TableRow android:id="@+id/TableRow02" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 
 			<Button android:id="@+id/skipbm" android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
 
 		</TableRow>
 
-		<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content"
+		<TableRow android:id="@+id/TableRow03" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 
 			<Button android:id="@+id/cancelbm" android:layout_width="wrap_content"

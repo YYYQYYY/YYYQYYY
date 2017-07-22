@@ -39,8 +39,8 @@ public class KBConstants {
 	public static final String DATE_FORMAT_YYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
 
 	public static final String EXIT_TITLE = "确定退出";
-	public static final String EXIT_DETAIL = "确定退出晨光看书？";
-	public static final String EXIT_TOAST_DETAIL = "再按一次返回键退出晨光看书。";
+	public static final String EXIT_DETAIL = "确定退出程序？";
+	public static final String EXIT_TOAST_DETAIL = "再按一次返回键退出程序。";
 
 	public static final String WRONG_NO_BOOK = "您的书库中没有找到任何TXT文件！";
 	public final static String UP_ONE_LEVEL = "返回上级..";

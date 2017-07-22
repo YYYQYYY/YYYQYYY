@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<TableRow android:id="@+id/tre" android:layout_width="fill_parent"
+	<TableRow android:id="@+id/tre1" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 
 		<EditText android:id="@+id/bmet" android:layout_width="fill_parent"
@@ -11,7 +11,7 @@
 
 	</TableRow>
 
-	<TableRow android:id="@+id/tre" android:layout_width="fill_parent"
+	<TableRow android:id="@+id/tre2" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 
 		<Button android:id="@+id/bmsure" android:layout_width="150px"

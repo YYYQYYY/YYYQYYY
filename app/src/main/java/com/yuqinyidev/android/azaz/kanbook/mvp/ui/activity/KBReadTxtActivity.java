@@ -246,7 +246,7 @@ public class KBReadTxtActivity extends Activity {
         String tag = "onCreate";
         Log.d(tag, "create the read text activity...");
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         Intent intent = getIntent();
         if (intent == null) {

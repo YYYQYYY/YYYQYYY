@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.qqbb.kanbook.customviews.KBTextProgressBar
+        <com.yuqinyidev.android.azaz.kanbook.mvp.ui.customviews.KBTextProgressBar
             android:id="@+id/tpbPercnet"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
