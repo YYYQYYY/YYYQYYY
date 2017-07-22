@@ -61,7 +61,7 @@
         <activity
             android:name=".kanbook.mvp.ui.activity.KBMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <activity
             android:name=".kanbook.mvp.ui.activity.KBBookShelfActivity"
@@ -83,6 +83,38 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
 
+        <activity
+            android:name=".memorandum.mvp.ui.activity.MR_MemorandumMain"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".memorandum.mvp.ui.activity.MR_MemoList"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".memorandum.mvp.ui.activity.MR_EventList"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".memorandum.mvp.ui.activity.MR_OptionMain"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".memorandum.mvp.ui.activity.MR_MemorandumNotification"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".memorandum.mvp.model.service.MR_MemorandumReceiver"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".weather.mvp.model.service.AutoUpdateWeatherService"
