@@ -66,6 +66,7 @@ public class KBConstants {
 	public static final String PREF_KEY_BACKGROUND_IDX = "settings_background_idx";
 	public static final String PREF_KEY_IS_NIGHTMODE = "settings_nightmode";
 	public static final String PREF_KEY_IS_BRIGHTNESS = "settings_brightness";
+	public static final String PREF_KEY_USING_SYSTEM_BRIGHTNESS = "settings_using_system_brightness";
 
 	public static final String HISTORY_TITLE_NAME = "【书名】：";
 	public static final String HISTORY_TITLE_LAST_OPEN_DT = "【日期】：";
@@ -76,6 +77,7 @@ public class KBConstants {
 	public static final String VIRUAL_DIALOG_PERCENT = "start_intent_virual_percent";
 	public static final String VIRUAL_DIALOG_RESULT = "result_intent_virual_dialog";
 	public static final String VIRUAL_DIALOG_BRIGHTNESS = "start_intent_virual_brightness";
+	public static final String VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS = "start_intent_virual_using_system_brightness";
 
 	public static final String DIALOG_TITLE_INPUT_FOLDER_NAME = "请输入文件夹名称：";
 	public static final String DIALOG_TITLE_INPUT_FILE_NAME = "请输入文件名称：";

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
@@ -21,9 +22,11 @@ public class KBVirualDialogActivity extends Activity {
     private String choice;
     private SeekBar skbSkip;
     private EditText edtInput;
+    private ToggleButton toggleButton;
     private TextView txvSkip;
     private String percent;
     private float mBrightness;
+    private boolean mUsingSystemBrightness;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class KBVirualDialogActivity extends Activity {
             setContentView(R.layout.kb_virual_dialog);
 
             edtInput = (EditText) findViewById(R.id.edtInput);
+            toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
             txvSkip = (TextView) findViewById(R.id.txvSkip);
             skbSkip = (SeekBar) findViewById(R.id.skbSkip);
 
@@ -41,6 +45,7 @@ public class KBVirualDialogActivity extends Activity {
             if (KBConstants.ACTIVITY_START_KEY_SKIP.equals(choice)) {
                 setTitle(KBConstants.DIALOG_TITLE_PERCENT);
                 edtInput.setVisibility(View.GONE);
+                toggleButton.setVisibility(View.GONE);
                 skbSkip.setVisibility(View.VISIBLE);
                 txvSkip.setVisibility(View.VISIBLE);
                 int p = intent.getIntExtra(KBConstants.VIRUAL_DIALOG_PERCENT, 0);
@@ -71,8 +76,24 @@ public class KBVirualDialogActivity extends Activity {
             } else if (KBConstants.ACTIVITY_START_KEY_BRIGHTNESS.equals(choice)) {
                 setTitle(KBConstants.DIALOG_TITLE_BRIGHTNESS);
                 edtInput.setVisibility(View.GONE);
+                toggleButton.setVisibility(View.VISIBLE);
                 skbSkip.setVisibility(View.VISIBLE);
                 txvSkip.setVisibility(View.VISIBLE);
+
+                toggleButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (toggleButton.isChecked()) {
+                            mUsingSystemBrightness = true;
+                        } else {
+                            mUsingSystemBrightness = false;
+                        }
+                    }
+                });
+
+                mUsingSystemBrightness = intent.getBooleanExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, false);
+                toggleButton.setChecked(mUsingSystemBrightness);
+
                 int p = intent.getIntExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, 5);
                 skbSkip.setMax(255);
                 skbSkip.setProgress(p);
@@ -84,8 +105,7 @@ public class KBVirualDialogActivity extends Activity {
                                 if (tmpInt < 5) {
                                     tmpInt = 5;
                                 }
-                                float tmpFloat = (float) tmpInt / 255;
-                                mBrightness = tmpFloat;
+                                mBrightness = (float) tmpInt / 255;
                             }
 
                             @Override
@@ -99,6 +119,7 @@ public class KBVirualDialogActivity extends Activity {
                         });
             } else {
                 skbSkip.setVisibility(View.GONE);
+                toggleButton.setVisibility(View.GONE);
                 txvSkip.setVisibility(View.GONE);
                 edtInput.setVisibility(View.VISIBLE);
                 if (KBConstants.ACTIVITY_START_KEY_RENAME_FOLDER.equals(choice)) {
@@ -123,14 +144,16 @@ public class KBVirualDialogActivity extends Activity {
                             result.append(percent);
                         } else if (KBConstants.ACTIVITY_START_KEY_BRIGHTNESS.equals(choice)) {
                             result.append(mBrightness);
+                            result.append("|");
+                            result.append(mUsingSystemBrightness);
                         } else {
                             String input = edtInput.getText().toString();
-                            if (input == null || input.length() == 0) {
+                            if (input.length() == 0) {
                                 setResult(RESULT_CANCELED);
                                 finish();
                             }
 
-                            result.append("/");
+                            result.append("|");
                             result.append(input);
                             if (KBConstants.ACTIVITY_START_KEY_RENAME_FILE
                                     .equals(choice)) {

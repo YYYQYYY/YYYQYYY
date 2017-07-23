@@ -341,11 +341,14 @@ public class KBReadTxtActivity extends Activity {
                 // 取得当前亮度
                 int normal = Settings.System.getInt(getContentResolver(),
                         Settings.System.SCREEN_BRIGHTNESS, 10);
+                boolean usingSystemBrightness = mPreference.getBoolean(
+                        KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
                 intent = new Intent(KBReadTxtActivity.this,
                         KBVirualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START,
                         KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
+                intent.putExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, usingSystemBrightness);
                 startActivityForResult(intent, REQUEST_CODE_BRIGHTNESS);
                 return true;
             case R.id.menu_reader_back:
@@ -418,8 +421,11 @@ public class KBReadTxtActivity extends Activity {
                     }
                     break;
                 case REQUEST_CODE_BRIGHTNESS:
+                    String[] rd = _data.getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT).split("\\|");
                     KBUtility.putShare(mPreference, KBConstants.PREF_KEY_IS_BRIGHTNESS,
-                            Float.valueOf(_data.getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT)));
+                            Float.valueOf(rd[0]));
+                    KBUtility.putShare(mPreference, KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS,
+                            Boolean.valueOf(rd[1]));
                     setScreenBrightness();
                     break;
             }
@@ -534,9 +540,18 @@ public class KBReadTxtActivity extends Activity {
     }
 
     private void setScreenBrightness() {
-        WindowManager.LayoutParams wl = getWindow().getAttributes();
-        wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5 / 255));
-        getWindow().setAttributes(wl);
+//        boolean usingSystemBrightness = mPreference.getBoolean(
+//                KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+//        if (!usingSystemBrightness) {
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+//                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+            WindowManager.LayoutParams wl = getWindow().getAttributes();
+            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
+            getWindow().setAttributes(wl);
+//        } else {
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+//                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+//        }
     }
 
     private void bookMarkView() {

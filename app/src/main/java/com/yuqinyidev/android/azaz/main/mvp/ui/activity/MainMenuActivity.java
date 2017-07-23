@@ -1,25 +1,18 @@
 package com.yuqinyidev.android.azaz.main.mvp.ui.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
-import com.yuqinyidev.android.azaz.demo.mvp.presenter.UserPresenter;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
-import com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity.KBMainActivity;
-import com.yuqinyidev.android.azaz.main.mvp.model.entity.AppItem;
 import com.yuqinyidev.android.azaz.main.mvp.ui.adapter.MyFragmentPagerAdapter;
 import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
-import com.yuqinyidev.android.framework.utils.Utility;
 import com.yuqinyidev.android.framework.widget.NoScrollViewPager;
 
-import butterknife.BindArray;
 import butterknife.BindView;
 
 import static com.yuqinyidev.android.framework.utils.UiUtils.killAll;
@@ -43,7 +36,7 @@ public class MainMenuActivity extends BaseActivity {
 
     private boolean isClickedExit = false;
 
-        @Override
+    @Override
     public void onBackPressed() {
         if (isClickedExit) {
             isClickedExit = false;
@@ -64,6 +57,7 @@ public class MainMenuActivity extends BaseActivity {
             isClickedExit = true;
         }
     }
+
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
     }
