@@ -20,7 +20,6 @@ import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.utils.UiUtils;
-import com.yuqinyidev.android.framework.widget.ItemRemoveRecyclerView;
 import com.yuqinyidev.android.framework.widget.RecyListViewOnItemClick;
 
 import java.lang.reflect.Field;
@@ -43,7 +42,7 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     private RxPermissions mRxPermissions;
 
     @BindView(R.id.recycler_view)
-    ItemRemoveRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.coordinatorLayout)
@@ -121,13 +120,13 @@ public class TrainingDiaryActivity extends BaseActivity<TrainingDiaryPresenter>
     @Override
     public void setAdapter(DefaultAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setItem_delete(R.id.item_delete);
-        mRecyclerView.setListener(new RecyListViewOnItemClick() {
-            @Override
-            public void onDeleteClick(View view, int position) {
-//                mRecyclerView.notifyItemRemoved(position);
-            }
-        });
+//        mRecyclerView.setItem_delete(R.id.item_delete);
+//        mRecyclerView.setListener(new RecyListViewOnItemClick() {
+//            @Override
+//            public void onDeleteClick(View view, int position) {
+////                mRecyclerView.notifyItemRemoved(position);
+//            }
+//        });
         initRecycleView();
     }
 

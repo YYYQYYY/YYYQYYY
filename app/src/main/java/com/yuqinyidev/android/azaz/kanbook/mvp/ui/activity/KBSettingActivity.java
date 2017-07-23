@@ -25,7 +25,7 @@ public class KBSettingActivity extends Activity {
     private static final int DIALOG_ID_FONT_COLOR = 1;
     private static final int DIALOG_ID_BACKGROUND = 2;
 
-    private TextView viewfont;
+    private TextView viewFont;
 
     private static SharedPreferences mPreference;
 
@@ -44,8 +44,8 @@ public class KBSettingActivity extends Activity {
         mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME,
                 Context.MODE_PRIVATE);
 
-        viewfont = (TextView) findViewById(R.id.viewfont);
-        viewfont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
+        viewFont = (TextView) findViewById(R.id.viewfont);
+        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
                 KBConstants.DEFAULT_FONT_SIZE));
 
         RelativeLayout imgFontSize = (RelativeLayout) findViewById(R.id.rlayFontSize);
@@ -126,16 +126,16 @@ public class KBSettingActivity extends Activity {
     }
 
     private void initializing() {
-        viewfont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
+        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
                 KBConstants.DEFAULT_FONT_SIZE));
-        viewfont.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR,
+        viewFont.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR,
                 Color.BLACK));
-        viewfont.setBackgroundResource(mPreference.getInt(
+        viewFont.setBackgroundResource(mPreference.getInt(
                 KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
     }
 
     private void setFontSize(int _textSize) {
-        viewfont.setTextSize(_textSize);
+        viewFont.setTextSize(_textSize);
         KBUtility.putShare(mPreference, KBConstants.PREF_KEY_FONT_SIZE, _textSize);
     }
 
@@ -168,7 +168,7 @@ public class KBSettingActivity extends Activity {
                 textColor = Color.RED;
                 break;
         }
-        viewfont.setTextColor(textColor);
+        viewFont.setTextColor(textColor);
         KBUtility.putShare(mPreference, KBConstants.PREF_KEY_FONT_COLOR, textColor);
     }
 
@@ -205,7 +205,7 @@ public class KBSettingActivity extends Activity {
             // background = R.drawable.bg_yjst;
             // break;
         }
-        viewfont.setBackgroundResource(background);
+        viewFont.setBackgroundResource(background);
         KBUtility
                 .putShare(mPreference, KBConstants.PREF_KEY_BACKGROUND,
                         background);

@@ -148,6 +148,7 @@ public class KBReadTxtActivity extends Activity {
             }
         }
     };
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -177,11 +178,11 @@ public class KBReadTxtActivity extends Activity {
     private KBDBAdapter mKBDBAdapter;
     private KBTxtReader mTxtReader;
 
-    private LinearLayout mLlayContent;
-    private LinearLayout mLlayFooter;
+    private LinearLayout mLayContent;
+    private LinearLayout mLayFooter;
     private ScrollView mScvContent;
     private TextView mTxvContent;
-    private KBTextProgressBar mTpbPercnet;
+    private KBTextProgressBar mTpbPercent;
     private TextView mTxvBatteryStatus;
     private TextView mTxvFileName;
     private DigitalClock mDcTime;
@@ -194,7 +195,7 @@ public class KBReadTxtActivity extends Activity {
     private List<KBBookMark> mBookMarkList = null;
 
     private KBBookMark mBookMark = null;
-    private int bmlocation = 0;
+    private int bmLocation = 0;
     private String mFilePath = null;
     private int mBookId = 0;
 
@@ -271,11 +272,11 @@ public class KBReadTxtActivity extends Activity {
         mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME,
                 Context.MODE_PRIVATE);
 
-        mLlayContent = (LinearLayout) findViewById(R.id.llayContent);
+        mLayContent = (LinearLayout) findViewById(R.id.llayContent);
         mScvContent = (ScrollView) findViewById(R.id.scvContent);
         mTxvContent = (TextView) findViewById(R.id.textContent);
-        mLlayFooter = (LinearLayout) findViewById(R.id.llayFooter);
-        mTpbPercnet = (KBTextProgressBar) findViewById(R.id.tpbPercnet);
+        mLayFooter = (LinearLayout) findViewById(R.id.llayFooter);
+        mTpbPercent = (KBTextProgressBar) findViewById(R.id.tpbPercnet);
         mTxvBatteryStatus = (TextView) findViewById(R.id.mTxvBatteryStatus);
         mTxvFileName = (TextView) findViewById(R.id.txvFileName);
         mDcTime = (DigitalClock) findViewById(R.id.dcTime);
@@ -371,7 +372,7 @@ public class KBReadTxtActivity extends Activity {
         if (_resultCode == RESULT_OK) {
             switch (_requestCode) {
                 case REQUEST_CODE_SETTING:
-                    mLlayContent.setBackgroundResource(mPreference.getInt(
+                    mLayContent.setBackgroundResource(mPreference.getInt(
                             KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
                     int fontColor = mPreference.getInt(
@@ -509,7 +510,7 @@ public class KBReadTxtActivity extends Activity {
 
     private void setNightMode(boolean _isNightMode) {
         if (_isNightMode) {
-            mLlayContent.setBackgroundResource(mPreference.getInt(
+            mLayContent.setBackgroundResource(mPreference.getInt(
                     KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
             int fontColor = mPreference.getInt(
@@ -520,15 +521,15 @@ public class KBReadTxtActivity extends Activity {
             mTxvBatteryStatus.setTextColor(fontColor);
             mDcTime.setTextColor(fontColor);
 
-            mTpbPercnet.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_normal));
+            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_normal));
         } else {
-            mLlayContent.setBackgroundResource(R.drawable.bg_hydq);
+            mLayContent.setBackgroundResource(R.drawable.bg_hydq);
             mTxvContent.setTextColor(Color.DKGRAY);
             mTxvFileName.setTextColor(Color.DKGRAY);
             mTxvBatteryStatus.setTextColor(Color.DKGRAY);
             mDcTime.setTextColor(Color.DKGRAY);
 
-            mTpbPercnet.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_night));
+            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_night));
         }
     }
 
@@ -557,8 +558,8 @@ public class KBReadTxtActivity extends Activity {
             public void onItemClick(AdapterView<?> _parent, View _view,
                                     int _position, long _id) {
                 lsvBookMark.setItemChecked(_position, true);
-                bmlocation = _position;
-                mBookMark = mBookMarkList.get(bmlocation);
+                bmLocation = _position;
+                mBookMark = mBookMarkList.get(bmLocation);
             }
         });
 
@@ -581,7 +582,7 @@ public class KBReadTxtActivity extends Activity {
                     boolean b = mKBDBAdapter.deleteBookMark(mBookMark
                             .getBookMarkId());
                     if (b && mBookMarkList.size() > 0) {
-                        mBookMarkList.remove(bmlocation);
+                        mBookMarkList.remove(bmLocation);
                         lsvBookMark.setAdapter(listAdapter);
                         mBookMark = null;
                         System.gc();
@@ -611,7 +612,7 @@ public class KBReadTxtActivity extends Activity {
                 KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(
                 KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
-        mLlayContent.setBackgroundResource(mPreference.getInt(
+        mLayContent.setBackgroundResource(mPreference.getInt(
                 KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
         /** load the attribute for font */
@@ -725,8 +726,8 @@ public class KBReadTxtActivity extends Activity {
                 + mLastPercent);
         if (percent != mLastPercent) {
             mLastPercent = percent;
-            mTpbPercnet.setProgress(mLastPercent);
-            mLlayFooter.postInvalidate();
+            mTpbPercent.setProgress(mLastPercent);
+            mLayFooter.postInvalidate();
         }
     }
 

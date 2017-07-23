@@ -21,7 +21,7 @@
             android:paddingLeft="15px"
             android:paddingTop="15px">
 
-            <com.yuqinyidev.android.framework.widget.ItemRemoveRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
