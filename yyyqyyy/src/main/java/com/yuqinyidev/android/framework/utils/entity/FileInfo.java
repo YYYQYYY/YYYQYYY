@@ -1,17 +1,17 @@
-package com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils;
+package com.yuqinyidev.android.framework.utils.entity;
 
 /**
  * Created by X311 on 2015/8/9.
  */
-public class KBFileInfo {
+public class FileInfo {
     private String fileName;
     private String filePath;
     private long lastModified;
 
-    public KBFileInfo() {
+    public FileInfo() {
     }
 
-    public KBFileInfo(String _fileName, String _filePath, long _lastModified) {
+    public FileInfo(String _fileName, String _filePath, long _lastModified) {
         fileName = _fileName;
         filePath = _filePath;
         lastModified = _lastModified;

@@ -10,11 +10,12 @@ import com.yuqinyidev.android.azaz.kanbook.KBConstants;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBook;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBookMark;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBHistory;
+import com.yuqinyidev.android.framework.utils.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class KBDBAdapter extends KBSQLiteOpenHelper {
+public class KBDBAdapter extends SQLiteOpenHelper {
 
     private final static int DB_VERSION = 1;
 
@@ -56,17 +57,20 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
             HISTORY_BOOK_PATH, HISTORY_SAVETIME, HISTORY_SUMMARY};
 
     private SQLiteDatabase db = null;
-    private boolean isopen = false;
+    private boolean isOpen = false;
 
     public KBDBAdapter(Context _context) {
-        super(_context, KBConstants.DB_NAME, KBConstants.ROOT_PATH + "/", null,
-                DB_VERSION);
+        this(_context, DB_VERSION);
+    }
+
+    public KBDBAdapter(Context _context, int _version) {
+        super(_context, KBConstants.DB_NAME, null, _version);
     }
 
     public void close() {
-        if (isopen) {
+        if (isOpen) {
             db.close();
-            isopen = false;
+            isOpen = false;
         }
         System.gc();
     }
@@ -85,8 +89,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
     }
 
     public KBBook queryBook(int _bookId) {
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
         Cursor cur = db.query(BOOK_TABLE_NAME, COLUMNS_BOOK, BOOK_ID + "="
@@ -110,8 +114,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
         String tag = "saveBook";
         Log.d(tag, "query the book form database");
         Log.d(tag, "query the book path:" + _book.getBookPath());
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
 
@@ -136,8 +140,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean updateBook(String _oldPath, String _newPath, String _newName) {
         String tag = "updateBook";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
         Cursor cur = db.query(BOOK_TABLE_NAME, COLUMNS_BOOK, BOOK_PATH + "=\""
@@ -162,8 +166,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean deleteBook(String _bookPath) {
         String tag = "deleteBook";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
         String[] col = new String[]{BOOK_ID, BOOK_PATH};
@@ -195,8 +199,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public List<KBBookMark> queryAllBookMark(int _bookId) {
         String tag = "queryAllBookMark";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -228,8 +232,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
     public boolean saveBookMark(KBBookMark _bookMark) {
         String tag = "saveBookMark";
         Log.d(tag, "insert the book mark into database");
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -250,8 +254,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean deleteBookMark(int _bmId) {
         String tag = "deleteBookMark";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -266,8 +270,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean deleteAllBookMark(int _bookId) {
         String tag = "deleteAllBookMark";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -281,8 +285,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
     }
 
     public Cursor queryHistory(int _hid) {
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
 
@@ -291,8 +295,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
     }
 
     public Cursor queryHistoryWithBookId(int _bookId) {
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
 
@@ -302,8 +306,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public List<KBHistory> queryAllHistory() {
         String tag = "queryAllHistory";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -338,8 +342,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
         String tag = "saveHistory";
         Log.d(tag, "query the hostory form database");
         Log.d(tag, "query the hostory path:" + _hostory.getBookId());
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
         }
 
@@ -367,8 +371,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean deleteHistory(int _hid) {
         String tag = "deleteHistory";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }
@@ -383,8 +387,8 @@ public class KBDBAdapter extends KBSQLiteOpenHelper {
 
     public boolean deleteAllHistory(int _bookId) {
         String tag = "deleteAllHistory";
-        if (!isopen) {
-            isopen = true;
+        if (!isOpen) {
+            isOpen = true;
             db = getWritableDatabase();
             Log.d(tag, "open the database...");
         }

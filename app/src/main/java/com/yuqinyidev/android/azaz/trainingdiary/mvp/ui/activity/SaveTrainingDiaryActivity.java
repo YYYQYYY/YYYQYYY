@@ -48,8 +48,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static com.yuqinyidev.android.framework.utils.Preconditions.checkNotNull;
-
 /**
  * 保存日志
  * Created by RDX64 on 2017/6/29.
@@ -206,9 +204,10 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         int groupNo = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_GROUP_NO, -1);
         int count = intent.getIntExtra(TrainingDiaryEntity.COLUMN_NAME_COUNT, -1);
 
-        if (!TextUtils.isEmpty(date)) {
-            mTxvTdDate.setText(date);
+        if (TextUtils.isEmpty(date)) {
+            date = getTime(new Date());
         }
+        mTxvTdDate.setText(date);
         if (!TextUtils.isEmpty(level)) {
             mTxvTdLevel.setText(level);
         }
@@ -323,7 +322,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     }
 
     private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault());
         return format.format(date);
     }
 

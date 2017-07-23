@@ -19,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -32,9 +31,9 @@ import com.yuqinyidev.android.azaz.kanbook.KBConstants;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.KBDBAdapter;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBook;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBIconText;
-import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBFileAdapter;
-import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBFileInfo;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
+import com.yuqinyidev.android.framework.utils.FileUtils;
+import com.yuqinyidev.android.framework.utils.entity.FileInfo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,9 +87,9 @@ public class KBBookShelfActivity extends Activity {
 //            phonePicsPath = getFilesDir().getAbsolutePath();
 //        }
 
-        KBFileAdapter.getFileList(findTargetPaths, "*.txt", new KBFileAdapter.OnFileListCallback() {
+        FileUtils.getFileList(findTargetPaths, "*.txt", new FileUtils.OnFileListCallback() {
             @Override
-            public void SearchFileListInfo(ArrayList<KBFileInfo> list) {
+            public void SearchFileListInfo(ArrayList<FileInfo> list) {
 //                mCurrentDirectory = new File(phonePicsPath);
                 browseAllTxtFiles(list);
 
@@ -257,7 +256,7 @@ public class KBBookShelfActivity extends Activity {
         }
     }
 
-    private void browseAllTxtFiles(ArrayList<KBFileInfo> list) {
+    private void browseAllTxtFiles(ArrayList<FileInfo> list) {
         try {
             mDirectoryList.clear();
 
@@ -265,7 +264,7 @@ public class KBBookShelfActivity extends Activity {
             File currentFile;
             List<KBIconText> fileList = new ArrayList<KBIconText>();
 
-            for (KBFileInfo currentKBFileInfo : list) {
+            for (FileInfo currentKBFileInfo : list) {
                 currentFile = new File(currentKBFileInfo.getFilePath());
                 if (currentFile == null) {
                     continue;
@@ -337,7 +336,7 @@ public class KBBookShelfActivity extends Activity {
             if (currentFile.isDirectory()) {
                 currentIcon = getResources().getDrawable(R.drawable.folder32);
 
-                mDirectoryList.add(new KBIconText(new KBFileInfo(currentFile.getAbsolutePath().substring(currentPathStringLenght),
+                mDirectoryList.add(new KBIconText(new FileInfo(currentFile.getAbsolutePath().substring(currentPathStringLenght),
                         currentFile.getAbsolutePath(), currentFile.lastModified()), currentIcon,
                         KBConstants.ITEM_TYPE_FOLDER));
             } else {
@@ -346,7 +345,7 @@ public class KBBookShelfActivity extends Activity {
                         R.array.textEnds))) {
                     currentIcon = getResources().getDrawable(R.drawable.text32);
 
-                    fileList.add(new KBIconText(new KBFileInfo(currentFile.getAbsolutePath().substring(currentPathStringLenght),
+                    fileList.add(new KBIconText(new FileInfo(currentFile.getAbsolutePath().substring(currentPathStringLenght),
                             currentFile.getAbsolutePath(), currentFile.lastModified()), currentIcon,
                             KBConstants.ITEM_TYPE_FILE));
                 }

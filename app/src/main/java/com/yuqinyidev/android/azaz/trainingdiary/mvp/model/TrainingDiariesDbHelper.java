@@ -1,14 +1,11 @@
 package com.yuqinyidev.android.azaz.trainingdiary.mvp.model;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiaryEntity;
-
-import static android.R.attr.version;
+import com.yuqinyidev.android.framework.utils.SQLiteOpenHelper;
 
 /**
  * Created by RDX64 on 2017/7/8.

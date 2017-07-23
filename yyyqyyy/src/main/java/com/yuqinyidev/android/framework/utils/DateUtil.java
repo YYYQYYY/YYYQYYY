@@ -42,4 +42,9 @@ public class DateUtil {
     public static int date2Int(Date date) {
         return Integer.parseInt(new SimpleDateFormat("yyyyMMdd", Locale.CHINA).format(date));
     }
+
+    public static String dateToString(Date _date, String _format) {
+        return new SimpleDateFormat(_format, Locale.getDefault()).format(_date);
+    }
+
 }

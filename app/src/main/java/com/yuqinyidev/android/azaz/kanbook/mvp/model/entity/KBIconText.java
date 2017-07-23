@@ -2,21 +2,21 @@ package com.yuqinyidev.android.azaz.kanbook.mvp.model.entity;
 
 import android.graphics.drawable.Drawable;
 
-import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBFileInfo;
+import com.yuqinyidev.android.framework.utils.entity.FileInfo;
 
 public class KBIconText implements Comparable<KBIconText> {
 
     private String mText = "";
     private String mFilePath = "";
-    private Long mLastModified = new Long(0);
+    private Long mLastModified = 0L;
     private Drawable mIcon;
     private boolean mSelectable = true;
     private int mType;
 
-    public KBIconText(KBFileInfo _KB_fileInfo, Drawable _bullet, int _type) {
-        mText = _KB_fileInfo.getFileName().substring(0, _KB_fileInfo.getFileName().lastIndexOf("."));
-        mFilePath = _KB_fileInfo.getFilePath();
-        mLastModified = _KB_fileInfo.getLastModified();
+    public KBIconText(FileInfo _fileInfo, Drawable _bullet, int _type) {
+        mText = _fileInfo.getFileName().substring(0, _fileInfo.getFileName().lastIndexOf("."));
+        mFilePath = _fileInfo.getFilePath();
+        mLastModified = _fileInfo.getLastModified();
         mType = _type;
         mIcon = _bullet;
     }

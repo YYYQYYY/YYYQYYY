@@ -1,4 +1,4 @@
-package com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils;
+package com.yuqinyidev.android.framework.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -10,9 +10,9 @@ import java.util.regex.Pattern;
  *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2011-7-22
  */
-public class KBStringUtils {
+public class StringUtils {
 
-    private KBStringUtils() {
+    private StringUtils() {
         throw new AssertionError();
     }
 
@@ -220,7 +220,7 @@ public class KBStringUtils {
      * @return
      */
     public static String htmlEscapeCharsToString(String source) {
-        return KBStringUtils.isEmpty(source) ? source : source.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
+        return StringUtils.isEmpty(source) ? source : source.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
                 .replaceAll("&amp;", "&").replaceAll("&quot;", "\"");
     }
 

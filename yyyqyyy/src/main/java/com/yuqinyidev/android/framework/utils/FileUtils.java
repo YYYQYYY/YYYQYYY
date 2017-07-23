@@ -1,6 +1,10 @@
-package com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils;
+package com.yuqinyidev.android.framework.utils;
 
+import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.yuqinyidev.android.framework.utils.entity.FileInfo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,11 +51,12 @@ import java.util.List;
  *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2012-5-12
  */
-public class KBFileUtils {
+public class FileUtils {
+    private static final String TAG = "FileUtils";
 
     public final static String FILE_EXTENSION_SEPARATOR = ".";
 
-    private KBFileUtils() {
+    private FileUtils() {
         throw new AssertionError();
     }
 
@@ -99,12 +104,12 @@ public class KBFileUtils {
      *
      * @param filePath
      * @param content
-     * @param append is append, if true, write to the end of file, else clear content of file and write into it
+     * @param append   is append, if true, write to the end of file, else clear content of file and write into it
      * @return return false if content is empty, true otherwise
      * @throws RuntimeException if an error occurs while operator FileWriter
      */
     public static boolean writeFile(String filePath, String content, boolean append) {
-        if (KBStringUtils.isEmpty(content)) {
+        if (StringUtils.isEmpty(content)) {
             return false;
         }
 
@@ -133,7 +138,7 @@ public class KBFileUtils {
      *
      * @param filePath
      * @param contentList
-     * @param append is append, if true, write to the end of file, else clear content of file and write into it
+     * @param append      is append, if true, write to the end of file, else clear content of file and write into it
      * @return return false if contentList is empty, true otherwise
      * @throws RuntimeException if an error occurs while operator FileWriter
      */
@@ -206,8 +211,8 @@ public class KBFileUtils {
      * write file
      *
      * @param filePath the file to be opened for writing.
-     * @param stream the input stream
-     * @param append if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
+     * @param stream   the input stream
+     * @param append   if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
      * @return return true
      * @throws RuntimeException if an error occurs while operator FileOutputStream
      */
@@ -230,7 +235,7 @@ public class KBFileUtils {
     /**
      * write file
      *
-     * @param file the file to be opened for writing.
+     * @param file   the file to be opened for writing.
      * @param stream the input stream
      * @param append if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
      * @return return true
@@ -349,7 +354,7 @@ public class KBFileUtils {
 
     /**
      * get file name from path, not include suffix
-     *
+     * <p>
      * <pre>
      *      getFileNameWithoutExtension(null)               =   null
      *      getFileNameWithoutExtension("")                 =   ""
@@ -370,7 +375,7 @@ public class KBFileUtils {
      * @see
      */
     public static String getFileNameWithoutExtension(String filePath) {
-        if (KBStringUtils.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -387,7 +392,7 @@ public class KBFileUtils {
 
     /**
      * get file name from path, include suffix
-     *
+     * <p>
      * <pre>
      *      getFileName(null)               =   null
      *      getFileName("")                 =   ""
@@ -407,7 +412,7 @@ public class KBFileUtils {
      * @return file name from path, include suffix
      */
     public static String getFileName(String filePath) {
-        if (KBStringUtils.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -417,7 +422,7 @@ public class KBFileUtils {
 
     /**
      * get folder name from path
-     *
+     * <p>
      * <pre>
      *      getFolderName(null)               =   null
      *      getFolderName("")                 =   ""
@@ -439,7 +444,7 @@ public class KBFileUtils {
      */
     public static String getFolderName(String filePath) {
 
-        if (KBStringUtils.isEmpty(filePath)) {
+        if (StringUtils.isEmpty(filePath)) {
             return filePath;
         }
 
@@ -449,7 +454,7 @@ public class KBFileUtils {
 
     /**
      * get suffix of file from path
-     *
+     * <p>
      * <pre>
      *      getFileExtension(null)               =   ""
      *      getFileExtension("")                 =   ""
@@ -470,7 +475,7 @@ public class KBFileUtils {
      * @return
      */
     public static String getFileExtension(String filePath) {
-        if (KBStringUtils.isBlank(filePath)) {
+        if (StringUtils.isBlank(filePath)) {
             return filePath;
         }
 
@@ -494,16 +499,16 @@ public class KBFileUtils {
      *
      * @param filePath
      * @return true if the necessary directories have been created or the target directory already exists, false one of
-     *         the directories can not be created.
-     *         <ul>
-     *         <li>if {@link KBFileUtils#getFolderName(String)} return null, return false</li>
-     *         <li>if target directory already exists, return true</li>
-     *         <li>return boolean</li>
-     *         </ul>
+     * the directories can not be created.
+     * <ul>
+     * <li>if {@link FileUtils#getFolderName(String)} return null, return false</li>
+     * <li>if target directory already exists, return true</li>
+     * <li>return boolean</li>
+     * </ul>
      */
     public static boolean makeDirs(String filePath) {
         String folderName = getFolderName(filePath);
-        if (KBStringUtils.isEmpty(folderName)) {
+        if (StringUtils.isEmpty(folderName)) {
             return false;
         }
 
@@ -527,7 +532,7 @@ public class KBFileUtils {
      * @return
      */
     public static boolean isFileExist(String filePath) {
-        if (KBStringUtils.isBlank(filePath)) {
+        if (StringUtils.isBlank(filePath)) {
             return false;
         }
 
@@ -542,7 +547,7 @@ public class KBFileUtils {
      * @return
      */
     public static boolean isFolderExist(String directoryPath) {
-        if (KBStringUtils.isBlank(directoryPath)) {
+        if (StringUtils.isBlank(directoryPath)) {
             return false;
         }
 
@@ -562,7 +567,7 @@ public class KBFileUtils {
      * @return
      */
     public static boolean deleteFile(String path) {
-        if (KBStringUtils.isBlank(path)) {
+        if (StringUtils.isBlank(path)) {
             return true;
         }
 
@@ -597,11 +602,107 @@ public class KBFileUtils {
      * @return returns the length of this file in bytes. returns -1 if the file does not exist.
      */
     public static long getFileSize(String path) {
-        if (KBStringUtils.isBlank(path)) {
+        if (StringUtils.isBlank(path)) {
             return -1;
         }
 
         File file = new File(path);
         return (file.exists() && file.isFile() ? file.length() : -1);
     }
+
+
+    /**
+     * 获取指定位置的指定类型的文件
+     *
+     * @param paths 文件夹路径
+     * @param type  文件类型（如“*.jpg;*.png;*.gif”）
+     */
+    public static void getFileList(String paths, String type,
+                                   final OnFileListCallback onFileListCallback) {
+
+        new AsyncTask<String, String, String>() {
+            ArrayList<FileInfo> list = new ArrayList<>();
+
+            @Override
+            protected void onPostExecute(String result) {
+                onFileListCallback.SearchFileListInfo(list);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                String type = params[1].substring(params[1]
+                        .lastIndexOf(".") + 1);
+                String[] paths;
+                if (params[0] != null) {
+                    paths = params[0].split("\\|");
+                    for (String path : paths) {
+                        File file = new File(path);
+                        scanSDCard(file, type, list);
+                    }
+                }
+                return null;
+            }
+
+        }.execute(paths, type, "");
+    }
+
+    private static void scanSDCard(File file, String ext, ArrayList<FileInfo> list) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File tmp : files) {
+                    if (tmp.isFile()) {
+                        String fileName = tmp.getName();
+                        String filePath = tmp.getName();
+                        if (fileName.contains(".")) {
+                            fileName = fileName.substring(fileName
+                                    .lastIndexOf(".") + 1);
+                            if (ext != null && ext.equalsIgnoreCase(fileName)) {
+                                Log.i(TAG, filePath);
+                                list.add(new FileInfo(filePath, tmp.getAbsolutePath(), tmp.lastModified()));
+                            }
+                        }
+                    } else
+                        scanSDCard(tmp, ext, list);
+                }
+            }
+        } else {
+            if (file.isFile()) {
+                String fileName = file.getName();
+                String filePath = file.getName();
+                if (fileName.contains(".")) {
+                    fileName = fileName
+                            .substring(fileName.lastIndexOf(".") + 1);
+                    if (ext != null && ext.equalsIgnoreCase(fileName)) {
+                        Log.i(TAG, filePath);
+                        list.add(new FileInfo(filePath, file.getAbsolutePath(), file.lastModified()));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 扫描完成后的回调，获取文件列表必须实现
+     *
+     * @author cola
+     */
+    public interface OnFileListCallback {
+        /**
+         * 返回查询的文件列表
+         *
+         * @param list 文件列表
+         */
+        public void SearchFileListInfo(ArrayList<FileInfo> list);
+    }
+
+    public static String packageName2DBPath(String _packageName) {
+        if (StringUtils.isEmpty(_packageName)) {
+            return null;
+        } else {//Environment.getExternalStorageDirectory().getPath()
+//            return "/sdcard/yyyqyyy/".concat(_packageName.replaceAll("\\.", "/")).concat("/");
+            return Utility.getExternalSdCardPath() + "/yyyqyyy/".concat(_packageName).concat("/");
+        }
+    }
+
 }
