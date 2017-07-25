@@ -7,7 +7,7 @@ import com.yuqinyidev.android.azaz.splash.mvp.model.entity.Images;
 import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.framework.integration.AppManager;
 import com.yuqinyidev.android.framework.mvp.presenter.BasePresenter;
-import com.yuqinyidev.android.framework.utils.PermissionUtil;
+import com.yuqinyidev.android.framework.utils.PermissionUtils;
 import com.yuqinyidev.android.framework.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -33,8 +33,8 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
         this.mErrorHandler = errorHandler;
     }
 
-    public void requestSplashs() {
-        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
+    public void requestSplashes() {
+        PermissionUtils.externalStorage(new PermissionUtils.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
             }
@@ -51,7 +51,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
 3、n，必要。这是输出信息的数量，比如n=1，即为1条，以此类推，至多输出8条；*
 *号注释：此处我们要注意的时，是否正常的输出信息，与n和idx有关，通过idx的值，我们就可以获得之前bing所使用的背景图片的信息了。
          */
-        mModel.getSplashs("js", 0, 1)
+        mModel.getSplashBackground("js", 0, 1)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
                 .doOnSubscribe(disposable -> {
@@ -65,9 +65,9 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
                 .compose(RxUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<Images>(mErrorHandler) {
                     @Override
-                    public void onNext(@NonNull Images splashs) {
-                        if (splashs.getImages() != null && splashs.getImages().length > 0) {
-                            mRootView.setSplashBackground(splashs.getImages()[0]);
+                    public void onNext(@NonNull Images splashBackground) {
+                        if (splashBackground.getImages() != null && splashBackground.getImages().length > 0) {
+                            mRootView.setSplashBackground(splashBackground.getImages()[0]);
                         } else {
                             mRootView.showMessage("获取数据失败");
                         }

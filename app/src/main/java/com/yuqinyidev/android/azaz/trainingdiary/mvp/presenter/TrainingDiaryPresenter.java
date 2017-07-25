@@ -14,7 +14,7 @@ import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.framework.integration.AppManager;
 import com.yuqinyidev.android.framework.mvp.presenter.BasePresenter;
-import com.yuqinyidev.android.framework.utils.PermissionUtil;
+import com.yuqinyidev.android.framework.utils.PermissionUtils;
 import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class TrainingDiaryPresenter extends BasePresenter<TrainingDiaryContract.
             }
         });
 
-        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
+        PermissionUtils.externalStorage(new PermissionUtils.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
 

@@ -30,13 +30,13 @@ public class SplashModel extends BaseModel implements SplashContract.Model {
     }
 
     @Override
-    public Observable<Images> getSplashs(String format, int idx, int n) {
+    public Observable<Images> getSplashBackground(String format, int idx, int n) {
         SplashService ss = mRepositoryManager
                 .obtainRetrofitService(SplashService.class);
-        Observable<Images> splashs = ss.getSplashs(format, idx, n);
+        Observable<Images> splashs = ss.getSplashBackground(format, idx, n);
 
         return mRepositoryManager.obtainCacheService(SplashCache.class)
-                .getSplashs(splashs, new DynamicKey(format + idx + n), new EvictDynamicKey(false))
+                .getSplashBackground(splashs, new DynamicKey(format + idx + n), new EvictDynamicKey(false))
                 .flatMap(new Function<Reply<Images>, ObservableSource<Images>>() {
                     @Override
                     public ObservableSource<Images> apply(@NonNull Reply<Images> listReply) throws Exception {

@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 
 public interface SplashService {
     @GET("http://cn.bing.com/HPImageArchive.aspx")
-    Observable<Images> getSplashs(@Query("format") String format, @Query("idx") int idx, @Query("n") int n);
+    Observable<Images> getSplashBackground(@Query("format") String format, @Query("idx") int idx, @Query("n") int n);
 }

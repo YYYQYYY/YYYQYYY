@@ -696,12 +696,21 @@ public class FileUtils {
         public void SearchFileListInfo(ArrayList<FileInfo> list);
     }
 
+    public static String packageName2CachePath(String _packageName) {
+        if (StringUtils.isEmpty(_packageName)) {
+            return null;
+        } else {//Environment.getExternalStorageDirectory().getPath()
+//            return "/sdcard/yyyqyyy/".concat(_packageName.replaceAll("\\.", "/")).concat("/");
+            return Utility.getExternalSdCardPath() + "/yyyqyyy/".concat(_packageName).concat("/cache/");
+        }
+    }
+
     public static String packageName2DBPath(String _packageName) {
         if (StringUtils.isEmpty(_packageName)) {
             return null;
         } else {//Environment.getExternalStorageDirectory().getPath()
 //            return "/sdcard/yyyqyyy/".concat(_packageName.replaceAll("\\.", "/")).concat("/");
-            return Utility.getExternalSdCardPath() + "/yyyqyyy/".concat(_packageName).concat("/");
+            return Utility.getExternalSdCardPath() + "/yyyqyyy/".concat(_packageName).concat("/database/");
         }
     }
 

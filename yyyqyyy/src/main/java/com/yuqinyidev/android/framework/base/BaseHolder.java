@@ -19,6 +19,7 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder
     public BaseHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
         AutoUtils.autoSize(itemView);
         ThirdViewUtil.bindTarget(this, itemView);
     }

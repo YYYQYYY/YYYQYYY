@@ -19,5 +19,5 @@ import io.rx_cache2.Reply;
 
 public interface SplashCache {
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<Images>> getSplashs(Observable<Images> splashs, DynamicKey url, EvictProvider evictProvider);
+    Observable<Reply<Images>> getSplashBackground(Observable<Images> splashBackground, DynamicKey url, EvictProvider evictProvider);
 }

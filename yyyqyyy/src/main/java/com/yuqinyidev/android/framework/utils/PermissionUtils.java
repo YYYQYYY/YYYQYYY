@@ -16,10 +16,10 @@ import timber.log.Timber;
  * Created by RDX64 on 2017/6/29.
  */
 
-public class PermissionUtil {
-    public static final String TAG = "PermissionUtil";
+public class PermissionUtils {
+    public static final String TAG = "PermissionUtils";
 
-    private PermissionUtil() {
+    private PermissionUtils() {
     }
 
     public interface RequestPermission {

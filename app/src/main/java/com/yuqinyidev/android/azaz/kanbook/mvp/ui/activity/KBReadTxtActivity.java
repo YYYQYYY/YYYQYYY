@@ -49,7 +49,7 @@ import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBHistory;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.customviews.KBTextProgressBar;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBTxtReader;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
-import com.yuqinyidev.android.framework.utils.DateUtil;
+import com.yuqinyidev.android.framework.utils.DateUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -681,7 +681,7 @@ public class KBReadTxtActivity extends Activity {
                     bm.setBookId(mBookId);
                     bm.setMarkName(bmn);
                     bm.setCurrentOffset(offset);
-                    bm.setSaveTime(DateUtil.dateToString(new Date(),
+                    bm.setSaveTime(DateUtils.dateToString(new Date(),
                             KBConstants.DATE_FORMAT_YYYYMMDDHHMMSS));
                     boolean operateResult = mKBDBAdapter.saveBookMark(bm);
                     if (operateResult) {
@@ -729,7 +729,7 @@ public class KBReadTxtActivity extends Activity {
         history.setCurrentOffset(mTxtReader.getCurrentLineOffset());
         history.setBookName(KBUtility.getBookName(mFilePath));
         history.setBookPath(mFilePath);
-        history.setSaveTime(DateUtil.dateToString(new Date(),
+        history.setSaveTime(DateUtils.dateToString(new Date(),
                 KBConstants.DATE_FORMAT_YYYYMMDDHHMMSS));
         history.setSummary(mTxtReader.getCurrentLineString());
         mKBDBAdapter.saveHistory(history);

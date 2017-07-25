@@ -11,7 +11,7 @@ import static android.R.attr.format;
  * Created by RDX64 on 2017/6/30.
  */
 
-public class DateUtil {
+public class DateUtils {
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static SimpleDateFormat sdf;
 

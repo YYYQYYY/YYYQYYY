@@ -20,6 +20,6 @@ public interface SplashContract {
     }
 
     interface Model extends IModel {
-        Observable<Images> getSplashs(String format, int idx, int n);
+        Observable<Images> getSplashBackground(String format, int idx, int n);
     }
 }

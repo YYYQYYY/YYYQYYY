@@ -1,5 +1,8 @@
 package com.yuqinyidev.android.azaz.main.mvp.ui.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -18,6 +21,9 @@ import butterknife.BindView;
 import static com.yuqinyidev.android.framework.utils.UiUtils.killAll;
 
 public class MainMenuActivity extends BaseActivity {
+    public static final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
+    public static final String ACTION_REMOVE_SHORTCUT = "com.android.launcher.action.UNINSTALL_SHORTCUT";
+
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
 
     private TabLayout.Tab one;
@@ -103,6 +109,75 @@ public class MainMenuActivity extends BaseActivity {
 //                }
 //            }
 //        }
+    }
+
+    private void addShortcut(String name) {
+        Intent addShortcutIntent = new Intent(ACTION_ADD_SHORTCUT);
+
+        // 不允许重复创建
+        addShortcutIntent.putExtra("duplicate", false);// 经测试不是根据快捷方式的名字判断重复的
+        // 应该是根据快链的Intent来判断是否重复的,即Intent.EXTRA_SHORTCUT_INTENT字段的value
+        // 但是名称不同时，虽然有的手机系统会显示Toast提示重复，仍然会建立快链
+        // 屏幕上没有空间时会提示
+        // 注意：重复创建的行为MIUI和三星手机上不太一样，小米上似乎不能重复创建快捷方式
+
+        // 名字
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, name);
+
+        // 图标
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(MainMenuActivity.this,
+                        R.mipmap.ic_launcher));
+
+        // 设置关联程序
+        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
+        launcherIntent.setClass(MainMenuActivity.this, MainMenuActivity.class);
+        launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        addShortcutIntent
+                .putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
+
+        // 发送广播
+        sendBroadcast(addShortcutIntent);
+    }
+
+    private void removeShortcut(String name) {
+        // remove shortcut的方法在小米系统上不管用，在三星上可以移除
+        Intent intent = new Intent(ACTION_REMOVE_SHORTCUT);
+
+        // 名字
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, name);
+
+        // 设置关联程序
+        Intent launcherIntent = new Intent(MainMenuActivity.this,
+                MainMenuActivity.class).setAction(Intent.ACTION_MAIN);
+
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
+
+        // 发送广播
+        sendBroadcast(intent);
+    }
+
+    private boolean hasInstallShortcut(String name) {
+
+        boolean hasInstall = false;
+
+        final String AUTHORITY = "com.android.launcher2.settings";
+        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+                + "/favorites?notify=true");
+
+        // 这里总是failed to find provider info
+        // com.android.launcher2.settings和com.android.launcher.settings都不行
+        Cursor cursor = this.getContentResolver().query(CONTENT_URI,
+                new String[]{"title", "iconResource"}, "title=?",
+                new String[]{name}, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            hasInstall = true;
+        }
+
+        return hasInstall;
+
     }
 
 }

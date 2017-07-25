@@ -6,7 +6,7 @@ import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.framework.integration.AppManager;
 import com.yuqinyidev.android.framework.mvp.presenter.BasePresenter;
-import com.yuqinyidev.android.framework.utils.PermissionUtil;
+import com.yuqinyidev.android.framework.utils.PermissionUtils;
 import com.yuqinyidev.android.framework.utils.RxUtils;
 import com.yuqinyidev.android.azaz.demo.mvp.contract.UserContract;
 import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
@@ -53,7 +53,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             mRootView.setAdapter(mAdapter);
         }
 
-        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
+        PermissionUtils.externalStorage(new PermissionUtils.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
 
