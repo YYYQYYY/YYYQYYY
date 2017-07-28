@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llayContent"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/llayScroll"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1.0"
         android:orientation="vertical">
 
         <ScrollView
             android:id="@+id/scvContent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <TextView
+            <com.yuqinyidev.android.framework.widget.JustifyTextView
                 android:id="@+id/textContent"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </ScrollView>
 
@@ -29,20 +29,20 @@
 
     <LinearLayout
         android:id="@+id/llayFooter"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.yuqinyidev.android.azaz.kanbook.mvp.ui.customviews.KBTextProgressBar
             android:id="@+id/tpbPercnet"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="10px"
             android:max="1000"
             android:progressDrawable="@drawable/progressbar_normal" />
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
