@@ -9,13 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.yuqinyidev.android.azaz.BuildConfig;
+import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.app.api.API;
 import com.yuqinyidev.android.azaz.app.api.service.CommonService;
 import com.yuqinyidev.android.azaz.demo.mvp.model.cache.UserCache;
@@ -26,15 +27,10 @@ import com.yuqinyidev.android.framework.base.App;
 import com.yuqinyidev.android.framework.base.delegate.AppDelegate;
 import com.yuqinyidev.android.framework.di.module.GlobalConfigModule;
 import com.yuqinyidev.android.framework.http.GlobalHttpHandler;
-import com.yuqinyidev.android.framework.http.RequestInterceptor;
 import com.yuqinyidev.android.framework.integration.ConfigModule;
 import com.yuqinyidev.android.framework.integration.IRepositoryManager;
-import com.yuqinyidev.android.azaz.BuildConfig;
-import com.yuqinyidev.android.azaz.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;

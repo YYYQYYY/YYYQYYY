@@ -1,10 +1,7 @@
 package com.yuqinyidev.android.azaz.splash.mvp.model.cache;
 
-import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
 import com.yuqinyidev.android.azaz.splash.mvp.model.entity.Images;
-import com.yuqinyidev.android.azaz.splash.mvp.model.entity.Splash;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;

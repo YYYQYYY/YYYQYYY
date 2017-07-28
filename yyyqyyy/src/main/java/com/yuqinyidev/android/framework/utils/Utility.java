@@ -4,8 +4,6 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
 
-import com.yuqinyidev.android.framework.R;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;

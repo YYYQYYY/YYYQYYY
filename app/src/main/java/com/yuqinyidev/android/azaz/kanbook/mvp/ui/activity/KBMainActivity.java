@@ -1,13 +1,11 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +19,6 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
@@ -29,14 +26,17 @@ import com.yuqinyidev.android.azaz.kanbook.mvp.model.KBDBAdapter;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBook;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBHistory;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class KBMainActivity extends Activity {
+public class KBMainActivity extends AppCompatActivity {
 
     private static final int DIALOG_ID_ABOUT = 0;
     private static final int DIALOG_ID_EXIT = 1;
@@ -80,6 +80,7 @@ public class KBMainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         String tag = "onCreate";
         Log.d(tag, "create the main activity...");
+        UiUtils.fullScreen(KBMainActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kb_main);
 
@@ -122,6 +123,8 @@ public class KBMainActivity extends Activity {
 
         txvHello = (TextView) findViewById(R.id.txvHello);
         txvHello.setText(sayHello());
+
+        copyFilesFromAssets("/sx.txt", "/sdcard/Download");
     }
 
     @Override
@@ -323,6 +326,44 @@ public class KBMainActivity extends Activity {
         @Override
         public View getView(int _position, View _convertView, ViewGroup _parent) {
             return galleryItems.get(_position);
+        }
+    }
+
+    private void copyFilesFromAssets(String oldPath, String newPath) {
+        File f = new File(newPath + oldPath);
+        if (f.exists()) {
+            return;
+        }
+        try {
+//            String fileNames[] = context.getAssets().list(oldPath);//获取assets目录下的所有文件及目录名
+//            if (fileNames.length > 0) {//如果是目录
+//                File file = new File(newPath);
+//                file.mkdirs();//如果文件夹不存在，则递归
+//                for (String fileName : fileNames) {
+//                    copyFilesFromAssets(context, oldPath + "/" + fileName, newPath + "/" + fileName);
+//                }
+//            } else {//如果是文件
+            File file = new File(newPath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            InputStream is = getResources().getAssets().open("sx.txt"); //getAssets().open(oldPath);
+            FileOutputStream fos = new FileOutputStream(new File(newPath + oldPath));
+            byte[] buffer = new byte[1024];
+            int byteCount = 0;
+            while ((byteCount = is.read(buffer)) != -1) {//循环从输入流读取 buffer字节
+                fos.write(buffer, 0, byteCount);//将读取的输入流写入到输出流
+            }
+            fos.flush();//刷新缓冲区
+            is.close();
+            fos.close();
+//            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //如果捕捉到错误则通知UI线程
+//            MainActivity.handler.sendEmptyMessage(COPY_FALSE);
         }
     }
 

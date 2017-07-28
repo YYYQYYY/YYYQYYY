@@ -1,6 +1,5 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -18,8 +18,9 @@ import android.widget.TextView;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 
-public class KBSettingActivity extends Activity {
+public class KBSettingActivity extends AppCompatActivity {
 
     private static final int DIALOG_ID_FONT_SIZE = 0;
     private static final int DIALOG_ID_FONT_COLOR = 1;
@@ -38,6 +39,7 @@ public class KBSettingActivity extends Activity {
     }
 
     public void onCreate(Bundle savedInstanceState) {
+        UiUtils.fullScreen(KBSettingActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kb_setting);
 
@@ -184,10 +186,10 @@ public class KBSettingActivity extends Activity {
             case 2:
                 background = R.drawable.bg_hssp;
                 break;
-             // 黑夜灯桥
-             case 3:
-             background = R.drawable.bg_hydq;
-             break;
+            // 黑夜灯桥
+            case 3:
+                background = R.drawable.bg_hydq;
+                break;
             // // 火红烛心
             // case 4:
             // background = R.drawable.bg_hzhx;

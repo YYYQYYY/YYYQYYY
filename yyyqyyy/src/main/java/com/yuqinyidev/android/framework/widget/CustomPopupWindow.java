@@ -6,8 +6,8 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.PopupWindow;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.PopupWindow;
 
 /**
  * Created by RDX64 on 2017/6/28.

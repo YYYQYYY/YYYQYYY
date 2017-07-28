@@ -8,15 +8,15 @@ import android.support.v7.widget.RecyclerView;
 
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.yuqinyidev.android.framework.base.BaseActivity;
-import com.yuqinyidev.android.framework.base.DefaultAdapter;
-import com.yuqinyidev.android.framework.di.component.AppComponent;
-import com.yuqinyidev.android.framework.utils.UiUtils;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.demo.di.component.DaggerUserComponent;
 import com.yuqinyidev.android.azaz.demo.di.module.UserModule;
 import com.yuqinyidev.android.azaz.demo.mvp.contract.UserContract;
 import com.yuqinyidev.android.azaz.demo.mvp.presenter.UserPresenter;
+import com.yuqinyidev.android.framework.base.BaseActivity;
+import com.yuqinyidev.android.framework.base.DefaultAdapter;
+import com.yuqinyidev.android.framework.di.component.AppComponent;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import butterknife.BindView;
 import io.reactivex.Observable;

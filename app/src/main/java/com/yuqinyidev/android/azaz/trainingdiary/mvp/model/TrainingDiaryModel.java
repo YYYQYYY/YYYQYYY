@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.contract.TrainingDiaryContract;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiary;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiaryEntity;
-import com.yuqinyidev.android.framework.base.App;
 import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.framework.integration.IRepositoryManager;
 import com.yuqinyidev.android.framework.mvp.model.BaseModel;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static android.R.attr.id;
 import static com.yuqinyidev.android.framework.utils.Preconditions.checkNotNull;
 
 /**

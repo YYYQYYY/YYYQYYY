@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.yuqinyidev.android.framework.R;
 
-import java.security.PublicKey;
-
 import timber.log.Timber;
 
 /**

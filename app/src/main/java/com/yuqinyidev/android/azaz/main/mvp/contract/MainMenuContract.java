@@ -8,8 +8,6 @@ import com.yuqinyidev.android.framework.mvp.view.IView;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-
 /**
  * Created by RDX64 on 2017/7/2.
  */

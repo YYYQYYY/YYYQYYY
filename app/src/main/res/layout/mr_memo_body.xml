@@ -1,76 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_height="fill_parent"
-	android:layout_width="wrap_content">
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="wrap_content">
 
-	<!-- Title line -->
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="horizontal">
+    <!-- Title line -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView android:textSize="20sp" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/title"
-			style="@style/AudioFileInfoOverlayText" />
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            style="@style/AudioFileInfoOverlayText" />
 
-		<EditText android:id="@+id/edtMemoTitle"
-			android:layout_height="wrap_content" android:layout_width="fill_parent"
-			android:layout_weight="1" android:layout_marginLeft="10dp" />
+        <EditText
+            android:id="@+id/edtMemoTitle"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<!-- Dur Date line -->
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+    <!-- Dur Date line -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-		<TextView android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="@string/time"
-			android:textSize="20sp" android:layout_centerVertical="true"
-			android:layout_alignParentLeft="true" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/time"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true" />
 
-		<Button android:id="@+id/btnMemoTime" android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="@string/timeFomat"
-			android:layout_centerVertical="true" android:layout_alignParentRight="true" />
+        <Button
+            android:id="@+id/btnMemoTime"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/timeFomat"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
 
-		<Button android:id="@+id/btnMemoDate" android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="@string/dateFomat"
-			android:layout_centerVertical="true" android:layout_centerInParent="true"
-			android:layout_marginRight="10dp" />
+        <Button
+            android:id="@+id/btnMemoDate"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/dateFomat"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp" />
 
-	</RelativeLayout>
+    </RelativeLayout>
 
-	<!-- Status line -->
-	<TableRow android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+    <!-- Status line -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-		<TextView android:textSize="20sp" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/status" />
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status" />
 
-		<CheckBox android:id="@+id/chbMemoImportant"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_marginLeft="10dp" />
+        <CheckBox
+            android:id="@+id/chbMemoImportant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp" />
 
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/important" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/important" />
 
-		<CheckBox android:id="@+id/chbMemoCompleted"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <CheckBox
+            android:id="@+id/chbMemoCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/complete" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/complete" />
 
-	</TableRow>
+    </TableRow>
 
-	<!-- Memo line -->
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="horizontal">
+    <!-- Memo line -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/memo_"
-			android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/memo_"
+            android:textSize="20sp" />
 
-		<EditText android:id="@+id/edtMemoContent"
-			android:layout_height="wrap_content" android:layout_width="fill_parent"
-			android:layout_weight="1" android:layout_marginLeft="10dp" />
+        <EditText
+            android:id="@+id/edtMemoContent"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp" />
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

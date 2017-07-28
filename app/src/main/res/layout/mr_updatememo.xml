@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_height="fill_parent"
-	android:layout_width="match_parent" android:background="@color/white">
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:background="@color/white">
 
-    <include android:id="@+id/memoHeader" layout="@layout/mr_memo_header" />
-    <include android:id="@+id/memoBody" layout="@layout/mr_memo_body" />
+    <include
+        android:id="@+id/memoHeader"
+        layout="@layout/mr_memo_header" />
 
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+    <include
+        android:id="@+id/memoBody"
+        layout="@layout/mr_memo_body" />
 
-		<Button android:id="@+id/btnMemoUpdate" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1"
-			android:textSize="20sp" android:text="@string/update"
-			android:layout_marginTop="10dip" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-		<Button android:id="@+id/btnMemoCancle" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1"
-			android:text="@string/cancle" android:textSize="20sp"
-			android:layout_marginTop="10dip" />
+        <Button
+            android:id="@+id/btnMemoUpdate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="@string/update"
+            android:layout_marginTop="10dip" />
 
-	</LinearLayout>
+        <Button
+            android:id="@+id/btnMemoCancle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancle"
+            android:textSize="20sp"
+            android:layout_marginTop="10dip" />
+
+    </LinearLayout>
 
 </LinearLayout>

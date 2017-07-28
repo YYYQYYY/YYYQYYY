@@ -1,11 +1,5 @@
 package com.yuqinyidev.android.azaz.memorandum.mvp.ui.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -18,17 +12,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.GridView;
@@ -36,13 +31,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.MR_DBAdapter;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.entity.MR_holiday;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.entity.MR_memory;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.service.MR_MemorandumReceiver;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 public class MR_MemorandumMain extends Activity implements OnGestureListener {
     /**

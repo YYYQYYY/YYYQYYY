@@ -36,6 +36,7 @@ public class NoScrollViewPager extends ViewPager {
 
     /**
      * 取消滑页动画
+     *
      * @param item
      */
     @Override

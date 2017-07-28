@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static android.R.attr.format;
-
 /**
  * Created by RDX64 on 2017/6/30.
  */

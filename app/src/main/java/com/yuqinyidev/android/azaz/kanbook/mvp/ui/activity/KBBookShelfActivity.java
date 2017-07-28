@@ -1,6 +1,5 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -13,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +33,7 @@ import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBook;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBIconText;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
 import com.yuqinyidev.android.framework.utils.FileUtils;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 import com.yuqinyidev.android.framework.utils.entity.FileInfo;
 
 import java.io.File;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class KBBookShelfActivity extends Activity {
+public class KBBookShelfActivity extends AppCompatActivity {
 
     private static final int DIALOG_ID_ITEM_LONG_CLICK_FILE = 10;
     private static final int DIALOG_ID_ITEM_LONG_CLICK_FOLDER = 11;
@@ -66,8 +67,9 @@ public class KBBookShelfActivity extends Activity {
 //    private File mCurrentDirectory = new File(KBConstants.BOOK_SHELF_ROOT_PATH);
 
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        UiUtils.fullScreen(KBBookShelfActivity.this);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.kb_bookshelf);
 
         mKBDBAdapter = new KBDBAdapter(this);
@@ -379,7 +381,7 @@ public class KBBookShelfActivity extends Activity {
                 break;
             case CHOICE_ITEM_RENAME:
                 Intent intent = new Intent(KBBookShelfActivity.this,
-                        KBVirualDialogActivity.class);
+                        KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START,
                         KBConstants.ACTIVITY_START_KEY_RENAME_FILE);
                 startActivityForResult(intent, CHOICE_ITEM_RENAME);
@@ -397,7 +399,7 @@ public class KBBookShelfActivity extends Activity {
                 break;
             case CHOICE_ITEM_RENAME:
                 intent = new Intent(KBBookShelfActivity.this,
-                        KBVirualDialogActivity.class);
+                        KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START,
                         KBConstants.ACTIVITY_START_KEY_RENAME_FOLDER);
                 startActivityForResult(intent, CHOICE_ITEM_RENAME);

@@ -2,15 +2,15 @@ package com.yuqinyidev.android.azaz.demo.mvp.presenter;
 
 import android.app.Application;
 
+import com.yuqinyidev.android.azaz.demo.mvp.contract.UserContract;
+import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
+import com.yuqinyidev.android.azaz.demo.mvp.ui.adapter.UserAdapter;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.framework.integration.AppManager;
 import com.yuqinyidev.android.framework.mvp.presenter.BasePresenter;
 import com.yuqinyidev.android.framework.utils.PermissionUtils;
 import com.yuqinyidev.android.framework.utils.RxUtils;
-import com.yuqinyidev.android.azaz.demo.mvp.contract.UserContract;
-import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
-import com.yuqinyidev.android.azaz.demo.mvp.ui.adapter.UserAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

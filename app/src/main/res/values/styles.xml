@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--<style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.DayNight">-->
+    <!--<item name="windowNoTitle">true</item>-->
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="android:windowFullscreen">true</item>-->
+    <!--<item name="android:windowContentOverlay">@null</item>-->
+    <!--</style>-->
+
     <style name="AnimationActivityStyle">
         <item name="android:activityOpenEnterAnimation">@anim/right_in</item>
         <item name="android:activityOpenExitAnimation">@anim/left_out</item>
@@ -26,8 +33,8 @@
     </style>
 
     <style name="AudioFileInfoOverlayText">
-        <item name="android:paddingLeft">4px</item>
-        <item name="android:paddingBottom">4px</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:textColor">#f1f1f1</item>
         <item name="android:textSize">60sp</item>
         <item name="android:shadowColor">#4d4d4d</item>

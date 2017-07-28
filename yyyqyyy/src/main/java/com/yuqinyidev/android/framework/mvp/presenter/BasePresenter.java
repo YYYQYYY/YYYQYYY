@@ -1,7 +1,7 @@
 package com.yuqinyidev.android.framework.mvp.presenter;
 
-import com.yuqinyidev.android.framework.mvp.view.IView;
 import com.yuqinyidev.android.framework.mvp.model.IModel;
+import com.yuqinyidev.android.framework.mvp.view.IView;
 
 import org.simple.eventbus.EventBus;
 

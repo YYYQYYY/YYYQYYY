@@ -20,7 +20,6 @@ import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.utils.UiUtils;
-import com.yuqinyidev.android.framework.widget.RecyListViewOnItemClick;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

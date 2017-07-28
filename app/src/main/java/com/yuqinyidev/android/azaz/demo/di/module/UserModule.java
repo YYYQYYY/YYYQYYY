@@ -1,8 +1,8 @@
 package com.yuqinyidev.android.azaz.demo.di.module;
 
-import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.azaz.demo.mvp.contract.UserContract;
 import com.yuqinyidev.android.azaz.demo.mvp.model.UserModel;
+import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;

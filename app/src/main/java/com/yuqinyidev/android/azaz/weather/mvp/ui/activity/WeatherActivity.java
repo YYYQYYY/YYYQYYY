@@ -26,7 +26,9 @@ import com.yuqinyidev.android.azaz.weather.mvp.model.entity.gson.Weather;
 import com.yuqinyidev.android.azaz.weather.mvp.model.service.AutoUpdateWeatherService;
 import com.yuqinyidev.android.azaz.weather.mvp.util.HttpUtil;
 import com.yuqinyidev.android.azaz.weather.mvp.util.Utility;
+import com.yuqinyidev.android.framework.utils.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -34,6 +36,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
+    private static final String SPLASH_BG_NAME = "splash_bg.jpg";
+
     public DrawerLayout drawerLayout;
     public SwipeRefreshLayout swipeRefresh;
 
@@ -49,7 +53,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView comfortText;
     private TextView carWashText;
     private TextView sportText;
-    private ImageView bingPicImg;
+    private ImageView mBingPicImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +84,13 @@ public class WeatherActivity extends AppCompatActivity {
                 requestWeather(weatherId);
             }
         });
-        String bingPic = prefs.getString("bing_pic", null);
-        if (bingPic != null) {
-            Glide.with(this).load(bingPic).into(bingPicImg);
-        } else {
-            loadBingPic();
-        }
         navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        displayBackground();
     }
 
     public void requestWeather(final String weatherId) {
@@ -130,7 +129,7 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
-        loadBingPic();
+        displayBackground();
     }
 
     private void showWeatherInfo(Weather weather) {
@@ -185,31 +184,53 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText = (TextView) findViewById(R.id.comfort_text);
         carWashText = (TextView) findViewById(R.id.car_wash_text);
         sportText = (TextView) findViewById(R.id.sport_text);
-        bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
+        mBingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
     }
 
-    private void loadBingPic() {
-        String requestBingPic = "http://guolin.tech/api/bing_pic";
-        HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String bingPic = response.body().string();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
-                editor.putString("bing_pic", bingPic);
-                editor.apply();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.with(WeatherActivity.this).load(bingPic).into(bingPicImg);
-                    }
-                });
-            }
+//    private void loadBingPic() {
+//        String requestBingPic = "http://guolin.tech/api/bing_pic";
+//        HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                final String bingPic = response.body().string();
+//                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+//                editor.putString("bing_pic", bingPic);
+//                editor.apply();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Glide.with(WeatherActivity.this).load(bingPic).into(mBingPicImg);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//    }
 
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
+    private void displayBackground() {
+//        SPLASH_BG_NAME
+        File f = new File(FileUtils.packageName2CachePath(getPackageName()), SPLASH_BG_NAME);
+        if (f.exists()) {
+            Glide.with(WeatherActivity.this)
+                    .load(f)
+                    .into(mBingPicImg);
+        } else {
+            Glide.with(WeatherActivity.this)
+                    .load(R.drawable.applegray)
+                    .into(mBingPicImg);
+//        } else {
+//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//            String bingPic = prefs.getString("bing_pic", null);
+//            if (bingPic != null) {
+//                Glide.with(this).load(bingPic).into(mBingPicImg);
+//            } else {
+//                loadBingPic();
+//            }
+        }
     }
 
 }

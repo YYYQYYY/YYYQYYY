@@ -1,9 +1,9 @@
 package com.yuqinyidev.android.azaz.demo.di.component;
 
-import com.yuqinyidev.android.framework.di.component.AppComponent;
-import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 import com.yuqinyidev.android.azaz.demo.di.module.UserModule;
 import com.yuqinyidev.android.azaz.demo.mvp.ui.activity.UserActivity;
+import com.yuqinyidev.android.framework.di.component.AppComponent;
+import com.yuqinyidev.android.framework.di.scope.ActivityScope;
 
 import dagger.Component;
 

@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-	<LinearLayout android:id="@+id/layFirstDayTitle"
-		android:orientation="vertical" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true">
+    <LinearLayout
+        android:id="@+id/layFirstDayTitle"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
 
-		<TextView android:id="@+id/textView1" android:textSize="20sp"
-			android:text="@string/date_option" android:layout_width="wrap_content"
-			android:layout_height="35dip"></TextView>
+        <TextView
+            android:id="@+id/textView1"
+            android:textSize="20sp"
+            android:text="@string/date_option"
+            android:layout_width="wrap_content"
+            android:layout_height="35dip"></TextView>
 
-		<TextView android:id="@+id/textView2" android:textSize="10sp"
-			android:text="@string/date_dtl" android:layout_width="wrap_content"
-			android:layout_height="25dip"></TextView>
+        <TextView
+            android:id="@+id/textView2"
+            android:textSize="10sp"
+            android:text="@string/date_dtl"
+            android:layout_width="wrap_content"
+            android:layout_height="25dip"></TextView>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<ImageView android:id="@+id/imgFirstDay"
-		android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:src="@drawable/download" android:layout_centerVertical="true"
-		android:layout_alignParentRight="true" />
+    <ImageView
+        android:id="@+id/imgFirstDay"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/download"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

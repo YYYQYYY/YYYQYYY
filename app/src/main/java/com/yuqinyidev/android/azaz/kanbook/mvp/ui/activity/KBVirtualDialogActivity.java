@@ -1,8 +1,8 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,10 +14,11 @@ import android.widget.ToggleButton;
 
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import java.text.DecimalFormat;
 
-public class KBVirualDialogActivity extends Activity {
+public class KBVirtualDialogActivity extends AppCompatActivity {
 
     private String choice;
     private SeekBar skbSkip;
@@ -30,11 +31,12 @@ public class KBVirualDialogActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        UiUtils.fullScreen(KBVirtualDialogActivity.this);
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
         if (intent != null) {
-            setContentView(R.layout.kb_virual_dialog);
+            setContentView(R.layout.kb_virtual_dialog);
 
             edtInput = (EditText) findViewById(R.id.edtInput);
             toggleButton = (ToggleButton) findViewById(R.id.toggleButton);

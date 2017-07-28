@@ -2,11 +2,11 @@ package com.yuqinyidev.android.azaz.demo.mvp.ui.adapter;
 
 import android.view.View;
 
-import com.yuqinyidev.android.framework.base.BaseHolder;
-import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
 import com.yuqinyidev.android.azaz.demo.mvp.ui.holder.UserItemHolder;
+import com.yuqinyidev.android.framework.base.BaseHolder;
+import com.yuqinyidev.android.framework.base.DefaultAdapter;
 
 import java.util.List;
 

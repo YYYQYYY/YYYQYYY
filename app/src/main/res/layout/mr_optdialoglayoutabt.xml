@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-		<ImageView android:id="@+id/imageView1" android:src="@drawable/about_icon"
-			android:layout_height="wrap_content" android:layout_width="wrap_content" />
+        <ImageView
+            android:id="@+id/imageView1"
+            android:src="@drawable/about_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
 
-		<TextView android:id="@+id/txvAbout" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:text="@string/abt_info"
-			android:layout_gravity="center_vertical" android:gravity="center" />
+        <TextView
+            android:id="@+id/txvAbout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/abt_info"
+            android:layout_gravity="center_vertical"
+            android:gravity="center" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<Button android:text="@string/abt_close" android:id="@+id/btnClose"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <Button
+        android:text="@string/abt_close"
+        android:id="@+id/btnClose"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
     

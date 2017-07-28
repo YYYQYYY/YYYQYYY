@@ -34,9 +34,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static android.R.attr.toAlpha;
-import static android.R.attr.type;
-
 /**
  * Created by RDX64 on 2017/6/18.
  */

@@ -4,13 +4,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yuqinyidev.android.azaz.R;
+import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
 import com.yuqinyidev.android.framework.base.App;
 import com.yuqinyidev.android.framework.base.BaseHolder;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
 import com.yuqinyidev.android.framework.widget.imageloader.ImageLoader;
 import com.yuqinyidev.android.framework.widget.imageloader.glide.GlideImageConfig;
-import com.yuqinyidev.android.azaz.R;
-import com.yuqinyidev.android.azaz.demo.mvp.model.entity.User;
 
 import butterknife.BindView;
 import io.reactivex.Observable;

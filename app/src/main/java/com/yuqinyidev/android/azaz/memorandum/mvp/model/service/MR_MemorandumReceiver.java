@@ -1,9 +1,5 @@
 package com.yuqinyidev.android.azaz.memorandum.mvp.model.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +9,10 @@ import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.MR_DBAdapter;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.entity.MR_memory;
 import com.yuqinyidev.android.azaz.memorandum.mvp.ui.activity.MR_MemorandumNotification;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MR_MemorandumReceiver extends BroadcastReceiver {
 

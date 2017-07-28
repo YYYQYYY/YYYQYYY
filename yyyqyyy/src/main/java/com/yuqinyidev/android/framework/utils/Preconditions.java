@@ -126,7 +126,7 @@ public final class Preconditions {
                 end >= 0 && end <= size ? format("end index (%s) must not be less than start index (%s)",
                         new Object[]{Integer.valueOf(end), Integer.valueOf(start)})
                         : badPositionIndex(end, size, "end index")
-        ): badPositionIndex(start, size, "start index");
+        ) : badPositionIndex(start, size, "start index");
     }
 
     @NonNull

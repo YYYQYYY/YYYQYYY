@@ -2,11 +2,11 @@ package com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.adapter;
 
 import android.view.View;
 
+import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.model.entity.TrainingDiary;
 import com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.holder.TrainingDiaryItemHolder;
 import com.yuqinyidev.android.framework.base.BaseHolder;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
-import com.yuqinyidev.android.azaz.R;
 
 import java.util.List;
 
