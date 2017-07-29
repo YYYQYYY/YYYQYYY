@@ -75,14 +75,14 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     if (isFling) {
                         return false;
                     }
-                    int offsetLines = (int) Math.abs(mScreenHeight
+                    int offsetLines = (int) Math.abs(mVisibleHeight
                             / (KBCR.fontHeight));
-                    if (e.getRawY() < (mScreenHeight * 1 / 3)) {
+                    if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
                         mTxtReader.displayPreToScreen(offsetLines);
                         showPercent();
                         mScvContent.scrollTo(0, 0);
                         return true;
-                    } else if (e.getRawY() > (mScreenHeight * 2 / 3)) {
+                    } else if (e.getRawY() > (mVisibleHeight * 2 / 3)) {
                         mTxtReader.displayNextToScreen(offsetLines);
                         showPercent();
                         return true;
@@ -188,7 +188,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
     private TextView mTxvFileName;
     private DigitalClock mDcTime;
 
-    private int mScreenWidth, mScreenHeight;
+    private int mVisibleWidth, mVisibleHeight;
 
     private int mLastPercent = 0;
     private static int mOffset = 0;
@@ -380,11 +380,9 @@ public class KBReadTxtActivity extends AppCompatActivity {
                         mTxvContent.setTextSize(textSize);
                         TextPaint tp = mTxvContent.getPaint();
                         KBCR.fontHeight = mTxvContent.getLineHeight();
-                        mLinesOfScreen = mScreenHeight / KBCR.fontHeight;
-                        KBCR.upperAsciiWidth = (int) tp
-                                .measureText(KBConstants.UPPERASCII);
-                        KBCR.lowerAsciiWidth = (int) tp
-                                .measureText(KBConstants.LOWERASCII);
+                        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
+                        KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
+                        KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
                         KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
 
                         Log.d("onActRet CR.FontHeight:", "" + KBCR.fontHeight);
@@ -591,11 +589,11 @@ public class KBReadTxtActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        int footHeight = mTxvFileName.getLineHeight() * (getResources().getDisplayMetrics().densityDpi / 160) + 10;
+        int footHeight = Math.round(mTxvFileName.getLineHeight() * getResources().getDisplayMetrics().density) + 10;
         Log.d("footHeight : ", "" + footHeight);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mScreenHeight = dm.heightPixels - footHeight;
-        mScreenWidth = dm.widthPixels;
+        mVisibleHeight = dm.heightPixels - footHeight;
+        mVisibleWidth = dm.widthPixels;
 
         mTxvContent.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
@@ -604,19 +602,18 @@ public class KBReadTxtActivity extends AppCompatActivity {
         /** load the attribute for font */
         TextPaint tp = mTxvContent.getPaint();
         KBCR.fontHeight = mTxvContent.getLineHeight();
-        mLinesOfScreen = mScreenHeight / KBCR.fontHeight;
+        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
 
         /** Ascii char width */
         KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
         KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
         /** Chinese char width */
-        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE
-                .toCharArray(), 0, 1);
+        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
 
         Log.d("onCrtDig CRFontHeight:", "" + KBCR.fontHeight);
         Log.d("onCrtDig CRAsciiWidth:", "" + KBCR.upperAsciiWidth);
         Log.d("onCrtDig CRFontWidth:", "" + KBCR.ChineseFontWidth);
-        mTxtReader = new KBTxtReader(mTxvContent, this, mFilePath, mScreenWidth, mScreenHeight);
+        mTxtReader = new KBTxtReader(mTxvContent, this, mFilePath, mVisibleWidth, mVisibleHeight);
 
         setTitle(mFilePath + "-" + getString(R.string.app_name));
         mScvContent.setOnKeyListener(mUpOrDown);

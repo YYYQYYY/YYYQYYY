@@ -26,12 +26,7 @@ public class KBTxtReader {
      */
     private String mFileName = null;
 
-    /**
-     * The wide-screen and high
-     */
-    private int mScreenWidth, mScreenHeigth;
-
-    private int mViewWidth, mViewHeigth;
+    private int mVisibleWidth, mVisibleHeight;
 
     /**
      * A screen can store data on the number of line
@@ -98,8 +93,8 @@ public class KBTxtReader {
                        int screenWidth, int screenHeigth) {
         this.mFileName = fileName;
         this.mTextView = textView;
-        this.mScreenWidth = screenWidth;
-        this.mScreenHeigth = screenHeigth;
+        this.mVisibleWidth = screenWidth;
+        this.mVisibleHeight = screenHeigth;
 
         /** Start initialization */
         init();
@@ -130,7 +125,7 @@ public class KBTxtReader {
                 continue;
             }
             if (b > 0x7f) {// Chinese
-                if (width + KBCR.ChineseFontWidth > mViewWidth) {// If the line
+                if (width + KBCR.ChineseFontWidth > mVisibleWidth) {// If the line
                     // length
                     // more than view width
                     mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
@@ -151,7 +146,7 @@ public class KBTxtReader {
                 if (!(b >= 65 && b <= 90)) {
                     aw = KBCR.lowerAsciiWidth;
                 }
-                if (width + aw > mViewWidth) {
+                if (width + aw > mVisibleWidth) {
 
                     mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
                             beforeLineLength));
@@ -570,8 +565,6 @@ public class KBTxtReader {
     }
 
     private void init() {
-        this.mViewHeigth = mScreenHeigth;
-        this.mViewWidth = mScreenWidth;
         this.mReadFileRandom = new KBReadFileRandom(this.mFileName);
         this.mFileLength = mReadFileRandom.getFileLength();
 
@@ -579,8 +572,7 @@ public class KBTxtReader {
         mReadFileRandom.readBytes(encodings);
         mReadFileRandom.close();
         KBBytesEncodingDetect be = new KBBytesEncodingDetect();
-        this.mEncoding = KBBytesEncodingDetect.nicename[be
-                .detectEncoding(encodings)];
+        this.mEncoding = KBBytesEncodingDetect.nicename[be.detectEncoding(encodings)];
 
         if (this.mFileLength == 0) {
             mTextView.setText(KBConstants.NODATAINFILE);
@@ -588,7 +580,7 @@ public class KBTxtReader {
         }
 
         /** Initialization screen shows a number of rows of data */
-        this.mLinesOfOneScreen = mViewHeigth / (KBCR.fontHeight + KBCR.lineSpace);
+        this.mLinesOfOneScreen = mVisibleHeight / (KBCR.fontHeight + KBCR.lineSpace);
 
         readNextBuffer();
         analysisDisplayBuffer();
