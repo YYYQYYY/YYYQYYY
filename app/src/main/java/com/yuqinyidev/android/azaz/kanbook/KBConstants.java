@@ -32,7 +32,7 @@ public class KBConstants {
     public final static String LOWERASCII = "a";
     public final static String CHINESE = "汉";
 
-    public static final int DEFAULT_FONT_SIZE = 18;
+    public static final int DEFAULT_FONT_SIZE = 44;
 
     public static final String ROOT_PATH = "/sdcard/xycgkanbook";
     public static final String BOOK_SHELF_ROOT_PATH = ROOT_PATH + "/BOOKSHELF";

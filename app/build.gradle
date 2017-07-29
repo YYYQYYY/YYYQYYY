@@ -64,13 +64,11 @@ buildscript {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //support
     compile(rootProject.ext.dependencies["cardview-v7"]) {
         exclude module: 'support-annotations'
     }
-
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
@@ -78,21 +76,19 @@ dependencies {
     compile rootProject.ext.dependencies["constraint-layout"]
     compile rootProject.ext.dependencies["pickerview"]
     compile rootProject.ext.dependencies["litepal"]
-
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
         exclude module: 'butterknife-annotations'
     }
     compile rootProject.ext.dependencies["paginate"]
-
     //framework
     compile project(':yyyqyyy')
-//    compile 'me.jessyan:framework:2.1.0'
-
+    //    compile 'me.jessyan:framework:2.1.0'
     //test
     testCompile rootProject.ext.dependencies["junit"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    compile files('libs/juniversalchardet-1.0.3.jar')
 }

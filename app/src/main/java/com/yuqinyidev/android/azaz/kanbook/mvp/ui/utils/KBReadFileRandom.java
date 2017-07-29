@@ -79,6 +79,7 @@ public class KBReadFileRandom {
         try {
             i = new File(filePath).length();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return i;
     }

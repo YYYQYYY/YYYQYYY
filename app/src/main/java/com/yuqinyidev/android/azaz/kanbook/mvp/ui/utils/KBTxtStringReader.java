@@ -1,14 +1,19 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
-import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.TxtLine;
+import com.yuqinyidev.android.framework.utils.io.BufferedRandomAccessFile;
 
+import org.mozilla.universalchardet.UniversalDetector;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.Vector;
 
 public class KBTxtStringReader {
 
@@ -17,7 +22,7 @@ public class KBTxtStringReader {
      */
     private TextView mTextView = null;
 
-    private final int BUFFER_SIZE = 100 * 1024;// 100k
+//    private final int BUFFER_SIZE = 100 * 1024;// 100k
 
     /**
      * To read the files
@@ -28,47 +33,47 @@ public class KBTxtStringReader {
     private int mLineCount; // 每页可以显示的行数
     private int mFontSize = 44;        //字体大小
 
-    private KBReadFileRandom mReadFileRandom;
+    private MappedByteBuffer mReadFileRandom;
 
     /**
      * To read the length of the document
      */
     private long mFileLength;
 
-    /**
-     * At present, the starting line
-     */
-    private int mCurrentLine = 0;
-
-    /**
-     * The first line in the current view of migration
-     */
-    private int mCurrentOffset = 0;
-
-    /**
-     * Save for the line and offset a collection of objects
-     */
-    private List<TxtLine> mMyLines = new ArrayList<TxtLine>();
-
-    /**
-     * The documents show that the data used to buffer
-     */
-    private byte[] mDisplayBuffer;
-
-    /**
-     * For the preservation of the current screen data
-     */
-    private byte[] mScreenData = new byte[0];
+//    /**
+//     * At present, the starting line
+//     */
+//    private int mCurrentLine = 0;
+//
+//    /**
+//     * The first line in the current view of migration
+//     */
+//    private int mCurrentOffset = 0;
+//
+//    /**
+//     * Save for the line and offset a collection of objects
+//     */
+//    private List<TxtLine> mMyLines = new ArrayList<TxtLine>();
+//
+//    /**
+//     * The documents show that the data used to buffer
+//     */
+//    private byte[] mDisplayBuffer;
+//
+//    /**
+//     * For the preservation of the current screen data
+//     */
+//    private byte[] mScreenData = new byte[0];
 
     /**
      * is the document is the last page ?
      */
-    private boolean mEndOfDoc = false;
+    private boolean m_isLastPage = false;
 
     /**
      * is the document is the front page ?
      */
-    private boolean mBeforeOfDoc = true;
+    private boolean m_isFirstPage = true;
 
     /**
      * The file encoding
@@ -79,318 +84,28 @@ public class KBTxtStringReader {
      * Percentage
      */
     private int mPercent = 0;
-    private int mStartOffset = 0;
-    private int mEndOffset = 0;
-    private int mDataStartLocation = 0;
-    private int mDataEndLocation = 0;
+    private int m_mbBufBegin = 0;
+    private int m_mbBufEnd = 0;
+//    private int mDataStartLocation = 0;
+//    private int mDataEndLocation = 0;
 
-    public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight) {
-        this.mFileName = fileName;
-        this.mTextView = textView;
-        this.mTextView.getPaint().setTextSize(mFontSize);
-        this.mVisibleWidth = visibleWidth;
-        this.mVisibleHeight = visibleHeight;
-
-        /** Start initialization */
-        init();
-    }
-
-    public void analysisDisplayBuffer() {
-        if (null == mDisplayBuffer) {
-            return;
-        }
-        mMyLines.clear();
-        int length = 0;
-        int offset = 0;
-        int width = 0;
-        int beforeLineLength = 0;// The length of before current line
-//        for (offset = 0; offset < mDisplayBuffer.length; ) {
-//            int b = mDisplayBuffer[offset] & 0xff;
-//            if (b == 13) {// Use the blank instead of \r
-//                mDisplayBuffer[offset] = ' ';
-//            }
-//            if (b == 10) {// \n
-//                length++;
-//                offset++;
-//                beforeLineLength++;
-//                /** Scroll down */
-//                mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
-//                        beforeLineLength));
-//                length = 0;
-//                continue;
-//            }
-//            if (b > 0x7f) {// Chinese
-//                if (width + KBCR.ChineseFontWidth > mVisibleWidth) {// If the line
-//                    // length
-//                    // more than view width
-//                    mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
-//                            beforeLineLength));
-//                    length = 0;
-//                    width = 0;
-//                    continue;
-//                } else {
-//                    offset += 2;
-//                    length += 2;
-//                    beforeLineLength += 2;
-//                    width += KBCR.ChineseFontWidth;
-//                }
-//
-//            } else {// Ascii
-//                int aw = KBCR.upperAsciiWidth;
-//
-//                if (!(b >= 65 && b <= 90)) {
-//                    aw = KBCR.lowerAsciiWidth;
-//                }
-//                if (width + aw > mVisibleWidth) {
-//
-//                    mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
-//                            beforeLineLength));
-//                    length = 0;
-//                    width = 0;
-//                    continue;
-//                } else {
-//                    offset += 1;
-//                    length += 1;
-//                    beforeLineLength += 1;
-//                    width += aw;
-//                }
-//            }
-//        }
-        // Add the last line
-        mMyLines.add(new TxtLine(mCurrentOffset + offset, length,
-                beforeLineLength));
-        mCurrentLine = 0;
-        System.gc();
-    }
-
-    public void close() {
-        mReadFileRandom.close();
-    }
-
-    public void displayPreToScreen(int n) {
-        String tag = "displayPreToScreen";
-        int tempCurrentLine = mCurrentLine;
-        int futureLine = tempCurrentLine - n;
-        Log.d(tag, "futureLine : " + futureLine);
-        if (futureLine < 0) {
-            futureLine = 0;
-        }
-
-        Log.d(tag, "mCurrentLine:" + mCurrentLine);
-        Log.d(tag, "futureLine:" + futureLine);
-        Log.d(tag, "mBeforeOfDoc:" + mBeforeOfDoc);
-        Log.d(tag, "mEndOfDoc:" + mEndOfDoc);
-        Log.d(tag, "mCurrentLine:" + mCurrentLine);
-
-        if (futureLine == 0 && !mBeforeOfDoc) {
-            readPreBuffer();
-            analysisDisplayBuffer();
-            Log.d(tag, "futureLine ==0 && !mBeforeOfDoc");
-            int lastLine = mLineCount - 1;
-            if (lastLine > mMyLines.size()) {
-                Log.d(tag, "lastLine  : " + lastLine);
-                Log.d(tag, "mMyLines.size():" + mMyLines.size());
-                mStartOffset = 0;
-                mDataStartLocation = mMyLines.get(0).getBeforeLineLength();
-                mEndOffset = mMyLines.get(mMyLines.size() - 1).getOffset();
-                mDataEndLocation = mMyLines.get(mMyLines.size() - 1)
-                        .getBeforeLineLength();
-            } else {
-                mCurrentLine = mMyLines.size() - mLineCount;
-                if (mCurrentLine < 0) {
-                    Log.d(tag, "set the mCurrentLine is 0 ....");
-                    mCurrentLine = 0;
-                }
-                mStartOffset = mMyLines.get(mCurrentLine).getOffset();
-                mDataStartLocation = mMyLines.get(mCurrentLine)
-                        .getBeforeLineLength();
-                mEndOffset = mMyLines.get(mMyLines.size() - 1).getOffset();
-                mDataEndLocation = mMyLines.get(mMyLines.size() - 1)
-                        .getBeforeLineLength();
-            }
-
-            Log.d(tag, "mCurrentLine : " + mCurrentLine);
-            Log.d(tag, "mDataStartLocation �� " + mDataStartLocation);
-            Log.d(tag, "mDataEndLocation : " + mDataEndLocation);
-            setData(mDataStartLocation, mDataEndLocation);
-
-            return;
-        }
-
-        if (futureLine == 0 && mBeforeOfDoc) {
-            mCurrentLine = 0;
-            mStartOffset = 0;
-            mDataStartLocation = 0;
-            int lastLine = mLineCount - 1;
-            if (lastLine > mMyLines.size()) {
-                mEndOffset = mMyLines.get(mMyLines.size() - 1).getOffset();
-                mDataEndLocation = mMyLines.get(mMyLines.size() - 1)
-                        .getBeforeLineLength();
-            } else {
-                mEndOffset = mMyLines.get(lastLine).getOffset();
-                mDataEndLocation = mMyLines.get(lastLine).getBeforeLineLength();
-            }
-
-            Log.d(tag, "futureLine ==0 && mBeforeOfDoc");
-
-            Log.d(tag, "mDataStartLocation : " + mDataStartLocation);
-            Log.d(tag, "mDataEndLocation : " + mDataEndLocation);
-            setData(mDataStartLocation, mDataEndLocation);
-            return;
-        }
-
-        if (futureLine > 0) {
-            int lastLine = futureLine + mLineCount;
-            if (lastLine >= mMyLines.size()) {
-                lastLine = mMyLines.size() - 1;
-            }
-            mCurrentLine = futureLine;
-            mStartOffset = mMyLines.get(futureLine).getOffset();
-            mDataStartLocation = mMyLines.get(futureLine).getBeforeLineLength();
-            mEndOffset = mMyLines.get(lastLine).getOffset();
-            mDataEndLocation = mMyLines.get(lastLine).getBeforeLineLength();
-            Log.d(tag, "futureLine > 0");
-
-            Log.d(tag, "mDataStartLocation �� " + mDataStartLocation);
-            Log.d(tag, "mDataEndLocation : " + mDataEndLocation);
-            setData(mDataStartLocation, mDataEndLocation);
-        }
-    }
-
-    public void displayNextToScreen(int n) {
-        String tag = "displayNextToScreen";
-        int tempCurrentLine = mCurrentLine;
-        int lastLineIndex = mMyLines.size() - 1;
-        int futureLine = tempCurrentLine + n;
-
-        if (futureLine + mLineCount > lastLineIndex) {
-            if (!mEndOfDoc) {
-                Log.d(tag, "read new buffer when skip...");
-                readNextBuffer();
-                analysisDisplayBuffer();
-                mCurrentLine = n;
-                lastLineIndex = mMyLines.size() - 1;
-                mStartOffset = mMyLines.get(mCurrentLine - 1).getOffset();
-                mDataStartLocation = mMyLines.get(mCurrentLine - 1)
-                        .getBeforeLineLength();
-                if (lastLineIndex + 1 < mLineCount) {
-                    mEndOffset = mMyLines.get(lastLineIndex).getOffset();
-                    mDataEndLocation = mMyLines.get(lastLineIndex)
-                            .getBeforeLineLength();
-                } else {
-                    int i = mCurrentLine + mLineCount;
-                    if (i >= mMyLines.size()) {
-                        i = mMyLines.size() - 1;
-                    }
-                    mEndOffset = mMyLines.get(i).getOffset();
-                    mDataEndLocation = mMyLines.get(i).getBeforeLineLength();
-                }
-                Log
-                        .d(tag,
-                                "futureLine+mLineCount > lastLineIndex !mEndOfDoc ");
-                Log.d(tag, "mDataStartLocation is :" + mDataStartLocation);
-                Log.d(tag, "mDataEndLocation is :" + mDataEndLocation);
-
-                setData(mDataStartLocation, mDataEndLocation);
-                return;
-            }
-            if (mEndOfDoc) {
-                if (lastLineIndex <= mLineCount) {
-                    if (mCurrentLine == 0) {
-                        mStartOffset = mMyLines.get(mCurrentLine).getOffset();
-                    } else {
-                        mStartOffset = mMyLines.get(mCurrentLine).getOffset();
-                        mDataStartLocation = mMyLines.get(mCurrentLine)
-                                .getBeforeLineLength();
-                    }
-                    mEndOffset = mMyLines.get(lastLineIndex).getOffset();
-                    mDataEndLocation = mMyLines.get(lastLineIndex)
-                            .getBeforeLineLength();
-                    Log.d(tag, "lastLineIndex<=mLineCount mEndOfDoc ");
-                    Log.d(tag, "mDataStartLocation is :" + mDataStartLocation);
-                    Log.d(tag, "mDataEndLocation is :" + mDataEndLocation);
-
-                    setData(mDataStartLocation, mDataEndLocation);
-                    return;
-                } else {
-                    mStartOffset = mMyLines.get(mCurrentLine).getOffset();
-                    mDataStartLocation = mMyLines.get(mCurrentLine)
-                            .getBeforeLineLength();
-
-                    mEndOffset = mMyLines.get(lastLineIndex).getOffset();
-                    mDataEndLocation = mMyLines.get(lastLineIndex)
-                            .getBeforeLineLength();
-
-                    mCurrentLine = lastLineIndex - mLineCount;
-                    Log.d(tag,
-                            "  !(lastLineIndex<=mLineCount) mEndOfDoc ");
-                    Log.d(tag, "mDataStartLocation is :" + mDataStartLocation);
-                    Log.d(tag, "mDataEndLocation is :" + mDataEndLocation);
-
-                    setData(mDataStartLocation, mDataEndLocation);
-                    return;
-                }
-            }
-        }
-
-        if (futureLine + mLineCount <= lastLineIndex) {
-            mCurrentLine = futureLine;
-            if (mCurrentLine == 0) {
-                mStartOffset = mMyLines.get(mCurrentLine).getOffset();
-                mDataStartLocation = mMyLines.get(mCurrentLine)
-                        .getBeforeLineLength();
-            } else {
-                mStartOffset = mMyLines.get(mCurrentLine - 1).getOffset();
-                mDataStartLocation = mMyLines.get(mCurrentLine - 1)
-                        .getBeforeLineLength();
-            }
-            mEndOffset = mMyLines.get(futureLine + mLineCount)
-                    .getOffset();
-            mDataEndLocation = mMyLines.get(futureLine + mLineCount)
-                    .getBeforeLineLength();
-
-            Log.d(tag, "futureLine+mLineCount <= lastLineIndex ");
-            Log.d(tag, "mDataStartLocation is :" + mDataStartLocation);
-            Log.d(tag, "mDataEndLocation is :" + mDataEndLocation);
-
-            setData(mDataStartLocation, mDataEndLocation);
-            return;
-        }
-    }
+    private Vector<String> m_lines = new Vector<>();
 
     public int getCurrentLineOffset() {
-        return mStartOffset;
+        return m_mbBufBegin;
     }
 
     public String getCurrentLineString() {
-        int length = mScreenData.length;
-        String s = KBConstants.BOOKMARK;
-        if (length < 10) {
-            try {
-                s = new String(mScreenData, this.mEncoding);
-            } catch (UnsupportedEncodingException e) {
-                return s;
-            }
-        } else {
-            byte[] b = new byte[10];
-            System.arraycopy(mScreenData, 0, b, 0, b.length);
-            try {
-                s = new String(b, this.mEncoding);
-            } catch (UnsupportedEncodingException e) {
-                return s;
-            }
-        }
-        System.gc();
-        return s;
+        return m_lines.size() > 0 ? m_lines.get(0) : KBConstants.NODATAINFILE;
     }
 
     public long getFileLength() {
         return mFileLength;
     }
 
-    public List<TxtLine> getList() {
-        return mMyLines;
-    }
+//    public List<TxtLine> getList() {
+//        return mMyLines;
+//    }
 
     public int getLinesOfOneScreen() {
         return this.mLineCount;
@@ -405,7 +120,7 @@ public class KBTxtStringReader {
         return endOffset;
     }
 
-    public int getPercentWithOffset(int _offset) {
+    public int getPercentWithOffset(long _offset) {
         int percent = 0;
         if (mFileLength != 0) {
             percent = (int) (((double) _offset / (double) mFileLength) * 1000);
@@ -422,189 +137,344 @@ public class KBTxtStringReader {
         mPercent = _percent;
     }
 
-    public void setFontSize(int size) {
+    public void setTextSize(int size) {
         mFontSize = size;
         mTextView.getPaint().setTextSize(mFontSize);
-        mLineCount = (int) (mVisibleHeight / mFontSize);
+        mLineCount = (mVisibleHeight / mFontSize);
+        this.mLineCount = this.mLineCount - this.mLineCount / 8;
     }
 
-    public int getFontSize() {
+    public int getTextSize() {
         return mFontSize;
     }
 
     public boolean isEnd() {
-        return mEndOfDoc;
+        return m_isLastPage;
     }
 
-    public void readBufferByOffset(int offset) {
-        String tag = "readBufferByOffset";
+    public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight) {
+        this.mFileName = fileName;
+        this.mTextView = textView;
+        this.mVisibleWidth = visibleWidth;
+        this.mVisibleHeight = visibleHeight;
+        setTextSize(mFontSize);
 
-        Log.d(tag, "read the data by offset");
-        Log.d(tag, "offset is :" + offset);
-        mStartOffset = offset;
-        mMyLines.clear();
-        TxtLine t = new TxtLine(offset, 0, 0);
+        mEncoding = getCharsetName();
 
-        mCurrentLine = 0;
-        mMyLines.add(t);
-        readNextBuffer();
-        analysisDisplayBuffer();
-        displayNextToScreen(0);
+        init();
     }
 
-    private void readNextBuffer() {
-        byte[] b = new byte[BUFFER_SIZE];
-
-        mCurrentOffset = (int) mStartOffset;
-        mReadFileRandom.openNewStream();
-        mReadFileRandom.fastSkip(mStartOffset);
-
-        int actualLength = mReadFileRandom.readBytes(b);
-
-        if (mStartOffset == 0) {
-            mBeforeOfDoc = true;
-        } else {
-            mBeforeOfDoc = false;
-        }
-        if (actualLength < BUFFER_SIZE) {
-            mEndOfDoc = true;
-        } else {
-            mEndOfDoc = false;
-        }
-
-        if (actualLength == -1 && mScreenData.length == 0) {
-            mTextView.setText(KBConstants.NODATAINFILE);
-            return;
-        }
-
-        if (mEndOfDoc) {
-            mDisplayBuffer = new byte[actualLength];
-            System.arraycopy(b, 0, mDisplayBuffer, 0, actualLength);
-            b = null;
-            System.gc();
-            return;
-        }
-
-        int readDataLength = actualLength;
-        int nlocation = 0;
-        while (readDataLength > 0) {
-            if ((b[readDataLength - 1] & 0xff) == 10) {
-                nlocation = readDataLength;
-                break;
-            }
-            readDataLength--;
-        }
-
-        if (nlocation == 0) {
-            System.exit(1);
-        }
-
-        int mDisplayBufferLength = nlocation;
-        mDisplayBuffer = new byte[mDisplayBufferLength];
-
-        System.arraycopy(b, 0, mDisplayBuffer, 0, mDisplayBufferLength);
-        b = null;
-        System.gc();
+    public void close() {
+        mReadFileRandom = null;
     }
 
-    private void readPreBuffer() {
-        int x = mCurrentLine + this.mLineCount;
-        int offsetOfLastLineInScreen = 0;
-        int sizeLines = mMyLines.size();
-        if (x > sizeLines) {
-            offsetOfLastLineInScreen = mMyLines.get(sizeLines - 1).getOffset();
-        } else {
-            offsetOfLastLineInScreen = mMyLines.get(x).getOffset();
-        }
-
-        if (offsetOfLastLineInScreen <= BUFFER_SIZE) {
-            mBeforeOfDoc = true;
-            if (offsetOfLastLineInScreen == mFileLength) {
-                mEndOfDoc = true;
-            }
-            byte[] b = new byte[offsetOfLastLineInScreen];
-            mReadFileRandom.openNewStream();
-            int readDataLength = mReadFileRandom.readBytes(b);
-
-            mDisplayBuffer = new byte[readDataLength];
-            System.arraycopy(b, 0, mDisplayBuffer, 0, readDataLength);
-            mCurrentOffset = 0;
-            b = null;
-            System.gc();
+    public void readPrePage() {
+        if (m_mbBufBegin <= 0) {
+            m_mbBufBegin = 0;
+            m_isFirstPage = true;
             return;
-        }
-        int skipLength = offsetOfLastLineInScreen - BUFFER_SIZE;
-        mReadFileRandom.openNewStream();
-        mReadFileRandom.locate(skipLength);
-        mCurrentOffset = skipLength;
-        byte[] b = new byte[BUFFER_SIZE];
-        int readLength = mReadFileRandom.readBytes(b);
-        mBeforeOfDoc = false;
-        if (readLength < BUFFER_SIZE) {
-            mEndOfDoc = true;
-        }
+        } else m_isFirstPage = false;
+        m_lines.clear();
+        pageUp();
+        m_lines = pageDown();
+        displayText();
+    }
 
-        int nlocation = 0;
-        while (nlocation < readLength) {
-            if ((b[nlocation] & 0xff) == 10) {
-                break;
+    public void readNextPage() {
+        if (m_mbBufEnd >= mFileLength) {
+            m_isLastPage = true;
+            return;
+        } else m_isLastPage = false;
+        m_lines.clear();
+        m_mbBufBegin = m_mbBufEnd;
+        m_lines = pageDown();
+        displayText();
+    }
+
+    public void read(int offset) {
+        m_mbBufEnd = m_mbBufBegin = offset;
+        m_lines.clear();
+        m_lines = pageDown();
+        displayText();
+    }
+
+    private void displayText() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (m_lines.size() > 0) {
+            for (String strLine : m_lines) {
+                stringBuilder.append(strLine);
             }
-            nlocation++;
         }
-        if (nlocation == readLength) {
-            System.exit(1);
+        mTextView.setText(stringBuilder.toString());
+
+        mPercent = (int) (m_mbBufBegin * 1000 / mFileLength);
+    }
+
+//    private void getCharsetName() {
+//        File file = new File(mFileName);
+//        if (!file.exists()) {
+//            return;
+//        }
+//
+//        byte[] encodings = new byte[512];
+//        FileInputStream fis = null;
+//        try {
+//            fis = new FileInputStream(file);
+//            if (fis.read(encodings) > 0) {
+//                mEncoding = KBBytesEncodingDetect.nicename[new KBBytesEncodingDetect().detectEncoding(encodings)];
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (fis != null) {
+//                    fis.close();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+    private String getCharsetName() {
+        File file = new File(mFileName);
+        if (!file.exists()) {
+            System.err.println("getFileIncode: file not exists!");
+            return null;
         }
 
-        mDisplayBuffer = new byte[readLength];
-        System.arraycopy(b, 0, mDisplayBuffer, 0, readLength);
-        b = null;
-        System.gc();
+        byte[] buf = new byte[4096];
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            // (1)
+            UniversalDetector detector = new UniversalDetector(null);
 
+            // (2)
+            int nread;
+            while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+                detector.handleData(buf, 0, nread);
+            }
+            // (3)
+            detector.dataEnd();
+
+            // (4)
+            String encoding = detector.getDetectedCharset();
+            if (encoding != null) {
+                System.out.println("Detected encoding = " + encoding);
+            } else {
+                System.out.println("No encoding detected.");
+            }
+
+            // (5)
+            detector.reset();
+            fis.close();
+            return encoding;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private void init() {
-        this.mReadFileRandom = new KBReadFileRandom(this.mFileName);
-        this.mFileLength = mReadFileRandom.getFileLength();
-
-        byte[] encodings = new byte[400];
-        mReadFileRandom.readBytes(encodings);
-        mReadFileRandom.close();
-        KBBytesEncodingDetect be = new KBBytesEncodingDetect();
-        this.mEncoding = KBBytesEncodingDetect.nicename[be.detectEncoding(encodings)];
-
-        if (this.mFileLength == 0) {
+        File file = new File(mFileName);
+        mFileLength = file.length();
+        if (mFileLength == 0) {
             mTextView.setText(KBConstants.NODATAINFILE);
             return;
         }
 
-        /** Initialization screen shows a number of rows of data */
-        this.mLineCount = (int) (mVisibleHeight / mFontSize);
-
-        readNextBuffer();
-        analysisDisplayBuffer();
-        displayNextToScreen(0);
-    }
-
-    private void setData(int start, int end) {
-        String tag = "setData";
-        Log.d(tag, "start index is :" + start);
-        Log.d(tag, "end index is :" + end);
-        mScreenData = null;
-        mScreenData = new byte[end - start];
-        mCurrentOffset = mStartOffset;
-        mPercent = (int) (((double) mStartOffset / (double) mFileLength) * 1000);
-        if (isEnd()) {
-            mPercent = 1000;
-        }
-        Log.d("showPercent", "setData mPercent: " + mPercent);
-
-        System.arraycopy(mDisplayBuffer, start, mScreenData, 0,
-                mScreenData.length);
         try {
-            // Log.d("setData:", new String(mScreenData, this.mEncoding));
-            mTextView.setText(new String(mScreenData, this.mEncoding));
-        } catch (UnsupportedEncodingException e) {
+            this.mReadFileRandom = new BufferedRandomAccessFile(file, "r").getChannel().map(FileChannel.MapMode.READ_ONLY, 0, mFileLength);
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        readNextBuffer();
+//        analysisDisplayBuffer();
+//        displayNextToScreen(0);
     }
+
+    private byte[] readParagraphBack(int nEnd) {  //读取上一段
+        int i;
+        byte b0, b1;        //分别存储一个汉字的前后两个字符
+
+        //判别文字编码
+        //utf-16是固定16位的(双字节)，分为LE 和 BE
+        //比如说char 'a', ascii为
+        //0x61, 那么它的utf-8, 则为 [0x61], 但utf-16是16位的, 所以为[0x00, 0x61]，LE 为Ox6100
+        switch (mEncoding) {
+            case "UTF-16LE"://UTF-16LE(little endian)
+                i = nEnd - 2;   //一个字 2 byte
+                while (i > 0) {
+                    b0 = mReadFileRandom.get(i);
+                    b1 = mReadFileRandom.get(i + 1);
+                    if (b0 == 0x0a && b1 == 0x00 && i != nEnd - 2) {   //Ox0a  分段标识
+                        i += 2;
+                        break;
+                    }
+                    i--;
+                }
+                break;
+            case "UTF-16BE":        //UTF-16BE (big endian)
+                i = nEnd - 2;
+                while (i > 0) {
+                    b0 = mReadFileRandom.get(i);
+                    b1 = mReadFileRandom.get(i + 1);
+                    if (b0 == 0x00 && b1 == 0x0a && i != nEnd - 2) {
+                        i += 2;
+                        break;
+                    }
+                    i--;
+                }
+                break;
+            default:
+                i = nEnd - 1;
+                while (i > 0) {
+                    b0 = mReadFileRandom.get(i);
+                    if (b0 == 0x0a && i != nEnd - 1) {
+                        i++;
+                        break;
+                    }
+                    i--;
+                }
+                break;
+        }
+        if (i < 0)
+            i = 0;
+        int nParaSize = nEnd - i;
+        int j;
+        byte[] buf = new byte[nParaSize];
+        for (j = 0; j < nParaSize; j++) {
+            buf[j] = mReadFileRandom.get(i + j);
+        }
+        return buf;
+    }
+
+    private byte[] readParagraphForward(int nFromPos) {
+        int i = nFromPos;
+        byte b0, b1;
+
+        // 根据编码格式判断换行，Ox0a为换行
+        switch (mEncoding) {
+            case "UTF-16LE":
+                while (i < mFileLength - 1) {
+                    b0 = mReadFileRandom.get(i++);
+                    b1 = mReadFileRandom.get(i++);
+                    if (b0 == 0x0a && b1 == 0x00) {
+                        break;
+                    }
+                }
+                break;
+            case "UTF-16BE":
+                while (i < mFileLength - 1) {
+                    b0 = mReadFileRandom.get(i++);
+                    b1 = mReadFileRandom.get(i++);
+                    if (b0 == 0x00 && b1 == 0x0a) {
+                        break;
+                    }
+                }
+                break;
+            default:
+                while (i < mFileLength) {
+                    b0 = mReadFileRandom.get(i++);
+                    if (b0 == 0x0a) {
+                        break;
+                    }
+                }
+                break;
+        }
+
+        int nParaSize = i - nFromPos;
+        byte[] buf = new byte[nParaSize];
+        for (i = 0; i < nParaSize; i++) {
+            buf[i] = mReadFileRandom.get(nFromPos + i);
+        }
+        return buf;
+    }
+
+    private void pageUp() { //上一页
+        if (m_mbBufBegin < 0)
+            m_mbBufBegin = 0;
+        Vector<String> lines = new Vector<>();
+        String strParagraph = "";
+        while (lines.size() < mLineCount && m_mbBufBegin > 0) {
+            Vector<String> paraLines = new Vector<>();
+            byte[] paraBuf = readParagraphBack(m_mbBufBegin);
+            m_mbBufBegin -= paraBuf.length;
+            try {   //将byte 转化为汉字
+                strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            strParagraph = strParagraph.replaceAll("\r\n", "");
+            strParagraph = strParagraph.replaceAll("\n", "");
+
+            if (strParagraph.length() == 0) {
+                paraLines.add(strParagraph);
+            }
+            while (strParagraph.length() > 0) {
+                int nSize = mTextView.getPaint().breakText(strParagraph, true, mVisibleWidth, null);
+                paraLines.add(strParagraph.substring(0, nSize) + "\r\n");
+                strParagraph = strParagraph.substring(nSize);
+            }
+            lines.addAll(0, paraLines);
+        }
+        while (lines.size() > mLineCount) {
+            try {
+                m_mbBufBegin += lines.get(0).getBytes(mEncoding).length;
+                lines.remove(0);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        m_mbBufEnd = m_mbBufBegin;
+    }
+
+    private Vector<String> pageDown() {  //下一页
+        String strParagraph = "";
+        Vector<String> lines = new Vector<>();
+        while (lines.size() < mLineCount && m_mbBufEnd < mFileLength) {
+            byte[] paraBuf = readParagraphForward(m_mbBufEnd); // 读取一个段落
+            m_mbBufEnd += paraBuf.length;
+            try {
+                strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String strReturn = "";
+
+            //\r换行，\n新行   \r\n新段落
+            if (strParagraph.contains("\r\n")) {
+                strReturn = "\r\n";
+                strParagraph = strParagraph.replaceAll("\r\n", "");
+            } else if (strParagraph.contains("\n")) {
+                strReturn = "\n";
+                strParagraph = strParagraph.replaceAll("\n", "");
+            }
+
+            if (strParagraph.length() == 0) {
+//                lines.add(strParagraph);
+                lines.add("\r\n");
+            }
+            while (strParagraph.length() > 0) {
+                int nSize = mTextView.getPaint().breakText(strParagraph, true, mVisibleWidth, null);
+                lines.add(strParagraph.substring(0, nSize) + "\r\n");
+                strParagraph = strParagraph.substring(nSize);
+                if (lines.size() >= mLineCount) {
+                    break;
+                }
+            }
+            if (strParagraph.length() != 0) {
+                try {
+                    m_mbBufEnd -= (strParagraph + strReturn).getBytes(mEncoding).length;
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lines;
+    }
+
 }

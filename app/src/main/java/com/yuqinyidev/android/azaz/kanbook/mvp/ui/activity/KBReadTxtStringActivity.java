@@ -67,57 +67,56 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
     private final Handler mHandlerFling = new Handler();
     private boolean isFling = false;
 
-    private GestureDetector mDetector = new GestureDetector(
-            new OnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    if (isFling) {
-                        return false;
-                    }
-                    int offsetLines = mTxtReader.getLinesOfOneScreen();
-                    if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
-                        mTxtReader.displayPreToScreen(offsetLines);
-                        showPercent();
-                        mScvContent.scrollTo(0, 0);
-                        return true;
-                    } else if (e.getRawY() > (mVisibleHeight * 2 / 3)) {
-                        mTxtReader.displayNextToScreen(offsetLines);
-                        showPercent();
-                        return true;
-                    } else {
-                        openOptionsMenu();
-                    }
-                    return false;
-                }
+    private GestureDetector mDetector = new GestureDetector(new OnGestureListener() {
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            if (isFling) {
+                return false;
+            }
+//                    int offsetLines = mTxtReader.getLinesOfOneScreen();
+            if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
+                mTxtReader.readPrePage();
+                showPercent();
+                mScvContent.scrollTo(0, 0);
+                return true;
+            } else if (e.getRawY() > (mVisibleHeight * 2 / 3)) {
+                mTxtReader.readNextPage();
+                showPercent();
+                return true;
+            } else {
+                openOptionsMenu();
+            }
+            return false;
+        }
 
-                @Override
-                public void onShowPress(MotionEvent e) {
-                }
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
 
-                @Override
-                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                    return false;
-                }
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
 
-                @Override
-                public void onLongPress(final MotionEvent e) {
-                }
+        @Override
+        public void onLongPress(final MotionEvent e) {
+        }
 
-                @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                    isFling = true;
-                    int distance = (int) (e1.getRawY() - e2.getRawY());
-                    mFlingLines = distance / mTxtReader.getFontSize() * 2;
-                    mHandlerFling.postDelayed(mFling, 50);
-                    return true;
-                }
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            isFling = true;
+            int distance = (int) (e1.getRawY() - e2.getRawY());
+            mFlingLines = distance / mTxtReader.getTextSize() * 2;
+            mHandlerFling.postDelayed(mFling, 50);
+            return true;
+        }
 
-                @Override
-                public boolean onDown(MotionEvent e) {
-                    isFling = false;
-                    return false;
-                }
-            });
+        @Override
+        public boolean onDown(MotionEvent e) {
+            isFling = false;
+            return false;
+        }
+    });
 
     private int mFlingLines = 0;
     private int mRunLine = 0;
@@ -129,11 +128,11 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                 return;
             }
             if (mFlingLines < 0) {
-                mTxtReader.displayPreToScreen(1);
+//                mTxtReader.displayPreToScreen(1);
                 showPercent();
                 mScvContent.scrollTo(0, 0);
             } else if (mFlingLines > 0) {
-                mTxtReader.displayNextToScreen(1);
+//                mTxtReader.displayNextToScreen(1);
                 showPercent();
             }
             if (mRunLine++ < Math.abs(mFlingLines)) {
@@ -207,9 +206,9 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                mScvContent.scrollTo(0, mTxtReader.getFontSize());
+                mScvContent.scrollTo(0, mTxtReader.getTextSize());
                 if (null != mTxtReader) {
-                    mTxtReader.displayNextToScreen(1);
+//                    mTxtReader.displayNextToScreen(1);
                 }
                 showPercent();
                 return true;
@@ -218,7 +217,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                 mScvContent.scrollTo(0, 0);
                 if (null != mTxtReader) {
-                    mTxtReader.displayPreToScreen(1);
+//                    mTxtReader.displayPreToScreen(1);
                 }
                 showPercent();
                 return true;
@@ -226,7 +225,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
                 if (null != mTxtReader) {
-                    mTxtReader.displayPreToScreen(mTxtReader.getLinesOfOneScreen());
+                    mTxtReader.readPrePage();
                 }
                 showPercent();
                 return true;
@@ -234,7 +233,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                 if (null != mTxtReader) {
-                    mTxtReader.displayNextToScreen(mTxtReader.getLinesOfOneScreen());
+                    mTxtReader.readNextPage();
                 }
                 showPercent();
                 return true;
@@ -284,18 +283,16 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         loadData();
         if (savedInstanceState != null) {
             mOffset = savedInstanceState.getInt(KBConstants.SAVED_STATE_OFFSET);
-            mTxtReader.readBufferByOffset(mOffset);
+            mTxtReader.read(mOffset);
             showPercent(mTxtReader.getPercentWithOffset(mOffset));
         } else if (KBConstants.ACTIVITY_START_KEY_MAIN.equals(intent.getStringExtra(KBConstants.ACTIVITY_START_KEY))) {
             mOffset = intent.getIntExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, 0);
-            mTxtReader.readBufferByOffset(mOffset);
+            mTxtReader.read(mOffset);
             showPercent(mTxtReader.getPercentWithOffset(mOffset));
-
         }
         mTxvFileName.setText(KBUtility.getBookName(mFilePath));
 
-        mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false);
-        setNightMode(!mIsNightMode);
+        setNightMode(!(mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false)));
         setScreenBrightness();
     }
 
@@ -377,7 +374,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     mDcTime.setTextColor(fontColor);
                     int textSize = mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE);
                     if ((int) (mTxvContent.getTextSize()) != textSize) {
-                        mTxtReader.setFontSize(textSize);
+                        mTxtReader.setTextSize(textSize);
 //                        TextPaint tp = mTxvContent.getPaint();
 //                        KBCR.fontHeight = mTxvContent.getLineHeight();
 //                        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
@@ -388,7 +385,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
 //                        Log.d("onActRet CR.FontHeight:", "" + KBCR.fontHeight);
 //                        Log.d("onActRet CR.AsciiWidth:", "" + KBCR.upperAsciiWidth);
 //                        Log.d("onActRet CR.FontWidth:", "" + KBCR.ChineseFontWidth);
-                        mTxtReader.readBufferByOffset((mOffset = mTxtReader.getCurrentLineOffset()));
+                        mTxtReader.read((mOffset = mTxtReader.getCurrentLineOffset()));
                         showPercent();
                     }
                     break;
@@ -398,7 +395,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     if (strPercent != null && strPercent.length() != 0) {
                         int intPercent = (int) (Float.valueOf(strPercent) * 10);
                         mOffset = mTxtReader.getOffsetWithPercent(intPercent);
-                        mTxtReader.readBufferByOffset(mOffset);
+                        mTxtReader.read(mOffset);
                         showPercent(intPercent);
                     }
                     break;
@@ -456,7 +453,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         Log.d(tag, "onRestoreInstanceState the read text activity...");
         mOffset = savedInstanceState.getInt(KBConstants.SAVED_STATE_OFFSET);
         if (mTxtReader != null) {
-            mTxtReader.readBufferByOffset(mOffset);
+            mTxtReader.read(mOffset);
             showPercent(mTxtReader.getPercentWithOffset(mOffset));
         }
     }
@@ -492,44 +489,6 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         unregisterReceiver(mBroadcastReceiver);
     }
 
-    private void setNightMode(boolean _isNightMode) {
-        if (_isNightMode) {
-            mLayContent.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
-
-            int fontColor = mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK);
-            mTxvContent.setTextColor(fontColor);
-
-            mTxvFileName.setTextColor(fontColor);
-            mTxvBatteryStatus.setTextColor(fontColor);
-            mDcTime.setTextColor(fontColor);
-
-            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_normal));
-        } else {
-            mLayContent.setBackgroundResource(R.drawable.bg_hydq);
-            mTxvContent.setTextColor(Color.DKGRAY);
-            mTxvFileName.setTextColor(Color.DKGRAY);
-            mTxvBatteryStatus.setTextColor(Color.DKGRAY);
-            mDcTime.setTextColor(Color.DKGRAY);
-
-            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_night));
-        }
-    }
-
-    private void setScreenBrightness() {
-//        boolean usingSystemBrightness = mPreference.getBoolean(
-//                KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-//        if (!usingSystemBrightness) {
-//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-//                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-        WindowManager.LayoutParams wl = getWindow().getAttributes();
-        wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
-        getWindow().setAttributes(wl);
-//        } else {
-//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-//                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-//        }
-    }
-
     private void bookMarkView() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.kb_book_mark_list);
@@ -555,7 +514,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mBookMark != null) {
                     mOffset = mBookMark.getCurrentOffset();
-                    mTxtReader.readBufferByOffset(mOffset);
+                    mTxtReader.read(mOffset);
                     showPercent(mTxtReader.getPercentWithOffset(mOffset));
                     dialog.dismiss();
                 }
@@ -594,8 +553,9 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
         int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
+        mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight);
 
-        mTxvContent.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
+        mTxtReader.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
         mLayContent.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
@@ -613,7 +573,6 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
 //        Log.d("onCrtDig CRFontHeight:", "" + KBCR.fontHeight);
 //        Log.d("onCrtDig CRAsciiWidth:", "" + KBCR.upperAsciiWidth);
 //        Log.d("onCrtDig CRFontWidth:", "" + KBCR.ChineseFontWidth);
-        mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight);
 
         setTitle(mFilePath + "-" + getString(R.string.app_name));
         mScvContent.setOnKeyListener(mUpOrDown);
@@ -700,6 +659,44 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         history.setSaveTime(DateUtils.dateToString(new Date(), KBConstants.DATE_FORMAT_YYYYMMDDHHMMSS));
         history.setSummary(mTxtReader.getCurrentLineString());
         mKBDBAdapter.saveHistory(history);
+    }
+
+    private void setNightMode(boolean _isNightMode) {
+        if (_isNightMode) {
+            mLayContent.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
+
+            int fontColor = mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK);
+            mTxvContent.setTextColor(fontColor);
+
+            mTxvFileName.setTextColor(fontColor);
+            mTxvBatteryStatus.setTextColor(fontColor);
+            mDcTime.setTextColor(fontColor);
+
+            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_normal));
+        } else {
+            mLayContent.setBackgroundResource(R.drawable.bg_hydq);
+            mTxvContent.setTextColor(Color.DKGRAY);
+            mTxvFileName.setTextColor(Color.DKGRAY);
+            mTxvBatteryStatus.setTextColor(Color.DKGRAY);
+            mDcTime.setTextColor(Color.DKGRAY);
+
+            mTpbPercent.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_night));
+        }
+    }
+
+    private void setScreenBrightness() {
+//        boolean usingSystemBrightness = mPreference.getBoolean(
+//                KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+//        if (!usingSystemBrightness) {
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+//                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        WindowManager.LayoutParams wl = getWindow().getAttributes();
+        wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
+        getWindow().setAttributes(wl);
+//        } else {
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+//                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+//        }
     }
 
     private void showPercent() {
