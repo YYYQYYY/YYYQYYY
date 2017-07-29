@@ -93,10 +93,8 @@ public class KBMainActivity extends AppCompatActivity {
         glyHistory.setAdapter(historyListAdapter);
         glyHistory.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> _parent, View _view,
-                                    int _position, long _id) {
-                if (!KBConstants.SOFT_STATE_NO_BOOK_OPENED.equals(_view.getTag()
-                        .toString())) {
+            public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
+                if (!KBConstants.SOFT_STATE_NO_BOOK_OPENED.equals(_view.getTag().toString())) {
                     openHistoryFile((KBHistory) _view.getTag());
                 }
             }
@@ -108,8 +106,7 @@ public class KBMainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                startActivityForResult(new Intent(KBMainActivity.this,
 //                        KBBookShelfActivity.class), REQUEST_CODE_BOOKSHELF);
-                startActivity(new Intent(KBMainActivity.this,
-                        KBBookShelfActivity.class));
+                startActivity(new Intent(KBMainActivity.this, KBBookShelfActivity.class));
             }
         });
 
@@ -261,15 +258,13 @@ public class KBMainActivity extends AppCompatActivity {
     }
 
     private void openHistoryFile(KBHistory _history) {
-        Intent intent = new Intent(this, KBReadTxtActivity.class);
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY,
-                KBConstants.ACTIVITY_START_KEY_MAIN);
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY_FILE_PATH, _history
-                .getBookPath());
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY_BOOK_ID, _history
-                .getBookId());
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, _history
-                .getCurrentOffset());
+//        Intent intent = new Intent(this, KBReadTxtActivity.class);
+        // TODO :String reader.
+        Intent intent = new Intent(this, KBReadTxtStringActivity.class);
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY, KBConstants.ACTIVITY_START_KEY_MAIN);
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY_FILE_PATH, _history.getBookPath());
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY_BOOK_ID, _history.getBookId());
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, _history.getCurrentOffset());
         startActivityForResult(intent, REQUEST_CODE_READTXT);
     }
 
@@ -360,7 +355,6 @@ public class KBMainActivity extends AppCompatActivity {
             fos.close();
 //            }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             //如果捕捉到错误则通知UI线程
 //            MainActivity.handler.sendEmptyMessage(COPY_FALSE);

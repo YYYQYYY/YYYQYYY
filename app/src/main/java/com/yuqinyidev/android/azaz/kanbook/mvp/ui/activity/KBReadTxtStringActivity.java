@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -42,13 +41,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.yuqinyidev.android.azaz.R;
-import com.yuqinyidev.android.azaz.kanbook.KBCR;
 import com.yuqinyidev.android.azaz.kanbook.KBConstants;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.KBDBAdapter;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBookMark;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBHistory;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.customviews.KBTextProgressBar;
-import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBTxtReader;
+import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBTxtStringReader;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
 import com.yuqinyidev.android.framework.utils.DateUtils;
 import com.yuqinyidev.android.framework.utils.UiUtils;
@@ -56,7 +54,7 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 import java.util.Date;
 import java.util.List;
 
-public class KBReadTxtActivity extends AppCompatActivity {
+public class KBReadTxtStringActivity extends AppCompatActivity {
 
     private static final int DIALOG_ID_ABOUT = 0;
     private static final int DIALOG_ID_SAVE_BOOK_MARK_SUCCESS = 11;
@@ -76,8 +74,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     if (isFling) {
                         return false;
                     }
-                    int offsetLines = (int) Math.abs(mVisibleHeight
-                            / (KBCR.fontHeight));
+                    int offsetLines = mTxtReader.getLinesOfOneScreen();
                     if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
                         mTxtReader.displayPreToScreen(offsetLines);
                         showPercent();
@@ -98,8 +95,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                        float distanceX, float distanceY) {
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                     return false;
                 }
 
@@ -108,11 +104,10 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                       float velocityX, float velocityY) {
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     isFling = true;
                     int distance = (int) (e1.getRawY() - e2.getRawY());
-                    mFlingLines = distance / KBCR.fontHeight * 2;
+                    mFlingLines = distance / mTxtReader.getFontSize() * 2;
                     mHandlerFling.postDelayed(mFling, 50);
                     return true;
                 }
@@ -178,7 +173,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
 
     private SharedPreferences mPreference;
     private KBDBAdapter mKBDBAdapter;
-    private KBTxtReader mTxtReader;
+    private KBTxtStringReader mTxtReader;
 
     private LinearLayout mLayContent;
     private LinearLayout mLayFooter;
@@ -189,7 +184,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
     private TextView mTxvFileName;
     private DigitalClock mDcTime;
 
-    private int mVisibleWidth, mVisibleHeight;
+    private int mVisibleHeight;
 
     private int mLastPercent = 0;
     private static int mOffset = 0;
@@ -201,10 +196,10 @@ public class KBReadTxtActivity extends AppCompatActivity {
     private String mFilePath = null;
     private int mBookId = 0;
 
-    private int mLinesOfScreen;
+    //    private int mLinesOfScreen;
     private boolean mIsNightMode;
 
-    private OnKeyListener mUpOrDown = new View.OnKeyListener() {
+    private OnKeyListener mUpOrDown = new OnKeyListener() {
 
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (0 == mTxtReader.getFileLength()) {
@@ -212,31 +207,35 @@ public class KBReadTxtActivity extends AppCompatActivity {
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                mScvContent.scrollTo(0, KBCR.fontHeight);
-                if (null != mTxtReader)
+                mScvContent.scrollTo(0, mTxtReader.getFontSize());
+                if (null != mTxtReader) {
                     mTxtReader.displayNextToScreen(1);
+                }
                 showPercent();
                 return true;
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                 mScvContent.scrollTo(0, 0);
-                if (null != mTxtReader)
+                if (null != mTxtReader) {
                     mTxtReader.displayPreToScreen(1);
+                }
                 showPercent();
                 return true;
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                if (null != mTxtReader)
-                    mTxtReader.displayPreToScreen(mLinesOfScreen);
+                if (null != mTxtReader) {
+                    mTxtReader.displayPreToScreen(mTxtReader.getLinesOfOneScreen());
+                }
                 showPercent();
                 return true;
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                if (null != mTxtReader)
-                    mTxtReader.displayNextToScreen(mLinesOfScreen);
+                if (null != mTxtReader) {
+                    mTxtReader.displayNextToScreen(mTxtReader.getLinesOfOneScreen());
+                }
                 showPercent();
                 return true;
             }
@@ -248,7 +247,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         String tag = "onCreate";
         Log.d(tag, "create the read text activity...");
-        UiUtils.fullScreen(KBReadTxtActivity.this);
+        UiUtils.fullScreen(KBReadTxtStringActivity.this);
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
@@ -268,7 +267,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
             finish();
             return;
         }
-        setContentView(R.layout.kb_reader);
+        setContentView(R.layout.kb_string_reader);
 
         mKBDBAdapter = new KBDBAdapter(this);
         mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -313,7 +312,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
         Intent intent;
         switch (id) {
             case R.id.menu_reader_skip:
-                intent = new Intent(KBReadTxtActivity.this, KBVirtualDialogActivity.class);
+                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_SKIP);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_PERCENT, mTxtReader.getPercent());
                 startActivityForResult(intent, REQUEST_CODE_SKIP);
@@ -339,7 +338,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                         Settings.System.SCREEN_BRIGHTNESS, 10);
                 boolean usingSystemBrightness = mPreference.getBoolean(
                         KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-                intent = new Intent(KBReadTxtActivity.this, KBVirtualDialogActivity.class);
+                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, usingSystemBrightness);
@@ -349,7 +348,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_reader_about:
-                showDialog(DIALOG_ID_ABOUT);
+                showDialog(DIALOG_ID_ABOUT);//DialogFragment
                 return true;
             default:
                 return true;
@@ -378,19 +377,18 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     mDcTime.setTextColor(fontColor);
                     int textSize = mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE);
                     if ((int) (mTxvContent.getTextSize()) != textSize) {
-                        mTxvContent.setTextSize(textSize);
-                        TextPaint tp = mTxvContent.getPaint();
-                        KBCR.fontHeight = mTxvContent.getLineHeight();
-                        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
-                        KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
-                        KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
-                        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
+                        mTxtReader.setFontSize(textSize);
+//                        TextPaint tp = mTxvContent.getPaint();
+//                        KBCR.fontHeight = mTxvContent.getLineHeight();
+//                        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
+//                        KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
+//                        KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
+//                        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
 
-                        Log.d("onActRet CR.FontHeight:", "" + KBCR.fontHeight);
-                        Log.d("onActRet CR.AsciiWidth:", "" + KBCR.upperAsciiWidth);
-                        Log.d("onActRet CR.FontWidth:", "" + KBCR.ChineseFontWidth);
-                        mOffset = mTxtReader.getCurrentLineOffset();
-                        mTxtReader.readBufferByOffset(mOffset);
+//                        Log.d("onActRet CR.FontHeight:", "" + KBCR.fontHeight);
+//                        Log.d("onActRet CR.AsciiWidth:", "" + KBCR.upperAsciiWidth);
+//                        Log.d("onActRet CR.FontWidth:", "" + KBCR.ChineseFontWidth);
+                        mTxtReader.readBufferByOffset((mOffset = mTxtReader.getCurrentLineOffset()));
                         showPercent();
                     }
                     break;
@@ -595,40 +593,40 @@ public class KBReadTxtActivity extends AppCompatActivity {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
-        mVisibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
+        int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
 
         mTxvContent.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
         mLayContent.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
         /** load the attribute for font */
-        TextPaint tp = mTxvContent.getPaint();
-        KBCR.fontHeight = mTxvContent.getLineHeight();
-        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
+//        TextPaint tp = mTxvContent.getPaint();
+//        KBCR.fontHeight = mTxvContent.getLineHeight();
+//        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
 
-        /** Ascii char width */
-        KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
-        KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
-        /** Chinese char width */
-        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
+//        /** Ascii char width */
+//        KBCR.upperAsciiWidth = (int) tp.measureText(KBConstants.UPPERASCII);
+//        KBCR.lowerAsciiWidth = (int) tp.measureText(KBConstants.LOWERASCII);
+//        /** Chinese char width */
+//        KBCR.ChineseFontWidth = (int) tp.measureText(KBConstants.CHINESE.toCharArray(), 0, 1);
 
-        Log.d("onCrtDig CRFontHeight:", "" + KBCR.fontHeight);
-        Log.d("onCrtDig CRAsciiWidth:", "" + KBCR.upperAsciiWidth);
-        Log.d("onCrtDig CRFontWidth:", "" + KBCR.ChineseFontWidth);
-        mTxtReader = new KBTxtReader(mTxvContent, this, mFilePath, mVisibleWidth, mVisibleHeight);
+//        Log.d("onCrtDig CRFontHeight:", "" + KBCR.fontHeight);
+//        Log.d("onCrtDig CRAsciiWidth:", "" + KBCR.upperAsciiWidth);
+//        Log.d("onCrtDig CRFontWidth:", "" + KBCR.ChineseFontWidth);
+        mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight);
 
         setTitle(mFilePath + "-" + getString(R.string.app_name));
         mScvContent.setOnKeyListener(mUpOrDown);
         mScvContent.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                KBReadTxtActivity.this.mDetector.onTouchEvent(event);
+                KBReadTxtStringActivity.this.mDetector.onTouchEvent(event);
                 return false;
             }
         });
     }
 
     private void saveBookMarkDialog() {
-        final Dialog dialog = new Dialog(KBReadTxtActivity.this);
+        final Dialog dialog = new Dialog(KBReadTxtStringActivity.this);
         dialog.setTitle(KBConstants.INPUTBMNAME);
         dialog.setContentView(R.layout.kb_book_mark_dialog);
         final EditText et = (EditText) dialog.findViewById(R.id.bmet);

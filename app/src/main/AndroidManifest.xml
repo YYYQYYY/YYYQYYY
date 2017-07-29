@@ -86,10 +86,13 @@
 
         <activity
             android:name=".kanbook.mvp.ui.activity.KBBookShelfActivity"
-            android:screenOrientation="portrait"  />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".kanbook.mvp.ui.activity.KBReadTxtActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".kanbook.mvp.ui.activity.KBReadTxtStringActivity"
             android:screenOrientation="portrait" />
 
         <activity
