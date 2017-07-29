@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.azaz.weather.mvp.model.entity.gson.Forecast;
 import com.yuqinyidev.android.azaz.weather.mvp.model.entity.gson.Weather;
@@ -217,10 +218,14 @@ public class WeatherActivity extends AppCompatActivity {
         if (f.exists()) {
             Glide.with(WeatherActivity.this)
                     .load(f)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mBingPicImg);
         } else {
             Glide.with(WeatherActivity.this)
                     .load(R.drawable.applegray)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mBingPicImg);
 //        } else {
 //            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuqinyidev.android.azaz.R;
@@ -195,10 +196,14 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         if (f.exists()) {
             Glide.with(SplashActivity.this)
                     .load(f)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mImvSplash);
         } else {
             Glide.with(SplashActivity.this)
                     .load(R.drawable.applegray)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mImvSplash);
         }
         txvJump.start();

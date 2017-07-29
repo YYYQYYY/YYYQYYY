@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <com.yuqinyidev.android.framework.widget.JustifyTextView
+            <TextView
                 android:id="@+id/textContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
