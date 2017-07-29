@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<item android:id="@+id/menu_reader_skip" android:title="@string/skipto"
-		android:icon="@drawable/fail" />
+		android:icon="@drawable/skip" />
 	<item android:id="@+id/menu_reader_save_bookmark" android:title="@string/savebookmark"
 		android:icon="@drawable/savebookmark" />
 	<item android:id="@+id/menu_reader_view_bookmark" android:title="@string/viewbookmark"
@@ -10,14 +10,14 @@
 
 
 	<item android:id="@+id/menu_reader_nightmode" android:title="@string/nightmode"
-		android:icon="@drawable/fail" />
+		android:icon="@drawable/daynight" />
 	<item android:id="@+id/menu_reader_back" android:title="@string/back"
 		android:icon="@drawable/uponelevel" />
 	<item android:id="@+id/menu_reader_brightness" android:title="@string/brightness"
-		android:icon="@drawable/fail" />
+		android:icon="@drawable/brightness" />
 	<item android:id="@+id/menu_reader_setting" android:title="@string/setting"
-		android:icon="@drawable/fail" />
+		android:icon="@drawable/settings" />
 	<item android:id="@+id/menu_reader_about" android:title="@string/about"
-		android:icon="@drawable/fail" />
+		android:icon="@drawable/about" />
 
 </menu>
