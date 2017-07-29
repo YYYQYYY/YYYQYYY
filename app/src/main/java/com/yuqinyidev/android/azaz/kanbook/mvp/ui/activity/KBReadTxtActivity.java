@@ -34,6 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DigitalClock;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -592,8 +593,9 @@ public class KBReadTxtActivity extends AppCompatActivity {
         int footHeight = Math.round(mTxvFileName.getLineHeight() * getResources().getDisplayMetrics().density) + 10;
         Log.d("footHeight : ", "" + footHeight);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mVisibleHeight = dm.heightPixels - footHeight;
-        mVisibleWidth = dm.widthPixels;
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mTxvContent.getLayoutParams();
+        mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
+        mVisibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
 
         mTxvContent.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
