@@ -10,24 +10,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -38,6 +39,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -175,6 +177,7 @@ public class KBReadTxtStringActivity extends Activity {
     private KBDBAdapter mKBDBAdapter;
     private KBTxtStringReader mTxtReader;
 
+    private PopupWindow mPopupWindow;
     private LinearLayout mLayContent;
     private LinearLayout mLayFooter;
     private ScrollView mScvContent;
@@ -243,6 +246,107 @@ public class KBReadTxtStringActivity extends Activity {
         }
     };
 
+    private OnClickListener mOnClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent;
+            switch (v.getId()) {
+                case R.id.ll_menu_reader_skip:
+                    mPopupWindow.dismiss();
+                    intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
+                    intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_SKIP);
+                    intent.putExtra(KBConstants.VIRUAL_DIALOG_PERCENT, mTxtReader.getPercent());
+                    startActivityForResult(intent, REQUEST_CODE_SKIP);
+                    break;
+                case R.id.ll_menu_reader_brightness:
+                    mPopupWindow.dismiss();
+                    // 取得当前亮度
+                    float normal = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, 0.5F);
+                    boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+                    intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
+                    intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
+                    intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
+                    intent.putExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, usingSystemBrightness);
+                    startActivityForResult(intent, REQUEST_CODE_BRIGHTNESS);
+                    break;
+                case R.id.ll_menu_reader_night_mode:
+                    mPopupWindow.dismiss();
+                    mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false);
+                    setNightMode(mIsNightMode);
+                    KBUtility.putShare(mPreference, KBConstants.PREF_KEY_IS_NIGHTMODE, !mIsNightMode);
+                    break;
+                case R.id.ll_menu_reader_save_bookmark:
+                    mPopupWindow.dismiss();
+                    saveBookMarkDialog();
+                    break;
+                case R.id.ll_menu_reader_view_bookmark:
+                    mPopupWindow.dismiss();
+                    bookMarkView();
+                    break;
+                case R.id.ll_menu_reader_setting:
+                    mPopupWindow.dismiss();
+                    intent = new Intent(getApplicationContext(), KBSettingActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_SETTING);
+                    break;
+                case R.id.ll_menu_reader_backward:
+                    mPopupWindow.dismiss();
+                    finish();
+                    break;
+                case R.id.bt_cancel:
+                    mPopupWindow.dismiss();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void showPopMenu() {
+        View view = View.inflate(getApplicationContext(), R.layout.kb_menu_reader, null);
+        LinearLayout ll_menu_reader_skip = (LinearLayout) view.findViewById(R.id.ll_menu_reader_skip);
+        LinearLayout ll_menu_reader_brightness = (LinearLayout) view.findViewById(R.id.ll_menu_reader_brightness);
+        LinearLayout ll_menu_reader_night_mode = (LinearLayout) view.findViewById(R.id.ll_menu_reader_night_mode);
+        LinearLayout ll_menu_reader_save_bookmark = (LinearLayout) view.findViewById(R.id.ll_menu_reader_save_bookmark);
+        LinearLayout ll_menu_reader_view_bookmark = (LinearLayout) view.findViewById(R.id.ll_menu_reader_view_bookmark);
+        LinearLayout ll_menu_reader_setting = (LinearLayout) view.findViewById(R.id.ll_menu_reader_setting);
+        LinearLayout ll_menu_reader_backward = (LinearLayout) view.findViewById(R.id.ll_menu_reader_backward);
+        Button bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+
+        ll_menu_reader_skip.setOnClickListener(mOnClickListener);
+        ll_menu_reader_brightness.setOnClickListener(mOnClickListener);
+        ll_menu_reader_night_mode.setOnClickListener(mOnClickListener);
+        ll_menu_reader_save_bookmark.setOnClickListener(mOnClickListener);
+        ll_menu_reader_view_bookmark.setOnClickListener(mOnClickListener);
+        ll_menu_reader_setting.setOnClickListener(mOnClickListener);
+        ll_menu_reader_backward.setOnClickListener(mOnClickListener);
+        bt_cancel.setOnClickListener(mOnClickListener);
+
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+
+        view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in));
+        LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
+        ll_popup.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_bottom_in));
+
+        if (mPopupWindow == null) {
+            mPopupWindow = new PopupWindow(this);
+            mPopupWindow.setWidth(LayoutParams.MATCH_PARENT);
+            mPopupWindow.setHeight(LayoutParams.MATCH_PARENT);
+            mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+            mPopupWindow.setFocusable(true);
+            mPopupWindow.setOutsideTouchable(true);
+        }
+
+        mPopupWindow.setContentView(view);
+        mPopupWindow.showAtLocation(mTxvBatteryStatus, Gravity.BOTTOM, 0, 0);
+        mPopupWindow.update();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         String tag = "onCreate";
@@ -297,61 +401,65 @@ public class KBReadTxtStringActivity extends Activity {
         setScreenBrightness();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.kb_menu_reader, menu);
-
-        return super.onCreateOptionsMenu(menu);
+    public void openOptionsMenu() {
+        showPopMenu();
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Intent intent;
-        switch (id) {
-            case R.id.menu_reader_skip:
-                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
-                intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_SKIP);
-                intent.putExtra(KBConstants.VIRUAL_DIALOG_PERCENT, mTxtReader.getPercent());
-                startActivityForResult(intent, REQUEST_CODE_SKIP);
-                return true;
-            case R.id.menu_reader_save_bookmark:
-                saveBookMarkDialog();
-                return true;
-            case R.id.menu_reader_view_bookmark:
-                bookMarkView();
-                return true;
-            case R.id.menu_reader_nightmode:
-                mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false);
-                setNightMode(mIsNightMode);
-                KBUtility.putShare(mPreference, KBConstants.PREF_KEY_IS_NIGHTMODE, !mIsNightMode);
-                return true;
-            case R.id.menu_reader_setting:
-                intent = new Intent(getApplicationContext(), KBSettingActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SETTING);
-                return true;
-            case R.id.menu_reader_brightness:
-                // 取得当前亮度
-                int normal = Settings.System.getInt(getContentResolver(),
-                        Settings.System.SCREEN_BRIGHTNESS, 10);
-                boolean usingSystemBrightness = mPreference.getBoolean(
-                        KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
-                intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
-                intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
-                intent.putExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, usingSystemBrightness);
-                startActivityForResult(intent, REQUEST_CODE_BRIGHTNESS);
-                return true;
-            case R.id.menu_reader_back:
-                finish();
-                return true;
-            case R.id.menu_reader_about:
-                showDialog(DIALOG_ID_ABOUT);//DialogFragment
-                return true;
-            default:
-                return true;
-        }
-    }
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.kb_menu_reader, menu);
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        Intent intent;
+//        switch (id) {
+//            case R.id.menu_reader_skip:
+//                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
+//                intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_SKIP);
+//                intent.putExtra(KBConstants.VIRUAL_DIALOG_PERCENT, mTxtReader.getPercent());
+//                startActivityForResult(intent, REQUEST_CODE_SKIP);
+//                return true;
+//            case R.id.menu_reader_save_bookmark:
+//                saveBookMarkDialog();
+//                return true;
+//            case R.id.menu_reader_view_bookmark:
+//                bookMarkView();
+//                return true;
+//            case R.id.menu_reader_nightmode:
+//                mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false);
+//                setNightMode(mIsNightMode);
+//                KBUtility.putShare(mPreference, KBConstants.PREF_KEY_IS_NIGHTMODE, !mIsNightMode);
+//                return true;
+//            case R.id.menu_reader_setting:
+//                intent = new Intent(getApplicationContext(), KBSettingActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_SETTING);
+//                return true;
+//            case R.id.menu_reader_brightness:
+//                // 取得当前亮度
+//                int normal = Settings.System.getInt(getContentResolver(),
+//                        Settings.System.SCREEN_BRIGHTNESS, 10);
+//                boolean usingSystemBrightness = mPreference.getBoolean(
+//                        KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+//                intent = new Intent(KBReadTxtStringActivity.this, KBVirtualDialogActivity.class);
+//                intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
+//                intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
+//                intent.putExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, usingSystemBrightness);
+//                startActivityForResult(intent, REQUEST_CODE_BRIGHTNESS);
+//                return true;
+//            case R.id.menu_reader_back:
+//                finish();
+//                return true;
+//            case R.id.menu_reader_about:
+//                showDialog(DIALOG_ID_ABOUT);//DialogFragment
+//                return true;
+//            default:
+//                return true;
+//        }
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -543,7 +651,6 @@ public class KBReadTxtStringActivity extends Activity {
             }
         });
         dialog.show();
-
     }
 
     private void loadData() {
@@ -552,7 +659,7 @@ public class KBReadTxtStringActivity extends Activity {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
-        int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
+        int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin - 10;
         mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight);
 
         mTxtReader.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));

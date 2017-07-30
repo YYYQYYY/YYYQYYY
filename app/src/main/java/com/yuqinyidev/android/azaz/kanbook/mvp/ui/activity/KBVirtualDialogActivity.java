@@ -115,8 +115,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onProgressChanged(SeekBar seekBar,
-                                                          int progress, boolean fromTouch) {
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
                             }
                         });
             } else {
@@ -126,8 +125,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
                 edtInput.setVisibility(View.VISIBLE);
                 if (KBConstants.ACTIVITY_START_KEY_RENAME_FOLDER.equals(choice)) {
                     setTitle(KBConstants.DIALOG_TITLE_INPUT_FOLDER_NAME);
-                } else if (KBConstants.ACTIVITY_START_KEY_RENAME_FILE
-                        .equals(choice)) {
+                } else if (KBConstants.ACTIVITY_START_KEY_RENAME_FILE.equals(choice)) {
                     setTitle(KBConstants.DIALOG_TITLE_INPUT_FILE_NAME);
                 }
             }
@@ -157,14 +155,12 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
 
                             result.append("|");
                             result.append(input);
-                            if (KBConstants.ACTIVITY_START_KEY_RENAME_FILE
-                                    .equals(choice)) {
+                            if (KBConstants.ACTIVITY_START_KEY_RENAME_FILE.equals(choice)) {
                                 result.append(KBConstants.FILE_END_TXT);
                             }
                         }
                         Intent intent = new Intent();
-                        intent.putExtra(KBConstants.VIRUAL_DIALOG_RESULT, result
-                                .toString());
+                        intent.putExtra(KBConstants.VIRUAL_DIALOG_RESULT, result.toString());
                         setResult(RESULT_OK, intent);
                         finish();
                     }

@@ -9,7 +9,7 @@
         android:id="@+id/txvEListTitle"
         android:layout_height="40dp"
         android:layout_width="fill_parent"
-        android:text="@string/eventList"
+        android:text="@string/event_list"
         android:textStyle="bold"
         android:textSize="25sp"
         android:background="@color/blue" />
@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/btnEListPreviou"
-                android:text="@string/previousEvent"
+                android:text="@string/previous_event"
                 android:layout_alignParentLeft="true"
                 android:layout_height="50dp"
                 android:layout_width="80dp"
@@ -44,7 +44,7 @@
 
             <Button
                 android:id="@+id/btnEListCreate"
-                android:text="@string/newEvent"
+                android:text="@string/new_event"
                 android:layout_centerHorizontal="true"
                 android:layout_height="50dp"
                 android:textSize="20sp"
@@ -53,7 +53,7 @@
 
             <Button
                 android:id="@+id/btnEListNext"
-                android:text="@string/nextEvent"
+                android:text="@string/next_event"
                 android:layout_alignParentRight="true"
                 android:layout_height="50dp"
                 android:layout_width="80dp"

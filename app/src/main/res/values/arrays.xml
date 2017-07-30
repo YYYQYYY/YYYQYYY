@@ -16,8 +16,12 @@
     </integer-array>
 
     <array name="app_items">
-        <item>1训练日记1,R.drawable.apple_pic,com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity.TrainingDiaryActivity</item>
-        <item>2天气预报2,R.drawable.apple_pic,com.yuqinyidev.android.azaz.weather.mvp.ui.activity.WeatherMainActivity</item>
+        <item>
+            1训练日记1,R.drawable.apple_pic,com.yuqinyidev.android.azaz.trainingdiary.mvp.ui.activity.TrainingDiaryActivity
+        </item>
+        <item>
+            2天气预报2,R.drawable.apple_pic,com.yuqinyidev.android.azaz.weather.mvp.ui.activity.WeatherMainActivity
+        </item>
     </array>
 
     <string-array name="fontcolor">
@@ -39,6 +43,17 @@
         <item>24</item>
         <item>26</item>
         <item>28</item>
+        <item>28</item>
+        <item>30</item>
+        <item>32</item>
+        <item>34</item>
+        <item>36</item>
+        <item>38</item>
+        <item>40</item>
+        <item>42</item>
+        <item>44</item>
+        <item>46</item>
+        <item>48</item>
     </string-array>
 
     <string-array name="background">

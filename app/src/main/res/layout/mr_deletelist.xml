@@ -9,13 +9,13 @@
     <TextView
         android:textSize="30sp"
         android:layout_height="50dip"
-        android:text="@string/Delete"
+        android:text="@string/delete"
         android:id="@+id/Delete"
         android:layout_width="fill_parent"></TextView>
 
     <TextView
         android:layout_height="50dip"
-        android:text="@string/deleteAll"
+        android:text="@string/delete_all"
         android:id="@+id/deleteAll"
         android:layout_width="fill_parent"
         android:textSize="30sp"></TextView>

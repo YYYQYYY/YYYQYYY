@@ -8,6 +8,6 @@
     <item
         android:id="@+id/menu_bookshelf_addfolder"
         android:icon="@drawable/addfolder"
-        android:title="@string/addfolder" />
+        android:title="@string/add_folder" />
 
 </menu>

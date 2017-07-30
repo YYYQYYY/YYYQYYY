@@ -4,18 +4,18 @@
 
     <!-- menu_main.xml -->
     <string name="setting">设置</string>
-    <string name="about">关于...</string>
+    <string name="about">关于&#8230;</string>
     <string name="exit">退出</string>
 
     <!-- menu_bookshelf.xml -->
     <string name="refresh">刷新</string>
-    <string name="addfolder">添加目录</string>
+    <string name="add_folder">添加目录</string>
 
     <!-- menu_reader.xml -->
-    <string name="nightmode">夜间模式</string>
-    <string name="skipto">跳转至...</string>
-    <string name="savebookmark">增加书签</string>
-    <string name="viewbookmark">浏览书签</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="skip_to">跳转至&#8230;</string>
+    <string name="save_bookmark">增加书签</string>
+    <string name="view_bookmark">浏览书签</string>
     <string name="brightness">亮度</string>
     <string name="back">返回</string>
 
@@ -23,14 +23,14 @@
     <string name="copyright">CopyRight 2011 小雨晨光工作室</string>
 
     <!-- setting.xml -->
-    <string name="viewfont">文字预览</string>
-    <string name="selectfontsize">请选择文字大小</string>
-    <string name="selectfontcolor">请选择文字颜色</string>
-    <string name="selectbackground">请选择背景风格</string>
+    <string name="view_font">文字预览</string>
+    <string name="select_font_size">请选择文字大小</string>
+    <string name="select_font_color">请选择文字颜色</string>
+    <string name="select_background">请选择背景风格</string>
 
-    <!-- bookmarklist.xml -->
+    <!-- bookmark_list.xml -->
     <string name="cancel">取消</string>
-    <string name="gomark">跳转</string>
+    <string name="go_mark">跳转</string>
     <string name="delete">删除</string>
 
     <!-- bookmark_dialog.xml -->
@@ -38,8 +38,8 @@
 
     <string name="events">Important Events</string>
     <string name="memo1">Tasks &amp; Memo</string>
-    <string name="testmemo">testmemo</string>
-    <string name="OptionMain">OptionMain</string>
+    <string name="test_memo">testMemo</string>
+    <string name="option_main">OptionMain</string>
     <string name="Sun">Sun</string>
     <string name="Mon">Mon</string>
     <string name="Tue">Tue</string>
@@ -86,16 +86,16 @@
     <string name="hdy_cel">
 		<b>Cancel</b>
 	</string>
-    <string name="bgd_enbgd">Enable Background</string>
+    <string name="bgd_enable_bg">Enable Background</string>
     <string name="bgd_color">Background color transparency.</string>
-    <string name="bgd_spbp">
+    <string name="bgd_sp_bg_pic">
 		<b>\u0020\u0020select portrait\u0020\u0020\n background picture</b>
 	</string>
     <string name="bgd_upd">
 		<b>Update</b>
 	</string>
     <string name="china">China</string>
-    <string name="jpan">Jpan</string>
+    <string name="japan">Japan</string>
     <string name="america">America</string>
     <string name="mon">Monday</string>
     <string name="tue">Tuesday</string>
@@ -104,14 +104,14 @@
     <string name="fri">Friday</string>
     <string name="sat">Saturday</string>
     <string name="sun">Sunday</string>
-    <string name="previousEvent"> ＜＜  </string>
-    <string name="newEvent">New Event</string>
-    <string name="nextEvent"> ＞＞  </string>
-    <string name="memoList">Memo List</string>
-    <string name="eventList">Event List</string>
-    <string name="into_eventlist">Event List</string>
-    <string name="into_memolist">Memo List</string>
-    <string name="newMemo">New Memo</string>
+    <string name="previous_event"> ＜＜  </string>
+    <string name="new_event">New Event</string>
+    <string name="next_event"> ＞＞  </string>
+    <string name="memo_list">Memo List</string>
+    <string name="event_list">Event List</string>
+    <string name="into_event_list">Event List</string>
+    <string name="into_memo_list">Memo List</string>
+    <string name="new_memo">New Memo</string>
     <string name="memo">Memo</string>
     <string name="memo_">Memo:</string>
     <string name="title">Title:</string>
@@ -120,22 +120,20 @@
     <string name="status">Status:</string>
     <string name="important">Important</string>
     <string name="complete">Complete</string>
-    <string name="memocontent">Memo:</string>
+    <string name="memo_content">Memo:</string>
     <string name="update">Update</string>
-    <string name="cancle">Cancle</string>
-    <string name="durDate">Dur Date:</string>
+    <string name="dur_date">Dur Date:</string>
     <string name="create">Create</string>
     <string name="event">Event</string>
-    <string name="memoAlarttitle">Waring!</string>
-    <string name="memoAlartContent">Are you sure complete this?</string>
+    <string name="memo_alert_title">Waring!</string>
+    <string name="memo_alert_content">Are you sure complete this?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="dateFomat">--/--/--(---)</string>
-    <string name="timeFomat">--:--</string>
-    <string name="aboutinfo">This is an example.</string>
-    <string name="Delete">Delete</string>
-    <string name="deleteAll">Delete All</string>
+    <string name="date_format">--/--/--(---)</string>
+    <string name="time_format">--:--</string>
+    <string name="about_info">This is an example.</string>
+    <string name="delete_all">Delete All</string>
     <string name="select_dialog">which do you choose?</string>
-    <string name="deleteConfirn">Are you sure to delete?</string>
+    <string name="delete_confirm">Are you sure to delete?</string>
 
 </resources>

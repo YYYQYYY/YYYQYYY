@@ -9,7 +9,7 @@
         android:id="@+id/txvMListTitle"
         android:layout_height="45dip"
         android:layout_width="fill_parent"
-        android:text="@string/memoList"
+        android:text="@string/memo_list"
         android:textStyle="bold"
         android:background="@color/blue"
         android:textSize="25sp" />
@@ -31,7 +31,7 @@
             android:id="@+id/btnMListCreate"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:text="@string/newMemo"
+            android:text="@string/new_memo"
             android:textSize="20sp"
             android:layout_marginTop="10dip" />
 

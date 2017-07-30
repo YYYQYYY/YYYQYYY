@@ -387,7 +387,7 @@ public class MR_EventList extends Activity {
 
     private void showDeleteDialog(final int _deleteAllFlag, final MR_memory _memo) {
         new AlertDialog.Builder(MR_EventList.this)
-                .setTitle(R.string.deleteConfirn).setPositiveButton(
+                .setTitle(R.string.delete_confirm).setPositiveButton(
                 R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
@@ -452,13 +452,10 @@ public class MR_EventList extends Activity {
             TextView title = (TextView) itemView.findViewById(R.id.itemTitle);
 
             if (_i % 2 == 1) {
-                itemView.setBackgroundColor(getResources().getColor(R.color.lightblue));
+                itemView.setBackgroundColor(getResources().getColor(R.color.light_blue));
             }
             try {
-                title.setText(new SimpleDateFormat("HH:mm aa")
-                        .format(new SimpleDateFormat("hhmmss").parse(
-                                _event.memo_time).getTime())
-                        + '\n' + _event.memo_title);
+                title.setText(new SimpleDateFormat("HH:mm aa").format(new SimpleDateFormat("hhmmss").parse(_event.memo_time).getTime()) + '\n' + _event.memo_title);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -470,7 +467,7 @@ public class MR_EventList extends Activity {
             }
             if (_event.important_flg == 1) {
                 title.setTextColor(Color.RED);
-                itemView.setBackgroundColor(getResources().getColor(R.color.lightpink));
+                itemView.setBackgroundColor(getResources().getColor(R.color.light_pink));
             }
             image.setOnClickListener(new OnClickListener() {
                 public void onClick(View view) {
@@ -493,8 +490,8 @@ public class MR_EventList extends Activity {
             title.setOnLongClickListener(new OnLongClickListener() {
 
                 public boolean onLongClick(View v) {
-                    final String[] items = {getString(R.string.Delete),
-                            getString(R.string.deleteAll)};
+                    final String[] items = {getString(R.string.delete),
+                            getString(R.string.delete_all)};
                     new AlertDialog.Builder(MR_EventList.this).setTitle(
                             R.string.select_dialog).setItems(items,
                             new DialogInterface.OnClickListener() {
@@ -511,8 +508,8 @@ public class MR_EventList extends Activity {
 
         private void showAlertDialog(final MR_memory _event, final View _itemView) {
             new AlertDialog.Builder(MR_EventList.this).setTitle(
-                    R.string.memoAlarttitle).setMessage(
-                    R.string.memoAlartContent).setPositiveButton(R.string.yes,
+                    R.string.memo_alert_title).setMessage(
+                    R.string.memo_alert_content).setPositiveButton(R.string.yes,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int whichButton) {

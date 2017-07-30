@@ -14,7 +14,6 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.widget.Toolbar;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -344,7 +343,8 @@ public class KBReadTxtActivity extends Activity {
                 return true;
             case R.id.menu_reader_brightness:
                 // 取得当前亮度
-                int normal = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 10);
+//                int normal = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 10);
+                float normal = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, 0.5F);
                 boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
                 intent = new Intent(KBReadTxtActivity.this, KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);

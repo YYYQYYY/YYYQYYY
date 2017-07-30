@@ -2,8 +2,12 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="detail_menu_item_height">30dp</dimen>
+    <dimen name="detail_menu_margin_top_up">15dp</dimen>
+    <dimen name="detail_menu_margin_top">15dp</dimen>
 
     <dimen name="list_item_padding">8dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
+
 </resources>

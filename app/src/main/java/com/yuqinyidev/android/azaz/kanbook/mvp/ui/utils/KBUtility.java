@@ -63,8 +63,7 @@ public class KBUtility {
      * @param _key        key
      * @param _value      value
      */
-    public static void putShare(SharedPreferences _preference, String _key,
-                                String _value) {
+    public static void putShare(SharedPreferences _preference, String _key, String _value) {
         Editor edit = _preference.edit();
         edit.putString(_key, _value);
         edit.commit();
@@ -77,8 +76,7 @@ public class KBUtility {
      * @param _key        key
      * @param _value      value
      */
-    public static void putShare(SharedPreferences _preference, String _key,
-                                boolean _value) {
+    public static void putShare(SharedPreferences _preference, String _key, boolean _value) {
         Editor edit = _preference.edit();
         edit.putBoolean(_key, _value);
         edit.commit();
@@ -91,8 +89,7 @@ public class KBUtility {
      * @param _key        key
      * @param _value      value
      */
-    public static void putShare(SharedPreferences _preference, String _key,
-                                int _value) {
+    public static void putShare(SharedPreferences _preference, String _key, int _value) {
         Editor edit = _preference.edit();
         edit.putInt(_key, _value);
         edit.commit();
@@ -105,8 +102,7 @@ public class KBUtility {
      * @param _key        key
      * @param _value      value
      */
-    public static void putShare(SharedPreferences _preference, String _key,
-                                float _value) {
+    public static void putShare(SharedPreferences _preference, String _key, float _value) {
         Editor edit = _preference.edit();
         edit.putFloat(_key, _value);
         edit.commit();

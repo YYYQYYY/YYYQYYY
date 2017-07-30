@@ -6,10 +6,10 @@
     <color name="green">#00BB00</color>
     <color name="red">#FF0000</color>
     <color name="blue">#2828FF</color>
-    <color name="lightgreen">#A6FFFF</color>
+    <color name="light_green">#A6FFFF</color>
     <color name="grey">#ADADAD</color>
-    <color name="lightblue">#D9FFFF</color>
-    <color name="lightpink">#FFECF5</color>
+    <color name="light_blue">#D9FFFF</color>
+    <color name="light_pink">#FFECF5</color>
 
     <color name="grid_sun">#FFCC99</color>
     <color name="grid_sta">#CC00FF</color>
@@ -29,7 +29,11 @@
 
     <drawable name="white">#FFFFFFFF</drawable>
     <drawable name="black">#000000</drawable>
-    <drawable name="other">#fff00f</drawable>
+    <drawable name="other">#FFF00F</drawable>
     <drawable name="blue">#0000FF</drawable>
+
+    <color name="popup_bg">#F2F2F2</color>
+    <color name="light_black">#A8A8A8</color>
+    <color name="dark_white">#DDDDDD</color>
 
 </resources>

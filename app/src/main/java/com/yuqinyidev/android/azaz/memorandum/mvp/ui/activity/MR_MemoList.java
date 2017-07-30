@@ -348,7 +348,7 @@ public class MR_MemoList extends Activity {
     }
 
     private void showDeleteDialog(final int _deleteAllFlag, final MR_memory _memo) {
-        new AlertDialog.Builder(MR_MemoList.this).setTitle(R.string.deleteConfirn)
+        new AlertDialog.Builder(MR_MemoList.this).setTitle(R.string.delete_confirm)
                 .setPositiveButton(R.string.yes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
@@ -413,8 +413,7 @@ public class MR_MemoList extends Activity {
             TextView title = (TextView) itemView.findViewById(R.id.itemTitle);
 
             if (_i % 2 == 1) {
-                itemView.setBackgroundColor(Color
-                        .parseColor(getString(R.color.lightblue)));
+                itemView.setBackgroundColor(getResources().getColor(R.color.light_blue));
             }
 
             title.setText(_memo.memo_title);
@@ -426,8 +425,7 @@ public class MR_MemoList extends Activity {
             }
             if (_memo.important_flg == 1) {
                 title.setTextColor(Color.RED);
-                itemView.setBackgroundColor(Color
-                        .parseColor(getString(R.color.lightpink)));
+                itemView.setBackgroundColor(getResources().getColor(R.color.light_blue));
             }
 
             image.setOnClickListener(new OnClickListener() {
@@ -451,8 +449,8 @@ public class MR_MemoList extends Activity {
             title.setOnLongClickListener(new OnLongClickListener() {
 
                 public boolean onLongClick(View v) {
-                    final String[] items = {getString(R.string.Delete),
-                            getString(R.string.deleteAll)};
+                    final String[] items = {getString(R.string.delete),
+                            getString(R.string.delete_all)};
                     new AlertDialog.Builder(MR_MemoList.this).setTitle(
                             R.string.select_dialog).setItems(items,
                             new DialogInterface.OnClickListener() {
@@ -470,8 +468,8 @@ public class MR_MemoList extends Activity {
 
         private void showAlertDialog(final MR_memory _memo, final View _itemView) {
             new AlertDialog.Builder(MR_MemoList.this).setTitle(
-                    R.string.memoAlarttitle).setMessage(
-                    R.string.memoAlartContent).setPositiveButton(R.string.yes,
+                    R.string.memo_alert_title).setMessage(
+                    R.string.memo_alert_content).setPositiveButton(R.string.yes,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int whichButton) {

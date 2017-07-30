@@ -81,59 +81,45 @@ public class KBSettingActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DIALOG_ID_FONT_SIZE:
-                return showSingleChoiceDialog(KBSettingActivity.this, getResources()
-                        .getStringArray(R.array.fontsize), mPreference.getInt(
-                        KBConstants.PREF_KEY_FONT_SIZE_IDX, 1), DIALOG_ID_FONT_SIZE);
+                return showSingleChoiceDialog(KBSettingActivity.this, getResources().getStringArray(R.array.fontsize), mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE_IDX, 1), DIALOG_ID_FONT_SIZE);
             case DIALOG_ID_FONT_COLOR:
-                return showSingleChoiceDialog(KBSettingActivity.this, getResources()
-                        .getStringArray(R.array.fontcolor), mPreference.getInt(
-                        KBConstants.PREF_KEY_FONT_COLOR_IDX, 0), DIALOG_ID_FONT_COLOR);
+                return showSingleChoiceDialog(KBSettingActivity.this, getResources().getStringArray(R.array.fontcolor), mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR_IDX, 0), DIALOG_ID_FONT_COLOR);
             case DIALOG_ID_BACKGROUND:
-                return showSingleChoiceDialog(KBSettingActivity.this, getResources()
-                        .getStringArray(R.array.background), mPreference.getInt(
-                        KBConstants.PREF_KEY_BACKGROUND_IDX, 7), DIALOG_ID_BACKGROUND);
+                return showSingleChoiceDialog(KBSettingActivity.this, getResources().getStringArray(R.array.background), mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND_IDX, 7), DIALOG_ID_BACKGROUND);
             default:
                 return null;
         }
     }
 
-    private Dialog showSingleChoiceDialog(final Context context,
-                                          final String[] _items, final int _checkedItemIdx, final int _type) {
-        AlertDialog dialog = new Builder(context).setSingleChoiceItems(_items,
-                _checkedItemIdx, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (_type) {
-                            case DIALOG_ID_FONT_SIZE:
-                                setFontSize(Integer.valueOf(_items[which]));
-                                KBUtility.putShare(mPreference,
-                                        KBConstants.PREF_KEY_FONT_SIZE_IDX, which);
-                                break;
-                            case DIALOG_ID_FONT_COLOR:
-                                setFontColor(which);
-                                KBUtility.putShare(mPreference,
-                                        KBConstants.PREF_KEY_FONT_COLOR_IDX, which);
-                                break;
-                            case DIALOG_ID_BACKGROUND:
-                                setBackground(which);
-                                KBUtility.putShare(mPreference,
-                                        KBConstants.PREF_KEY_BACKGROUND_IDX, which);
-                                break;
-                            default:
-                                break;
-                        }
-                        dialog.cancel();
-                    }
-                }).create();
+    private Dialog showSingleChoiceDialog(final Context context, final String[] _items, final int _checkedItemIdx, final int _type) {
+        AlertDialog dialog = new Builder(context).setSingleChoiceItems(_items, _checkedItemIdx, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (_type) {
+                    case DIALOG_ID_FONT_SIZE:
+                        setFontSize(Integer.valueOf(_items[which]));
+                        KBUtility.putShare(mPreference, KBConstants.PREF_KEY_FONT_SIZE_IDX, which);
+                        break;
+                    case DIALOG_ID_FONT_COLOR:
+                        setFontColor(which);
+                        KBUtility.putShare(mPreference, KBConstants.PREF_KEY_FONT_COLOR_IDX, which);
+                        break;
+                    case DIALOG_ID_BACKGROUND:
+                        setBackground(which);
+                        KBUtility.putShare(mPreference, KBConstants.PREF_KEY_BACKGROUND_IDX, which);
+                        break;
+                    default:
+                        break;
+                }
+                dialog.cancel();
+            }
+        }).create();
         return dialog;
     }
 
     private void initializing() {
-        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
-                KBConstants.DEFAULT_FONT_SIZE));
-        viewFont.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR,
-                Color.BLACK));
-        viewFont.setBackgroundResource(mPreference.getInt(
-                KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
+        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
+        viewFont.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
+        viewFont.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
     }
 
     private void setFontSize(int _textSize) {

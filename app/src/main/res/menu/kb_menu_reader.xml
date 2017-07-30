@@ -4,21 +4,21 @@
     <item
         android:id="@+id/menu_reader_skip"
         android:icon="@drawable/skip"
-        android:title="@string/skipto" />
+        android:title="@string/skip_to" />
     <item
         android:id="@+id/menu_reader_save_bookmark"
         android:icon="@drawable/savebookmark"
-        android:title="@string/savebookmark" />
+        android:title="@string/save_bookmark" />
     <item
         android:id="@+id/menu_reader_view_bookmark"
         android:icon="@drawable/viewbookmark"
-        android:title="@string/viewbookmark" />
+        android:title="@string/view_bookmark" />
 
 
     <item
         android:id="@+id/menu_reader_nightmode"
         android:icon="@drawable/daynight"
-        android:title="@string/nightmode" />
+        android:title="@string/night_mode" />
     <item
         android:id="@+id/menu_reader_back"
         android:icon="@drawable/uponelevel"
