@@ -1,5 +1,6 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -13,7 +14,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -54,7 +55,7 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 import java.util.Date;
 import java.util.List;
 
-public class KBReadTxtStringActivity extends AppCompatActivity {
+public class KBReadTxtStringActivity extends Activity {
 
     private static final int DIALOG_ID_ABOUT = 0;
     private static final int DIALOG_ID_SAVE_BOOK_MARK_SUCCESS = 11;
@@ -207,18 +208,18 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
                 mScvContent.scrollTo(0, mTxtReader.getTextSize());
-                if (null != mTxtReader) {
+//                if (null != mTxtReader) {
 //                    mTxtReader.displayNextToScreen(1);
-                }
+//                }
                 showPercent();
                 return true;
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                 mScvContent.scrollTo(0, 0);
-                if (null != mTxtReader) {
+//                if (null != mTxtReader) {
 //                    mTxtReader.displayPreToScreen(1);
-                }
+//                }
                 showPercent();
                 return true;
             }
@@ -262,7 +263,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         }
 
         mFilePath = intent.getStringExtra(KBConstants.ACTIVITY_START_KEY_FILE_PATH);
-        if (mFilePath == null || mFilePath.equals("")) {
+        if (TextUtils.isEmpty(mFilePath)) {
             finish();
             return;
         }
@@ -390,8 +391,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     }
                     break;
                 case REQUEST_CODE_SKIP:
-                    String strPercent = _data
-                            .getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT);
+                    String strPercent = _data.getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT);
                     if (strPercent != null && strPercent.length() != 0) {
                         int intPercent = (int) (Float.valueOf(strPercent) * 10);
                         mOffset = mTxtReader.getOffsetWithPercent(intPercent);
@@ -494,11 +494,11 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.kb_book_mark_list);
         final Button btnDelete = (Button) dialog.findViewById(R.id.deletebm);
         final Button btnGo = (Button) dialog.findViewById(R.id.skipbm);
-        final Button btnCancle = (Button) dialog.findViewById(R.id.cancelbm);
+        final Button btnCancel = (Button) dialog.findViewById(R.id.cancelbm);
         dialog.setTitle(KBConstants.BOOKMARKLIST);
         final ListView lsvBookMark = (ListView) dialog.findViewById(R.id.bookmarklistview);
         mBookMarkList = mKBDBAdapter.queryAllBookMark(mBookId);
-        final ListAdapter listAdapter = new ArrayAdapter<KBBookMark>(this, android.R.layout.simple_list_item_single_choice, mBookMarkList);
+        final ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, mBookMarkList);
         lsvBookMark.setAdapter(listAdapter);
         lsvBookMark.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lsvBookMark.setOnItemClickListener(new OnItemClickListener() {
@@ -537,7 +537,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
             }
         });
 
-        btnCancle.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
             }
@@ -559,7 +559,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
         mLayContent.setBackgroundResource(mPreference.getInt(KBConstants.PREF_KEY_BACKGROUND, R.drawable.bg_lyxg));
 
-        /** load the attribute for font */
+        /* load the attribute for font */
 //        TextPaint tp = mTxvContent.getPaint();
 //        KBCR.fontHeight = mTxvContent.getLineHeight();
 //        mLinesOfScreen = mVisibleHeight / KBCR.fontHeight;
@@ -601,7 +601,7 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     if (bmn.length() > 10) {
-                        bmn.substring(0, 10);
+                        bmn = bmn.substring(0, 10);
                     }
                     KBBookMark bm = new KBBookMark();
                     bm.setBookId(mBookId);
@@ -635,7 +635,8 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setTitle(KBConstants.SAVERESULT).setIcon(R.drawable.fail)
+                .setTitle(KBConstants.SAVERESULT)
+                .setIcon(R.drawable.fail)
                 .setMessage(KBConstants.SAVEFAIL).create();
     }
 
@@ -646,7 +647,8 @@ public class KBReadTxtStringActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .setTitle(KBConstants.SAVERESULT).setIcon(R.drawable.success)
+                .setTitle(KBConstants.SAVERESULT)
+                .setIcon(R.drawable.success)
                 .setMessage(KBConstants.SAVESUCCESS).create();
     }
 

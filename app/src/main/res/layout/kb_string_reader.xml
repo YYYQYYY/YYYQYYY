@@ -41,7 +41,7 @@
             android:id="@+id/tpbPercent"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="10px"
             android:max="1000"
             android:progressDrawable="@drawable/progressbar_normal" />
 

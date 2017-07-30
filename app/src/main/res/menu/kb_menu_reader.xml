@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/menu_reader_skip" android:title="@string/skipto"
-		android:icon="@drawable/skip" />
-	<item android:id="@+id/menu_reader_save_bookmark" android:title="@string/savebookmark"
-		android:icon="@drawable/savebookmark" />
-	<item android:id="@+id/menu_reader_view_bookmark" android:title="@string/viewbookmark"
-		android:icon="@drawable/viewbookmark" />
+    <item
+        android:id="@+id/menu_reader_skip"
+        android:icon="@drawable/skip"
+        android:title="@string/skipto" />
+    <item
+        android:id="@+id/menu_reader_save_bookmark"
+        android:icon="@drawable/savebookmark"
+        android:title="@string/savebookmark" />
+    <item
+        android:id="@+id/menu_reader_view_bookmark"
+        android:icon="@drawable/viewbookmark"
+        android:title="@string/viewbookmark" />
 
 
-	<item android:id="@+id/menu_reader_nightmode" android:title="@string/nightmode"
-		android:icon="@drawable/daynight" />
-	<item android:id="@+id/menu_reader_back" android:title="@string/back"
-		android:icon="@drawable/uponelevel" />
-	<item android:id="@+id/menu_reader_brightness" android:title="@string/brightness"
-		android:icon="@drawable/brightness" />
-	<item android:id="@+id/menu_reader_setting" android:title="@string/setting"
-		android:icon="@drawable/settings" />
-	<item android:id="@+id/menu_reader_about" android:title="@string/about"
-		android:icon="@drawable/about" />
+    <item
+        android:id="@+id/menu_reader_nightmode"
+        android:icon="@drawable/daynight"
+        android:title="@string/nightmode" />
+    <item
+        android:id="@+id/menu_reader_back"
+        android:icon="@drawable/uponelevel"
+        android:title="@string/back" />
+    <item
+        android:id="@+id/menu_reader_brightness"
+        android:icon="@drawable/brightness"
+        android:title="@string/brightness" />
+    <item
+        android:id="@+id/menu_reader_setting"
+        android:icon="@drawable/settings"
+        android:title="@string/setting" />
+    <item
+        android:id="@+id/menu_reader_about"
+        android:icon="@drawable/about"
+        android:title="@string/about" />
 
 </menu>

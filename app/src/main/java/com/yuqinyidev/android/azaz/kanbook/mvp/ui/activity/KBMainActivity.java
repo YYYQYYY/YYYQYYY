@@ -43,7 +43,7 @@ public class KBMainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SETTING = 10;
     private static final int REQUEST_CODE_BOOKSHELF = 21;
-    private static final int REQUEST_CODE_READTXT = 32;
+    private static final int REQUEST_CODE_READ_TEXT = 32;
 
     private KBDBAdapter mKBDBAdapter;
 
@@ -137,8 +137,7 @@ public class KBMainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_main_setting:
-                startActivityForResult(new Intent(this, KBSettingActivity.class),
-                        REQUEST_CODE_SETTING);
+                startActivityForResult(new Intent(this, KBSettingActivity.class), REQUEST_CODE_SETTING);
                 return true;
             case R.id.menu_main_about:
                 showDialog(DIALOG_ID_ABOUT);
@@ -155,8 +154,7 @@ public class KBMainActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DIALOG_ID_ABOUT:
-                return KBUtility.buildDialog(this, null, KBConstants.ABOUT_TITLE,
-                        KBConstants.ABOUT_DETAIL, getString(R.string.sure));
+                return KBUtility.buildDialog(this, null, KBConstants.ABOUT_TITLE, KBConstants.ABOUT_DETAIL, getString(R.string.sure));
             case DIALOG_ID_EXIT:
                 return KBUtility.buildDialog(this,
                         new DialogInterface.OnClickListener() {
@@ -164,8 +162,7 @@ public class KBMainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 System.exit(0);
                             }
-                        }, KBConstants.EXIT_TITLE, KBConstants.EXIT_DETAIL,
-                        getString(R.string.sure), getString(R.string.cancel));
+                        }, KBConstants.EXIT_TITLE, KBConstants.EXIT_DETAIL, getString(R.string.sure), getString(R.string.cancel));
             default:
                 return null;
         }
@@ -195,7 +192,7 @@ public class KBMainActivity extends AppCompatActivity {
     }
 
     private List<View> getHistoryList() {
-        List<View> items = new ArrayList<View>();
+        List<View> items = new ArrayList<>();
         galleryItems = null;
 
         List<KBHistory> histories = mKBDBAdapter.queryAllHistory();
@@ -203,12 +200,9 @@ public class KBMainActivity extends AppCompatActivity {
 
         if (histories == null || histories.size() == 0) {
             View view = View.inflate(this, R.layout.kb_gallery_item, null);
-            ((TextView) view.findViewById(R.id.txvBookName))
-                    .setVisibility(View.GONE);
-            ((TextView) view.findViewById(R.id.txvSaveTime))
-                    .setVisibility(View.GONE);
-            ((TextView) view.findViewById(R.id.txvSummary))
-                    .setText(KBConstants.HISTORY_TITLE_SUMMARY_DEFAULT);
+            (view.findViewById(R.id.txvBookName)).setVisibility(View.GONE);
+            (view.findViewById(R.id.txvSaveTime)).setVisibility(View.GONE);
+            ((TextView) view.findViewById(R.id.txvSummary)).setText(KBConstants.HISTORY_TITLE_SUMMARY_DEFAULT);
             view.setTag(KBConstants.SOFT_STATE_NO_BOOK_OPENED);
             items.add(view);
 
@@ -219,15 +213,9 @@ public class KBMainActivity extends AppCompatActivity {
         int cnt = histories.size() > 10 ? 10 : histories.size();
         for (int i = 0; i < cnt; i++) {
             View view = View.inflate(this, R.layout.kb_gallery_item, null);
-            ((TextView) view.findViewById(R.id.txvBookName))
-                    .setText(KBConstants.HISTORY_TITLE_NAME
-                            + histories.get(i).getBookName());
-            ((TextView) view.findViewById(R.id.txvSaveTime))
-                    .setText(KBConstants.HISTORY_TITLE_LAST_OPEN_DT
-                            + histories.get(i).getSaveTime());
-            ((TextView) view.findViewById(R.id.txvSummary))
-                    .setText(KBConstants.HISTORY_TITLE_SUMMARY
-                            + histories.get(i).getSummary());
+            ((TextView) view.findViewById(R.id.txvBookName)).setText(KBConstants.HISTORY_TITLE_NAME + histories.get(i).getBookName());
+            ((TextView) view.findViewById(R.id.txvSaveTime)).setText(KBConstants.HISTORY_TITLE_LAST_OPEN_DT + histories.get(i).getSaveTime());
+            ((TextView) view.findViewById(R.id.txvSummary)).setText(KBConstants.HISTORY_TITLE_SUMMARY + histories.get(i).getSummary());
             view.setTag(histories.get(i));
             items.add(view);
         }
@@ -265,7 +253,7 @@ public class KBMainActivity extends AppCompatActivity {
         intent.putExtra(KBConstants.ACTIVITY_START_KEY_FILE_PATH, _history.getBookPath());
         intent.putExtra(KBConstants.ACTIVITY_START_KEY_BOOK_ID, _history.getBookId());
         intent.putExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, _history.getCurrentOffset());
-        startActivityForResult(intent, REQUEST_CODE_READTXT);
+        startActivityForResult(intent, REQUEST_CODE_READ_TEXT);
     }
 
     private String sayHello() {

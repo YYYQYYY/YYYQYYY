@@ -1,5 +1,6 @@
 package com.yuqinyidev.android.azaz.kanbook.mvp.ui.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -13,7 +14,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -56,7 +57,7 @@ import com.yuqinyidev.android.framework.utils.UiUtils;
 import java.util.Date;
 import java.util.List;
 
-public class KBReadTxtActivity extends AppCompatActivity {
+public class KBReadTxtActivity extends Activity {
 
     private static final int DIALOG_ID_ABOUT = 0;
     private static final int DIALOG_ID_SAVE_BOOK_MARK_SUCCESS = 11;
@@ -76,8 +77,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     if (isFling) {
                         return false;
                     }
-                    int offsetLines = (int) Math.abs(mVisibleHeight
-                            / (KBCR.fontHeight));
+                    int offsetLines = (int) Math.abs(mVisibleHeight / (KBCR.fontHeight));
                     if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
                         mTxtReader.displayPreToScreen(offsetLines);
                         showPercent();
@@ -98,8 +98,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                        float distanceX, float distanceY) {
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                     return false;
                 }
 
@@ -108,8 +107,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                       float velocityX, float velocityY) {
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     isFling = true;
                     int distance = (int) (e1.getRawY() - e2.getRawY());
                     mFlingLines = distance / KBCR.fontHeight * 2;
@@ -308,6 +306,17 @@ public class KBReadTxtActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+//    @Override
+//    public void openOptionsMenu() {
+//        final View toolbar = getWindow().getDecorView().findViewById(R.id.action_bar);
+//        if (toolbar instanceof Toolbar) {
+////            ((Toolbar) toolbar).showOverflowMenu();
+//            super.openOptionsMenu();
+//        } else {
+//            super.openOptionsMenu();
+//        }
+//    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
@@ -335,10 +344,8 @@ public class KBReadTxtActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_reader_brightness:
                 // 取得当前亮度
-                int normal = Settings.System.getInt(getContentResolver(),
-                        Settings.System.SCREEN_BRIGHTNESS, 10);
-                boolean usingSystemBrightness = mPreference.getBoolean(
-                        KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+                int normal = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 10);
+                boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
                 intent = new Intent(KBReadTxtActivity.this, KBVirtualDialogActivity.class);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_START, KBConstants.ACTIVITY_START_KEY_BRIGHTNESS);
                 intent.putExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, normal);
@@ -395,8 +402,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     }
                     break;
                 case REQUEST_CODE_SKIP:
-                    String strPercent = _data
-                            .getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT);
+                    String strPercent = _data.getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT);
                     if (strPercent != null && strPercent.length() != 0) {
                         int intPercent = (int) (Float.valueOf(strPercent) * 10);
                         mOffset = mTxtReader.getOffsetWithPercent(intPercent);
@@ -537,11 +543,11 @@ public class KBReadTxtActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.kb_book_mark_list);
         final Button btnDelete = (Button) dialog.findViewById(R.id.deletebm);
         final Button btnGo = (Button) dialog.findViewById(R.id.skipbm);
-        final Button btnCancle = (Button) dialog.findViewById(R.id.cancelbm);
+        final Button btnCancel = (Button) dialog.findViewById(R.id.cancelbm);
         dialog.setTitle(KBConstants.BOOKMARKLIST);
         final ListView lsvBookMark = (ListView) dialog.findViewById(R.id.bookmarklistview);
         mBookMarkList = mKBDBAdapter.queryAllBookMark(mBookId);
-        final ListAdapter listAdapter = new ArrayAdapter<KBBookMark>(this, android.R.layout.simple_list_item_single_choice, mBookMarkList);
+        final ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, mBookMarkList);
         lsvBookMark.setAdapter(listAdapter);
         lsvBookMark.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lsvBookMark.setOnItemClickListener(new OnItemClickListener() {
@@ -580,7 +586,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
             }
         });
 
-        btnCancle.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
             }
@@ -644,7 +650,7 @@ public class KBReadTxtActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     if (bmn.length() > 10) {
-                        bmn.substring(0, 10);
+                        bmn = bmn.substring(0, 10);
                     }
                     KBBookMark bm = new KBBookMark();
                     bm.setBookId(mBookId);

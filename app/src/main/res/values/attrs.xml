@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="KBTextProgressBar">
+        <!--进度条的颜色-->
+        <attr name="progressColor" format="color" />
+        <!--文字的颜色-->
+        <attr name="textColor" format="color" />
+        <!--文字的大小-->
+        <attr name="textSize" format="integer" />
+    </declare-styleable>
+
+</resources>
