@@ -4,7 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="detail_menu_item_height">30dp</dimen>
     <dimen name="detail_menu_margin_top_up">15dp</dimen>
-    <dimen name="detail_menu_margin_top">15dp</dimen>
+    <dimen name="detail_menu_margin_top">10dp</dimen>
+    <dimen name="detail_menu_margin_left">10dp</dimen>
+    <dimen name="detail_menu_margin_right">10dp</dimen>
 
     <dimen name="list_item_padding">8dp</dimen>
 

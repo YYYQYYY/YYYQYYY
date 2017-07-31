@@ -31,7 +31,8 @@ public class KBTxtStringReader {
 
     private int mVisibleWidth, mVisibleHeight;
     private int mLineCount; // 每页可以显示的行数
-    private int mFontSize = 44;        //字体大小
+    private int mFontSize = 18;        //字体大小
+    private float mDensity = 1;
 
     private MappedByteBuffer mReadFileRandom;
 
@@ -139,9 +140,8 @@ public class KBTxtStringReader {
 
     public void setTextSize(int size) {
         mFontSize = size;
-        mTextView.getPaint().setTextSize(mFontSize);
-        mLineCount = (mVisibleHeight / mFontSize);
-        this.mLineCount = this.mLineCount - this.mLineCount / 8;
+        mTextView.getPaint().setTextSize(mFontSize * mDensity);
+        mLineCount = mVisibleHeight / mFontSize - mVisibleHeight / mFontSize / 8;
     }
 
     public int getTextSize() {
@@ -152,12 +152,12 @@ public class KBTxtStringReader {
         return m_isLastPage;
     }
 
-    public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight) {
+    public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight, float density) {
         this.mFileName = fileName;
         this.mTextView = textView;
         this.mVisibleWidth = visibleWidth;
         this.mVisibleHeight = visibleHeight;
-        setTextSize(mFontSize);
+        setTextSize(Math.round(mFontSize));
 
         mEncoding = getCharsetName();
 
