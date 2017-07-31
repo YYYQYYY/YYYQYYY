@@ -43,12 +43,10 @@ public class KBSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kb_setting);
 
-        mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME,
-                Context.MODE_PRIVATE);
+        mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         viewFont = (TextView) findViewById(R.id.viewfont);
-        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE,
-                KBConstants.DEFAULT_FONT_SIZE));
+        viewFont.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
 
         RelativeLayout imgFontSize = (RelativeLayout) findViewById(R.id.rlayFontSize);
         imgFontSize.setOnClickListener(new OnClickListener() {

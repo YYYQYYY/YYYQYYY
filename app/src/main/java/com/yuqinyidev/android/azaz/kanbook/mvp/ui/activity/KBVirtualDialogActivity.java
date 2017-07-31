@@ -96,9 +96,9 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
                 mUsingSystemBrightness = intent.getBooleanExtra(KBConstants.VIRUAL_DIALOG_USING_SYSTEM_BRIGHTNESS, false);
                 toggleButton.setChecked(mUsingSystemBrightness);
 
-                int p = intent.getIntExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, 5);
+                float p = intent.getFloatExtra(KBConstants.VIRUAL_DIALOG_BRIGHTNESS, 0.5F);
                 skbSkip.setMax(255);
-                skbSkip.setProgress(p);
+                skbSkip.setProgress((int) (p * 255));
                 skbSkip
                         .setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
                             @Override

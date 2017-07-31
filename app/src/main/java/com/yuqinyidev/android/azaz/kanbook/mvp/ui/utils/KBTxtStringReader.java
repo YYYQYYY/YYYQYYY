@@ -141,7 +141,7 @@ public class KBTxtStringReader {
     public void setTextSize(int size) {
         mFontSize = size;
         mTextView.getPaint().setTextSize(mFontSize * mDensity);
-        mLineCount = mVisibleHeight / mFontSize - mVisibleHeight / mFontSize / 8;
+        mLineCount = (int) (mVisibleHeight / mTextView.getPaint().getTextSize() - mVisibleHeight / mTextView.getPaint().getTextSize() / 8) - 1;
     }
 
     public int getTextSize() {
@@ -153,6 +153,7 @@ public class KBTxtStringReader {
     }
 
     public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight, float density) {
+        this.mDensity = density;
         this.mFileName = fileName;
         this.mTextView = textView;
         this.mVisibleWidth = visibleWidth;
