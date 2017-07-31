@@ -500,7 +500,7 @@ public class KBReadTxtStringActivity extends Activity {
                     break;
                 case REQUEST_CODE_SKIP:
                     String strPercent = _data.getStringExtra(KBConstants.VIRUAL_DIALOG_RESULT);
-                    if (strPercent != null && strPercent.length() != 0) {
+                    if (!TextUtils.isEmpty(strPercent)) {
                         int intPercent = (int) (Float.valueOf(strPercent) * 10);
                         mOffset = mTxtReader.getOffsetWithPercent(intPercent);
                         mTxtReader.read(mOffset);
