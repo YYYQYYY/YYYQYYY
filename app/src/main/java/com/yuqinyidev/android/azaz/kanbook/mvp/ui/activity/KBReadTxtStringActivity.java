@@ -659,7 +659,7 @@ public class KBReadTxtStringActivity extends Activity {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
-        int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin - 10;
+        int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
         mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight,dm.density);
 
         mTxtReader.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
