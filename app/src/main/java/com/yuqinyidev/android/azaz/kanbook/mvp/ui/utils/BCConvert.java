@@ -42,13 +42,18 @@ public class BCConvert {
      */
     public static String half2full(String src) {
         if (src == null) {
-            return src;
+            return null;
         }
         StringBuilder buf = new StringBuilder(src.length());
         char[] ca = src.toCharArray();
         for (int i = 0; i < ca.length; i++) {
-            if (ca[i] == DBC_SPACE) { // 如果是半角空格，直接用全角空格替代
-                buf.append(DBC_SPACE);
+            if (ca[i] == DBC_SPACE) {
+                if (ca[(i + 1)] == DBC_SPACE) { // 如果有连续两个空格，直接用全角空格替代
+                    buf.append(SBC_SPACE);
+                    i++;
+                } else {
+                    buf.append(DBC_SPACE);
+                }
             } else if ((ca[i] >= DBC_CHAR_START) && (ca[i] <= DBC_CHAR_END)) { // 字符是!到~之间的可见字符
                 buf.append((char) (ca[i] + CONVERT_STEP));
             } else { // 不对空格以及ascii表中其他可见字符之外的字符做任何处理
@@ -67,7 +72,7 @@ public class BCConvert {
      */
     public static String full2half(String src) {
         if (src == null) {
-            return src;
+            return null;
         }
         StringBuilder buf = new StringBuilder(src.length());
         char[] ca = src.toCharArray();
