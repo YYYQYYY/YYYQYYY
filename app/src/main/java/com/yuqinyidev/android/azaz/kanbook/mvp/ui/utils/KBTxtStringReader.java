@@ -141,7 +141,7 @@ public class KBTxtStringReader {
     public void setTextSize(int size) {
         mFontSize = size;
         mTextView.getPaint().setTextSize(mFontSize * mDensity);
-        mLineCount = (int) (mVisibleHeight / mTextView.getPaint().getTextSize() - mVisibleHeight / mTextView.getPaint().getTextSize() / 8) - 1;
+        mLineCount = (int) (mVisibleHeight / mTextView.getPaint().getTextSize() - mVisibleHeight / mTextView.getPaint().getTextSize() / 8);
     }
 
     public int getTextSize() {

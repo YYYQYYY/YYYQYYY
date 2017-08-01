@@ -80,7 +80,7 @@ public class KBReadTxtStringActivity extends Activity {
             if (e.getRawY() < (mVisibleHeight * 1 / 3)) {
                 mTxtReader.readPrePage();
                 showPercent();
-                mScvContent.scrollTo(0, 0);
+//                mScvContent.scrollTo(0, 0);
                 return true;
             } else if (e.getRawY() > (mVisibleHeight * 2 / 3)) {
                 mTxtReader.readNextPage();
@@ -133,7 +133,7 @@ public class KBReadTxtStringActivity extends Activity {
             if (mFlingLines < 0) {
 //                mTxtReader.displayPreToScreen(1);
                 showPercent();
-                mScvContent.scrollTo(0, 0);
+//                mScvContent.scrollTo(0, 0);
             } else if (mFlingLines > 0) {
 //                mTxtReader.displayNextToScreen(1);
                 showPercent();
@@ -180,7 +180,7 @@ public class KBReadTxtStringActivity extends Activity {
     private PopupWindow mPopupWindow;
     private LinearLayout mLayContent;
     private LinearLayout mLayFooter;
-    private ScrollView mScvContent;
+//    private ScrollView mScvContent;
     private TextView mTxvContent;
     private KBTextProgressBar mTpbPercent;
     private TextView mTxvBatteryStatus;
@@ -210,7 +210,7 @@ public class KBReadTxtStringActivity extends Activity {
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                mScvContent.scrollTo(0, mTxtReader.getTextSize());
+//                mScvContent.scrollTo(0, mTxtReader.getTextSize());
 //                if (null != mTxtReader) {
 //                    mTxtReader.displayNextToScreen(1);
 //                }
@@ -219,7 +219,7 @@ public class KBReadTxtStringActivity extends Activity {
             }
 
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                mScvContent.scrollTo(0, 0);
+//                mScvContent.scrollTo(0, 0);
 //                if (null != mTxtReader) {
 //                    mTxtReader.displayPreToScreen(1);
 //                }
@@ -377,7 +377,7 @@ public class KBReadTxtStringActivity extends Activity {
         mPreference = getSharedPreferences(KBConstants.PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         mLayContent = (LinearLayout) findViewById(R.id.llayContent);
-        mScvContent = (ScrollView) findViewById(R.id.scvContent);
+//        mScvContent = (ScrollView) findViewById(R.id.scvContent);
         mTxvContent = (TextView) findViewById(R.id.textContent);
         mLayFooter = (LinearLayout) findViewById(R.id.llayFooter);
         mTpbPercent = (KBTextProgressBar) findViewById(R.id.tpbPercent);
@@ -657,7 +657,7 @@ public class KBReadTxtStringActivity extends Activity {
         int footHeight = Math.round(mTxvFileName.getLineHeight() * getResources().getDisplayMetrics().density) + 10;
         Log.d("footHeight : ", "" + footHeight);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mTxvContent.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
         int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin - 10;
         mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight,dm.density);
@@ -682,13 +682,13 @@ public class KBReadTxtStringActivity extends Activity {
 //        Log.d("onCrtDig CRFontWidth:", "" + KBCR.ChineseFontWidth);
 
         setTitle(mFilePath + "-" + getString(R.string.app_name));
-        mScvContent.setOnKeyListener(mUpOrDown);
-        mScvContent.setOnTouchListener(new OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                KBReadTxtStringActivity.this.mDetector.onTouchEvent(event);
-                return false;
-            }
-        });
+//        mScvContent.setOnKeyListener(mUpOrDown);
+//        mScvContent.setOnTouchListener(new OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                KBReadTxtStringActivity.this.mDetector.onTouchEvent(event);
+//                return false;
+//            }
+//        });
     }
 
     private void saveBookMarkDialog() {
