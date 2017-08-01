@@ -441,6 +441,7 @@ public class KBTxtStringReader {
             m_mbBufEnd += paraBuf.length;
             try {
                 strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
+                strParagraph = strParagraph.replaceAll("“", "「").replaceAll("”", "」");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -457,7 +458,7 @@ public class KBTxtStringReader {
 
             if (strParagraph.length() == 0) {
 //                lines.add(strParagraph);
-                lines.add("\r\n");
+                lines.add(strReturn);
             }
             while (strParagraph.length() > 0) {
                 int nSize = mTextView.getPaint().breakText(strParagraph, true, mVisibleWidth, null);
