@@ -220,6 +220,23 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         initJsonData();
         if (!TextUtils.isEmpty(name)) {
             mTxvTdProgram.setText(name);
+            if (!mIsAdd) {
+                mOption1 = 0;
+                mOption2 = 0;
+                for (JsonBean level1Value : mOptions1Items) {
+                    if (name.equals(level1Value.getLevel1Key())) {
+                        for (String level2 : mOptions2Items.get(mOption1)) {
+                            if (level.equals(level2)) {
+                                break;
+                            }
+                            mOption2++;
+                        }
+                        break;
+                    }
+                    mOption1++;
+                }
+            }
+            mTxvTdUpRule.setText(mUpRule[mOption1][mOption2]);
             mTxvTdUpRule.setText(mUpRule[mOption1][mOption2]);
         } else {
             mTxvTdUpRule.setText("初级目标：\n中极目标：\n升级目标：");
