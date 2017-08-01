@@ -245,7 +245,7 @@ public class KBTxtStringReader {
         }
 
         byte[] buf = new byte[4096];
-        FileInputStream fis = null;
+        FileInputStream fis;
         try {
             fis = new FileInputStream(file);
             // (1)
