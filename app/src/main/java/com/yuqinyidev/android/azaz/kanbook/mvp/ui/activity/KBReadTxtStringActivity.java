@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.DigitalClock;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -329,7 +330,7 @@ public class KBReadTxtStringActivity extends Activity {
         });
 
         view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in));
-        LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
+        GridLayout ll_popup = (GridLayout) view.findViewById(R.id.gl_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_bottom_in));
 
         if (mPopupWindow == null) {
