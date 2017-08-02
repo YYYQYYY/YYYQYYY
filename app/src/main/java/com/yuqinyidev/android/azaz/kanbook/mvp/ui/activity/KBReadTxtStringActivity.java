@@ -25,7 +25,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -35,13 +34,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DigitalClock;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.yuqinyidev.android.azaz.R;
@@ -181,7 +178,7 @@ public class KBReadTxtStringActivity extends Activity {
     private PopupWindow mPopupWindow;
     private LinearLayout mLayContent;
     private LinearLayout mLayFooter;
-//    private ScrollView mScvContent;
+    //    private ScrollView mScvContent;
     private TextView mTxvContent;
     private KBTextProgressBar mTpbPercent;
     private TextView mTxvBatteryStatus;
@@ -661,7 +658,7 @@ public class KBReadTxtStringActivity extends Activity {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxvContent.getLayoutParams();
         mVisibleHeight = dm.heightPixels - footHeight - params.topMargin - params.bottomMargin;
         int visibleWidth = dm.widthPixels - params.leftMargin - params.rightMargin;
-        mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight,dm.density);
+        mTxtReader = new KBTxtStringReader(mTxvContent, mFilePath, visibleWidth, mVisibleHeight, dm.density);
 
         mTxtReader.setTextSize(mPreference.getInt(KBConstants.PREF_KEY_FONT_SIZE, KBConstants.DEFAULT_FONT_SIZE));
         mTxvContent.setTextColor(mPreference.getInt(KBConstants.PREF_KEY_FONT_COLOR, Color.BLACK));
@@ -795,18 +792,15 @@ public class KBReadTxtStringActivity extends Activity {
     }
 
     private void setScreenBrightness() {
-//        boolean usingSystemBrightness = mPreference.getBoolean(
-//                KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-//        if (!usingSystemBrightness) {
-//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-//                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-        WindowManager.LayoutParams wl = getWindow().getAttributes();
-        wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
-        getWindow().setAttributes(wl);
+        boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+        if (!usingSystemBrightness) {
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+            WindowManager.LayoutParams wl = getWindow().getAttributes();
+            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
+            getWindow().setAttributes(wl);
 //        } else {
-//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-//                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-//        }
+//            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+        }
     }
 
     private void showPercent() {
