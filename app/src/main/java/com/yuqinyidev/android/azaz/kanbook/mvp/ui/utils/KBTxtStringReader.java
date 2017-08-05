@@ -30,8 +30,8 @@ public class KBTxtStringReader {
     private String mFileName = null;
 
     private int mVisibleWidth, mVisibleHeight;
-    private int mLineCount; // 每页可以显示的行数
-    private int mFontSize = 18;        //字体大小
+    private int mLineCount;
+    private int mFontSize = 18;
     private float mDensity = 1;
 
     private MappedByteBuffer mReadFileRandom;
@@ -85,19 +85,19 @@ public class KBTxtStringReader {
      * Percentage
      */
     private int mPercent = 0;
-    private int m_mbBufBegin = 0;
-    private int m_mbBufEnd = 0;
+    private int mBufBegin = 0;
+    private int mBufEnd = 0;
 //    private int mDataStartLocation = 0;
 //    private int mDataEndLocation = 0;
 
-    private Vector<String> m_lines = new Vector<>();
+    private Vector<String> mLines = new Vector<>();
 
     public int getCurrentLineOffset() {
-        return m_mbBufBegin;
+        return mBufBegin;
     }
 
     public String getCurrentLineString() {
-        return m_lines.size() > 0 ? m_lines.get(0) : KBConstants.NODATAINFILE;
+        return mLines.size() > 0 ? mLines.get(0) : KBConstants.NODATAINFILE;
     }
 
     public long getFileLength() {
@@ -152,6 +152,10 @@ public class KBTxtStringReader {
         return m_isLastPage;
     }
 
+    public boolean isFirst() {
+        return m_isFirstPage;
+    }
+
     public KBTxtStringReader(TextView textView, String fileName, int visibleWidth, int visibleHeight, float density) {
         this.mDensity = density;
         this.mFileName = fileName;
@@ -170,46 +174,46 @@ public class KBTxtStringReader {
     }
 
     public void readPrePage() {
-        if (m_mbBufBegin <= 0) {
-            m_mbBufBegin = 0;
+        if (mBufBegin <= 0) {
+            mBufBegin = 0;
             m_isFirstPage = true;
             return;
         } else m_isFirstPage = false;
-        m_lines.clear();
+        mLines.clear();
         pageUp();
-        m_lines = pageDown();
+        mLines = pageDown();
         displayText();
     }
 
     public void readNextPage() {
-        if (m_mbBufEnd >= mFileLength) {
+        if (mBufEnd >= mFileLength) {
             m_isLastPage = true;
             return;
         } else m_isLastPage = false;
-        m_lines.clear();
-        m_mbBufBegin = m_mbBufEnd;
-        m_lines = pageDown();
+        mLines.clear();
+        mBufBegin = mBufEnd;
+        mLines = pageDown();
         displayText();
     }
 
     public void read(int offset) {
-        m_mbBufEnd = m_mbBufBegin = offset;
-        m_lines.clear();
-        m_lines = pageDown();
+        mBufEnd = mBufBegin = offset;
+        mLines.clear();
+        mLines = pageDown();
         displayText();
     }
 
     private void displayText() {
         StringBuilder stringBuilder = new StringBuilder();
-        if (m_lines.size() > 0) {
-            for (String strLine : m_lines) {
+        if (mLines.size() > 0) {
+            for (String strLine : mLines) {
                 stringBuilder.append(strLine);
             }
         }
         mTextView.setText(stringBuilder.toString());
 
-//        mPercent = (int) (m_mbBufBegin * 1000 / mFileLength);
-        mPercent = (int) (((double) m_mbBufBegin / (double) mFileLength) * 1000);
+//        mPercent = (int) (mBufBegin * 1000 / mFileLength);
+        mPercent = (int) (((double) mBufBegin / (double) mFileLength) * 1000);
     }
 
 //    private void getCharsetName() {
@@ -397,14 +401,14 @@ public class KBTxtStringReader {
     }
 
     private void pageUp() { //上一页
-        if (m_mbBufBegin < 0)
-            m_mbBufBegin = 0;
+        if (mBufBegin < 0)
+            mBufBegin = 0;
         Vector<String> lines = new Vector<>();
         String strParagraph = "";
-        while (lines.size() < mLineCount && m_mbBufBegin > 0) {
+        while (lines.size() < mLineCount && mBufBegin > 0) {
             Vector<String> paraLines = new Vector<>();
-            byte[] paraBuf = readParagraphBack(m_mbBufBegin);
-            m_mbBufBegin -= paraBuf.length;
+            byte[] paraBuf = readParagraphBack(mBufBegin);
+            mBufBegin -= paraBuf.length;
             try {   //将byte 转化为汉字
                 strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
             } catch (UnsupportedEncodingException e) {
@@ -425,21 +429,21 @@ public class KBTxtStringReader {
         }
         while (lines.size() > mLineCount) {
             try {
-                m_mbBufBegin += lines.get(0).getBytes(mEncoding).length;
+                mBufBegin += lines.get(0).getBytes(mEncoding).length;
                 lines.remove(0);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
-        m_mbBufEnd = m_mbBufBegin;
+        mBufEnd = mBufBegin;
     }
 
     private Vector<String> pageDown() {  //下一页
         String strParagraph = "";
         Vector<String> lines = new Vector<>();
-        while (lines.size() < mLineCount && m_mbBufEnd < mFileLength) {
-            byte[] paraBuf = readParagraphForward(m_mbBufEnd); // 读取一个段落
-            m_mbBufEnd += paraBuf.length;
+        while (lines.size() < mLineCount && mBufEnd < mFileLength) {
+            byte[] paraBuf = readParagraphForward(mBufEnd); // 读取一个段落
+            mBufEnd += paraBuf.length;
             try {
                 strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
                 strParagraph = strParagraph.replaceAll("“", "「").replaceAll("”", "」");
@@ -471,7 +475,7 @@ public class KBTxtStringReader {
             }
             if (strParagraph.length() != 0) {
                 try {
-                    m_mbBufEnd -= (strParagraph + strReturn).getBytes(mEncoding).length;
+                    mBufEnd -= (strParagraph + strReturn).getBytes(mEncoding).length;
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

@@ -327,7 +327,7 @@ public class KBReadTxtStringActivity extends Activity {
         });
 
         view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in));
-        GridLayout ll_popup = (GridLayout) view.findViewById(R.id.gl_popup);
+        LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.gl_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_bottom_in));
 
         if (mPopupWindow == null) {
