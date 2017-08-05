@@ -792,15 +792,15 @@ public class KBReadTxtStringActivity extends Activity {
     }
 
     private void setScreenBrightness() {
-        boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-        if (!usingSystemBrightness) {
+//        boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+//        if (!usingSystemBrightness) {
 //            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-            WindowManager.LayoutParams wl = getWindow().getAttributes();
-            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
-            getWindow().setAttributes(wl);
+//            WindowManager.LayoutParams wl = getWindow().getAttributes();
+//            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
+//            getWindow().setAttributes(wl);
 //        } else {
 //            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-        }
+//        }
     }
 
     private void showPercent() {

@@ -208,7 +208,8 @@ public class KBTxtStringReader {
         }
         mTextView.setText(stringBuilder.toString());
 
-        mPercent = (int) (m_mbBufBegin * 1000 / mFileLength);
+//        mPercent = (int) (m_mbBufBegin * 1000 / mFileLength);
+        mPercent = (int) (((double) m_mbBufBegin / (double) mFileLength) * 1000);
     }
 
 //    private void getCharsetName() {
