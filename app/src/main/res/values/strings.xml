@@ -37,104 +37,103 @@
     <!-- bookmark_dialog.xml -->
     <string name="sure">确定</string>
 
-    <string name="events">Important Events</string>
-    <string name="memo1">Tasks &amp; Memo</string>
-    <string name="test_memo">testMemo</string>
+    <string name="events">重要提醒</string>
+    <string name="memo1">任务 &amp; 便签</string>
+    <string name="test_memo">测试便签</string>
     <string name="option_main">OptionMain</string>
-    <string name="Sun">Sun</string>
-    <string name="Mon">Mon</string>
-    <string name="Tue">Tue</string>
-    <string name="Wed">Wed</string>
-    <string name="Thu">Thu</string>
-    <string name="Fri">Fri</string>
-    <string name="Sta">Sta</string>
-    <string name="Dt">Date &amp; Time</string>
+    <string name="Sun">日</string>
+    <string name="Mon">一</string>
+    <string name="Tue">二</string>
+    <string name="Wed">三</string>
+    <string name="Thu">四</string>
+    <string name="Fri">五</string>
+    <string name="Sta">六</string>
+    <string name="Dt">日期 &amp; 时间</string>
     <string name="bgd_title">
-		<b>Background</b>
+		<b>背景</b>
 	</string>
     <string name="bgd_option">
-		<b>set Background</b>
+		<b>设置背景</b>
 	</string>
-    <string name="bgd_dtl">set background with picture</string>
+    <string name="bgd_dtl">设置背景图片</string>
     <string name="hdy_title">
-		<b>Holidays</b>
+		<b>假日</b>
 	</string>
     <string name="hdy_option">
-		<b>set Holidays</b>
+		<b>设置假日</b>
 	</string>
-    <string name="hdy_dtl">select national holidays</string>
+    <string name="hdy_dtl">选择法定假日</string>
     <string name="date_title">
-		<b>Date &amp; Time</b>
+		<b>日期 &amp; 时间</b>
 	</string>
-    <string name="date_option">set The First Day</string>
-    <string name="date_dtl">set The First Day for week</string>
+    <string name="date_option">选择第一天</string>
+    <string name="date_dtl">设置每周开始日</string>
     <string name="abt_title">
-		<b>About</b>
+		<b>关于</b>
 	</string>
     <string name="abt_option">
-		<b>About Memorandum</b>
+		<b>关于记事本</b>
 	</string>
-    <string name="abt_dtl">version information,etc.</string>
-    <string name="abt_info">Memorandum\nversion:\t1.0alpha\nEmail:\tnwcfleshwound@gmail.com\n
-	</string>
-    <string name="abt_close">Close</string>
+    <string name="abt_dtl">版权信息，其他。</string>
+    <string name="abt_info">记事本\n版本：\t1.0@\n邮箱:\tnwcfleshwound@gmail.com\n</string>
+    <string name="abt_close">关闭</string>
     <string name="hdy_title1">
-		<b>National Holidays</b>
+		<b>法定假日</b>
 	</string>
     <string name="hdy_aqe">
-		<b>Acquire</b>
+		<b>获取</b>
 	</string>
     <string name="hdy_cel">
-		<b>Cancel</b>
+		<b>取消</b>
 	</string>
-    <string name="bgd_enable_bg">Enable Background</string>
-    <string name="bgd_color">Background color transparency.</string>
+    <string name="bgd_enable_bg">使用背景</string>
+    <string name="bgd_color">背景透明度：</string>
     <string name="bgd_sp_bg_pic">
-		<b>\u0020\u0020select portrait\u0020\u0020\n background picture</b>
+		<b>\u0020\u0020选择\u0020\u0020\n 背景图片</b>
 	</string>
     <string name="bgd_upd">
-		<b>Update</b>
+		<b>更新</b>
 	</string>
-    <string name="china">China</string>
-    <string name="japan">Japan</string>
-    <string name="america">America</string>
-    <string name="mon">Monday</string>
-    <string name="tue">Tuesday</string>
-    <string name="wed">Wednesday</string>
-    <string name="thu">Thursday</string>
-    <string name="fri">Friday</string>
-    <string name="sat">Saturday</string>
-    <string name="sun">Sunday</string>
+    <string name="china">中国</string>
+    <string name="japan">日本</string>
+    <string name="america">美国</string>
+    <string name="mon">周一</string>
+    <string name="tue">周二</string>
+    <string name="wed">周三</string>
+    <string name="thu">周四</string>
+    <string name="fri">周五</string>
+    <string name="sat">周六</string>
+    <string name="sun">周日</string>
     <string name="previous_event"> ＜＜  </string>
-    <string name="new_event">New Event</string>
+    <string name="new_event">新提醒</string>
     <string name="next_event"> ＞＞  </string>
-    <string name="memo_list">Memo List</string>
-    <string name="event_list">Event List</string>
-    <string name="into_event_list">Event List</string>
-    <string name="into_memo_list">Memo List</string>
-    <string name="new_memo">New Memo</string>
-    <string name="memo">Memo</string>
-    <string name="memo_">Memo:</string>
-    <string name="title">Title:</string>
-    <string name="time">Time:</string>
-    <string name="where">Where:</string>
-    <string name="status">Status:</string>
-    <string name="important">Important</string>
-    <string name="complete">Complete</string>
-    <string name="memo_content">Memo:</string>
-    <string name="update">Update</string>
-    <string name="dur_date">Dur Date:</string>
-    <string name="create">Create</string>
-    <string name="event">Event</string>
-    <string name="memo_alert_title">Waring!</string>
-    <string name="memo_alert_content">Are you sure complete this?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="memo_list">便签列表</string>
+    <string name="event_list">提醒列表</string>
+    <string name="into_event_list">提醒列表</string>
+    <string name="into_memo_list">便签列表</string>
+    <string name="new_memo">新便签</string>
+    <string name="memo">便签</string>
+    <string name="memo_">内容：</string>
+    <string name="title">标题：</string>
+    <string name="time">时间：</string>
+    <string name="where">地点：</string>
+    <string name="status">状态：</string>
+    <string name="important">重要</string>
+    <string name="complete">完成</string>
+    <string name="memo_content">内容：</string>
+    <string name="update">更新</string>
+    <string name="dur_date">截止日：</string>
+    <string name="create">完成</string>
+    <string name="event">提醒</string>
+    <string name="memo_alert_title">警告！</string>
+    <string name="memo_alert_content">确定完成吗？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
     <string name="date_format">--/--/--(---)</string>
     <string name="time_format">--:--</string>
-    <string name="about_info">This is an example.</string>
-    <string name="delete_all">Delete All</string>
-    <string name="select_dialog">which do you choose?</string>
-    <string name="delete_confirm">Are you sure to delete?</string>
+    <string name="about_info">只是举一个栗子。</string>
+    <string name="delete_all">删除所有</string>
+    <string name="select_dialog">请选择：</string>
+    <string name="delete_confirm">确定删除吗？</string>
 
 </resources>
