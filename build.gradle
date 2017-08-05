@@ -64,6 +64,8 @@ ext {
             "calendarview"             : 'com.prolificinteractive:material-calendarview:1.4.3',
             "constraint-layout"        : 'com.android.support.constraint:constraint-layout:1.0.2',
             "litepal"                  : 'org.litepal.android:core:1.5.1',
+            "glide-transformations"    : 'jp.wasabeef:glide-transformations:2.0.2',
+            "gpuimage-library"         : 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1',
 
             //network
             "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",

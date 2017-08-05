@@ -76,6 +76,8 @@ dependencies {
     compile rootProject.ext.dependencies["constraint-layout"]
     compile rootProject.ext.dependencies["pickerview"]
     compile rootProject.ext.dependencies["litepal"]
+    compile rootProject.ext.dependencies["glide-transformations"]
+    compile rootProject.ext.dependencies["gpuimage-library"]
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'

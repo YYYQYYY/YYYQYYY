@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/weibo"
-        android:icon="@drawable/icon_weibo"
+        android:icon="@drawable/icon_weibo_w"
         android:orderInCategory="90"
         android:title="weibo"
         app:showAsAction="ifRoom" />

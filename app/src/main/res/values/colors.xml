@@ -19,9 +19,18 @@
     <color name="grid_holiday">#000079</color>
     <color name="grid_event">#FFFFFF</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="popup_bg">#F2F2F2</color>
+    <color name="light_black">#A8A8A8</color>
+    <color name="dark_white">#DDDDDD</color>
+
+    <color name="midnight_blue">#1E1F26</color>
+    <color name="indigo_ink">#283655</color>
+    <color name="blueberry">#4D648D</color>
+    <color name="light_blueberry">#D0E1F9</color>
+
+    <color name="colorPrimary">#283655</color>
+    <color name="colorPrimaryDark">#4D648D</color>
+    <color name="colorAccent">#D0E1F9</color>
 
     <drawable name="completedTaskBackground">#CCCCCC</drawable>
 
@@ -31,9 +40,5 @@
     <drawable name="black">#000000</drawable>
     <drawable name="other">#FFF00F</drawable>
     <drawable name="blue">#0000FF</drawable>
-
-    <color name="popup_bg">#F2F2F2</color>
-    <color name="light_black">#A8A8A8</color>
-    <color name="dark_white">#DDDDDD</color>
 
 </resources>

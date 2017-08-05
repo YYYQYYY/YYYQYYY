@@ -37,6 +37,7 @@ import com.yuqinyidev.android.azaz.memorandum.mvp.model.MR_DBAdapter;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.entity.MR_holiday;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.entity.MR_memory;
 import com.yuqinyidev.android.azaz.memorandum.mvp.model.service.MR_MemorandumReceiver;
+import com.yuqinyidev.android.framework.utils.StatusBarUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -421,6 +422,7 @@ public class MR_MemorandumMain extends Activity implements OnGestureListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mr_main);
+        StatusBarUtil.setTransparent(MR_MemorandumMain.this);
 
         preference = getSharedPreferences(MR_OptionMain.PROFERENCE_NAME,
                 Context.MODE_PRIVATE);

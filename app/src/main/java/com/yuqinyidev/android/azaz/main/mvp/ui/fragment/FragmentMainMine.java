@@ -4,16 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.yuqinyidev.android.azaz.R;
 import com.yuqinyidev.android.framework.base.BaseFragment;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
+
+import butterknife.BindView;
+import jp.wasabeef.glide.transformations.CropTransformation;
+import jp.wasabeef.glide.transformations.GrayscaleTransformation;
 
 /**
  * Created by RDX64 on 2017/6/22.
  */
 
 public class FragmentMainMine extends BaseFragment {
+
+    @BindView(R.id.fruit_image_view)
+    ImageView mFruitImageView;
 
     @Override
     public void setupFragmentComponent(AppComponent appComponent) {
@@ -27,7 +36,9 @@ public class FragmentMainMine extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        Glide.with(getActivity()).load(R.drawable.bg)
+                .bitmapTransform(new GrayscaleTransformation(getActivity()), new CropTransformation(getActivity(), 560, 396))
+                .into(mFruitImageView);
     }
 
     @Override
