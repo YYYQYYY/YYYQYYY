@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/transparent_bg">
 
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="#B0000000"
         android:orientation="vertical">
 
         <EditText
@@ -15,22 +17,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
             android:singleLine="true"
-            android:text="EditText" />
+            android:text="EditText"
+            android:textColor="@color/white" />
 
         <ToggleButton
             android:id="@+id/toggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:background="#30000000"
             android:textOff="使用系统亮度"
             android:textOn="不使用系统亮度" />
 
         <TextView
             android:id="@+id/txvSkip"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="" />
+            android:text="abc"
+            android:textColor="@color/white" />
 
         <SeekBar
             android:id="@+id/skbSkip"
@@ -44,17 +49,21 @@
 
             <Button
                 android:id="@+id/btnSure"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="@string/sure" />
+                android:background="#30000000"
+                android:text="@string/sure"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btnCancel"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="@string/cancel" />
+                android:background="#30000000"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
