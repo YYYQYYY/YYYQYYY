@@ -14,6 +14,7 @@ import com.yuqinyidev.android.azaz.kanbook.KBConstants;
 import com.yuqinyidev.android.azaz.main.mvp.ui.adapter.MyFragmentPagerAdapter;
 import com.yuqinyidev.android.framework.base.BaseActivity;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
+import com.yuqinyidev.android.framework.utils.UiUtils;
 import com.yuqinyidev.android.framework.widget.NoScrollViewPager;
 
 import butterknife.BindView;
@@ -66,6 +67,7 @@ public class MainMenuActivity extends BaseActivity {
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
+        UiUtils.transparentStatus(MainMenuActivity.this);
     }
 
     @Override
