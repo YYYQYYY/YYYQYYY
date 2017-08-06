@@ -411,6 +411,7 @@ public class KBTxtStringReader {
             mBufBegin -= paraBuf.length;
             try {   //将byte 转化为汉字
                 strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
+                strParagraph = strParagraph.replaceAll("“", "「").replaceAll("”", "」").replaceAll("‘", "「").replaceAll("’", "」");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -446,7 +447,7 @@ public class KBTxtStringReader {
             mBufEnd += paraBuf.length;
             try {
                 strParagraph = BCConvert.half2full(new String(paraBuf, mEncoding));
-                strParagraph = strParagraph.replaceAll("“", "「").replaceAll("”", "」");
+                strParagraph = strParagraph.replaceAll("“", "「").replaceAll("”", "」").replaceAll("‘", "「").replaceAll("’", "」");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
