@@ -34,7 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DigitalClock;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -353,6 +352,17 @@ public class KBReadTxtStringActivity extends Activity {
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
+//        List<String> permissions = new ArrayList<>();
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+//            permissions.add(Manifest.permission.WRITE_SETTINGS);
+//        }
+//        if (!permissions.isEmpty()) {
+//            String[] p = permissions.toArray(new String[permissions.size()]);
+//            ActivityCompat.requestPermissions(this, p, 1);
+//        } else {
+//        setScreenBrightness();
+//        }
+
         Intent intent = getIntent();
         if (intent == null) {
             finish();
@@ -398,6 +408,27 @@ public class KBReadTxtStringActivity extends Activity {
         setNightMode(!(mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false)));
         setScreenBrightness();
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case 1:
+//                if (grantResults.length > 0) {
+//                    for (int grantResult : grantResults) {
+//                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+//                            Toast.makeText(this, "你没有权限", Toast.LENGTH_SHORT).show();
+//                            finish();
+//                        }
+//                    }
+//                    setScreenBrightness();
+//                } else {
+//                    Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     public void openOptionsMenu() {
         showPopMenu();
@@ -792,15 +823,16 @@ public class KBReadTxtStringActivity extends Activity {
     }
 
     private void setScreenBrightness() {
-//        boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
-//        if (!usingSystemBrightness) {
+        boolean usingSystemBrightness = mPreference.getBoolean(KBConstants.PREF_KEY_USING_SYSTEM_BRIGHTNESS, false);
+        WindowManager.LayoutParams wl = getWindow().getAttributes();
+        if (!usingSystemBrightness) {
 //            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-//            WindowManager.LayoutParams wl = getWindow().getAttributes();
-//            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
-//            getWindow().setAttributes(wl);
-//        } else {
+            wl.screenBrightness = mPreference.getFloat(KBConstants.PREF_KEY_IS_BRIGHTNESS, (5F / 255F));
+        } else {
 //            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-//        }
+            wl.screenBrightness = -1;
+        }
+        getWindow().setAttributes(wl);
     }
 
     private void showPercent() {

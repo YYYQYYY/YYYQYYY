@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
 
     private String choice;
     private EditText edtInput;
+    private LinearLayout llToggleButton;
     private ToggleButton toggleButton;
     private TextView txvSkip;
     private String percent;
@@ -36,6 +38,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
             setContentView(R.layout.kb_virtual_dialog);
 
             edtInput = (EditText) findViewById(R.id.edtInput);
+            llToggleButton = (LinearLayout) findViewById(R.id.llToggleButton);
             toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
             txvSkip = (TextView) findViewById(R.id.txvSkip);
             SeekBar skbSkip = (SeekBar) findViewById(R.id.skbSkip);
@@ -44,7 +47,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
             if (KBConstants.ACTIVITY_START_KEY_SKIP.equals(choice)) {
                 setTitle(KBConstants.DIALOG_TITLE_PERCENT);
                 edtInput.setVisibility(View.GONE);
-                toggleButton.setVisibility(View.GONE);
+                llToggleButton.setVisibility(View.GONE);
                 skbSkip.setVisibility(View.VISIBLE);
                 txvSkip.setVisibility(View.VISIBLE);
                 int p = intent.getIntExtra(KBConstants.VIRUAL_DIALOG_PERCENT, 0);
@@ -71,7 +74,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
             } else if (KBConstants.ACTIVITY_START_KEY_BRIGHTNESS.equals(choice)) {
                 setTitle(KBConstants.DIALOG_TITLE_BRIGHTNESS);
                 edtInput.setVisibility(View.GONE);
-                toggleButton.setVisibility(View.VISIBLE);
+                llToggleButton.setVisibility(View.VISIBLE);
                 skbSkip.setVisibility(View.VISIBLE);
                 txvSkip.setVisibility(View.VISIBLE);
 
@@ -105,7 +108,7 @@ public class KBVirtualDialogActivity extends AppCompatActivity {
                 });
             } else {
                 skbSkip.setVisibility(View.GONE);
-                toggleButton.setVisibility(View.GONE);
+                llToggleButton.setVisibility(View.GONE);
                 txvSkip.setVisibility(View.GONE);
                 edtInput.setVisibility(View.VISIBLE);
                 if (KBConstants.ACTIVITY_START_KEY_RENAME_FOLDER.equals(choice)) {

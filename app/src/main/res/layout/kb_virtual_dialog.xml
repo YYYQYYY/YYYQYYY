@@ -20,14 +20,33 @@
             android:text="EditText"
             android:textColor="@color/white" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/llToggleButton"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:background="#30000000"
-            android:textOff="使用系统亮度"
-            android:textOn="不使用系统亮度" />
+            android:layout_centerInParent="true"
+            android:background="#B0000000"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="使用系统亮度"
+                android:textColor="@color/white" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_butn_toggle"
+                android:checked="false"
+                android:text=""
+                android:textOff=""
+                android:textOn="" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txvSkip"
