@@ -416,12 +416,10 @@ public class KBBookShelfActivity extends AppCompatActivity {
         KBBook book = new KBBook();
         book.setBookName(KBUtility.getBookName(mFilePath));
         book.setBookPath(mFilePath);
-        Intent intent = new Intent(this, KBReadTxtActivity.class);
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY,
-                KBConstants.ACTIVITY_START_KEY_BOOKSHELF);
+        Intent intent = new Intent(this, KBReadTxtStringActivity.class);
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY, KBConstants.ACTIVITY_START_KEY_BOOKSHELF);
         intent.putExtra(KBConstants.ACTIVITY_START_KEY_FILE_PATH, mFilePath);
-        intent.putExtra(KBConstants.ACTIVITY_START_KEY_BOOK_ID, mKBDBAdapter
-                .saveBook(book));
+        intent.putExtra(KBConstants.ACTIVITY_START_KEY_BOOK_ID, mKBDBAdapter.saveBook(book));
         startActivity(intent);
         finish();
         setProgressBarIndeterminateVisibility(true);
