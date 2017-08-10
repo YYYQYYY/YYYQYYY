@@ -402,6 +402,10 @@ public class KBReadTxtStringActivity extends Activity {
             mOffset = intent.getIntExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, 0);
             mTxtReader.read(mOffset);
             showPercent(mTxtReader.getPercentWithOffset(mOffset));
+        } else {
+            mOffset = 0;
+            mTxtReader.read(mOffset);
+            showPercent(mTxtReader.getPercentWithOffset(mOffset));
         }
         mTxvFileName.setText(KBUtility.getBookName(mFilePath));
 
