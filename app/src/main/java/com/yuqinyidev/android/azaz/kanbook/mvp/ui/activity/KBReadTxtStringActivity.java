@@ -396,17 +396,13 @@ public class KBReadTxtStringActivity extends Activity {
         loadData();
         if (savedInstanceState != null) {
             mOffset = savedInstanceState.getInt(KBConstants.SAVED_STATE_OFFSET);
-            mTxtReader.read(mOffset);
-            showPercent(mTxtReader.getPercentWithOffset(mOffset));
         } else if (KBConstants.ACTIVITY_START_KEY_MAIN.equals(intent.getStringExtra(KBConstants.ACTIVITY_START_KEY))) {
             mOffset = intent.getIntExtra(KBConstants.ACTIVITY_START_KEY_OFFSET, 0);
-            mTxtReader.read(mOffset);
-            showPercent(mTxtReader.getPercentWithOffset(mOffset));
         } else {
             mOffset = 0;
-            mTxtReader.read(mOffset);
-            showPercent(mTxtReader.getPercentWithOffset(mOffset));
         }
+        mTxtReader.read(mOffset);
+        showPercent(mTxtReader.getPercentWithOffset(mOffset));
         mTxvFileName.setText(KBUtility.getBookName(mFilePath));
 
         setNightMode(!(mIsNightMode = mPreference.getBoolean(KBConstants.PREF_KEY_IS_NIGHTMODE, false)));
