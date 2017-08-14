@@ -4,7 +4,11 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * Created by RDX64 on 2017/7/2.
@@ -228,10 +233,64 @@ public class Utility {
         return result;
     }
 
+    /**
+     * 去除List的重复项
+     *
+     * @param arlList
+     */
     public static void removeDuplicate(List arlList) {
         HashSet h = new HashSet(arlList);
         arlList.clear();
         arlList.addAll(h);
     }
 
+    /**
+     * csvPath : csv路径，例如 G:\SenimarInfo.csv
+     */
+//    private void getCSV(String csvPath) {
+//        ArrayList<SeminarInfo> dataLists = new ArrayList<SeminarInfo>();
+//        ArrayList<String> lists = new ArrayList<String>();
+//        SeminarInfo mSeminarInfo = new SeminarInfo();
+//        if (dataLists != null) {
+//            dataLists.clear();
+//        }
+//        mSeminarInfoDB = new SeminarInfoDBHelper(mContext);
+//        db = mSeminarInfoDB.getWritableDatabase();
+//
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(csvFile));
+//            String line = "";
+//            int i = 0;
+//            while ((line = br.readLine()) != null) {//一次一行，lists.size()=14,28,42...
+//                // 把一行数据分割成多个字段
+//                StringTokenizer st = new StringTokenizer(line, "|");
+//                while (st.hasMoreTokens()) {//一次一个 lists.size()=1
+//                    String str = st.nextToken();
+//                    lists.add(str);
+//                    //    System.out.println("_______________tokens__________________"+str);
+//                }
+//                System.out.println("_______________size__________________" + lists.size());
+//                if (lists.size() > 14) {
+//                    mSeminarInfo.setId(lists.get(14 + i));
+//                    mSeminarInfo.setEventID(lists.get(15 + i));
+//                    mSeminarInfo.setCompanyID(lists.get(16 + i));
+//                    mSeminarInfo.setBooth(lists.get(17 + i));
+//                    mSeminarInfo.setDate(lists.get(18 + i));
+//                    mSeminarInfo.setTime(lists.get(19 + i));
+//                    mSeminarInfo.setHall(lists.get(20 + i));
+//                    mSeminarInfo.setRoomNo(lists.get(21 + i));
+//                    mSeminarInfo.setPresentCompany(lists.get(22 + i));
+//                    mSeminarInfo.setTopic(lists.get(23 + i));
+//                    mSeminarInfo.setSpeaker(lists.get(24 + i));
+//                    mSeminarInfo.setLangID(lists.get(25 + i));
+//                    dataLists.add(mSeminarInfo);
+//                    i = i + 14;
+//                    System.out.println("dataLists.toString()——————>" + dataLists.toString());
+//                }
+//
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
