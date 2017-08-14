@@ -26,6 +26,7 @@ import com.yuqinyidev.android.azaz.kanbook.mvp.model.KBDBAdapter;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBBook;
 import com.yuqinyidev.android.azaz.kanbook.mvp.model.entity.KBHistory;
 import com.yuqinyidev.android.azaz.kanbook.mvp.ui.utils.KBUtility;
+import com.yuqinyidev.android.framework.utils.AssetsUtils;
 import com.yuqinyidev.android.framework.utils.UiUtils;
 
 import java.io.File;
@@ -121,7 +122,7 @@ public class KBMainActivity extends AppCompatActivity {
         txvHello = (TextView) findViewById(R.id.txvHello);
         txvHello.setText(sayHello());
 
-        copyFilesFromAssets("/sx.txt", "/sdcard/Download");
+        AssetsUtils.copyFilesFromAssets(KBMainActivity.this, "sx.txt", "/sdcard/Download");
     }
 
     @Override
@@ -309,43 +310,6 @@ public class KBMainActivity extends AppCompatActivity {
         @Override
         public View getView(int _position, View _convertView, ViewGroup _parent) {
             return galleryItems.get(_position);
-        }
-    }
-
-    private void copyFilesFromAssets(String oldPath, String newPath) {
-        File f = new File(newPath + oldPath);
-        if (f.exists()) {
-            return;
-        }
-        try {
-//            String fileNames[] = context.getAssets().list(oldPath);//获取assets目录下的所有文件及目录名
-//            if (fileNames.length > 0) {//如果是目录
-//                File file = new File(newPath);
-//                file.mkdirs();//如果文件夹不存在，则递归
-//                for (String fileName : fileNames) {
-//                    copyFilesFromAssets(context, oldPath + "/" + fileName, newPath + "/" + fileName);
-//                }
-//            } else {//如果是文件
-            File file = new File(newPath);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-
-            InputStream is = getResources().getAssets().open("sx.txt"); //getAssets().open(oldPath);
-            FileOutputStream fos = new FileOutputStream(new File(newPath + oldPath));
-            byte[] buffer = new byte[1024];
-            int byteCount = 0;
-            while ((byteCount = is.read(buffer)) != -1) {//循环从输入流读取 buffer字节
-                fos.write(buffer, 0, byteCount);//将读取的输入流写入到输出流
-            }
-            fos.flush();//刷新缓冲区
-            is.close();
-            fos.close();
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            //如果捕捉到错误则通知UI线程
-//            MainActivity.handler.sendEmptyMessage(COPY_FALSE);
         }
     }
 
