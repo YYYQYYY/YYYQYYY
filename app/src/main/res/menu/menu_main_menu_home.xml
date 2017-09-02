@@ -5,17 +5,24 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/splash_copy"
+        android:icon="@drawable/icon_export_pic"
+        android:orderInCategory="80"
+        android:title="封面图保存"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/webview"
         android:icon="@drawable/icon_blog"
         android:orderInCategory="80"
-        android:title="web"
+        android:title="博客"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/weibo"
         android:icon="@drawable/icon_weibo_w"
         android:orderInCategory="90"
-        android:title="weibo"
+        android:title="微博"
         app:showAsAction="ifRoom" />
 
     <item

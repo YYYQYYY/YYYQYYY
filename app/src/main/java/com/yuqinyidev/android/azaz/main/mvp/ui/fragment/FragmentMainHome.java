@@ -34,7 +34,12 @@ import com.yuqinyidev.android.framework.base.App;
 import com.yuqinyidev.android.framework.base.BaseFragment;
 import com.yuqinyidev.android.framework.base.DefaultAdapter;
 import com.yuqinyidev.android.framework.di.component.AppComponent;
+import com.yuqinyidev.android.framework.utils.DateUtils;
+import com.yuqinyidev.android.framework.utils.FileUtils;
 import com.yuqinyidev.android.framework.utils.UiUtils;
+
+import java.io.File;
+import java.util.Date;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -46,6 +51,8 @@ import timber.log.Timber;
  */
 
 public class FragmentMainHome extends BaseFragment<MainMenuPresenter> implements MainMenuContract.View {
+    private static final String SPLASH_BG_NAME = "splash_bg.jpg";
+
     private RxPermissions mRxPermissions;
     private CollapsingToolbarLayoutState mState;
 
@@ -197,6 +204,9 @@ public class FragmentMainHome extends BaseFragment<MainMenuPresenter> implements
     public boolean onOptionsItemSelected(MenuItem item) {
         String msg = "";
         switch (item.getItemId()) {
+            case R.id.splash_copy:
+                copySplashBg();
+                break;
             case R.id.webview:
                 msg += "博客跳转";
                 break;
@@ -211,5 +221,19 @@ public class FragmentMainHome extends BaseFragment<MainMenuPresenter> implements
             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void copySplashBg() {
+        String dPath = FileUtils.packageName2SDPath(getActivity().getPackageName()) + SPLASH_BG_NAME.replace("splash_bg", "splash_bg" + DateUtils.dateToString(new Date(), "yyyyMMdd"));
+        if (new File(dPath).exists()) {
+            Toast.makeText(getActivity(), "今天的封面图片已经保存！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String savePath = FileUtils.packageName2CachePath(getActivity().getPackageName());
+        if (FileUtils.copyFile(savePath + SPLASH_BG_NAME, dPath)) {
+            Toast.makeText(getActivity(), "封面图片保存成功！", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "封面图片保存失败！", Toast.LENGTH_SHORT).show();
+        }
     }
 }
