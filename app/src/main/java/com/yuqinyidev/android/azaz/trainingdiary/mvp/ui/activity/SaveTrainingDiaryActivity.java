@@ -66,8 +66,8 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     private RxPermissions mRxPermissions;
     private List<JsonBean> mOptions1Items = new ArrayList<>();
     private List<List<String>> mOptions2Items = new ArrayList<>();
-    private List<List<List<Integer>>> mOptions3Items = new ArrayList<>();
-    private int mOption1, mOption2, mOption3;
+    //    private List<List<List<Integer>>> mOptions3Items = new ArrayList<>();
+    private int mOption1, mOption2;//, mOption3;
     private TimePickerView pvCustomTime;
     private OptionsPickerView pvOptions;
     private boolean mIsAdd;
@@ -149,6 +149,27 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
 
         db.close();
 
+        return result;
+    }
+
+    private int getMGroupNo() {
+        int result;
+        String date = mTxvTdDate.getText().toString();
+        String name = mTxvTdProgram.getText().toString();
+        String level = mTxvTdLevel.getText().toString();
+        TrainingDiary trainingDiary = new TrainingDiary(date, name, level, 0, 0);
+
+        String sql = "select max(td_group_no) + 1 as next_group_no from TrainingDiaries where td_date = ? and td_name = ? and td_level= ? group by td_date,td_name,td_level";
+        String[] whereClauseArgs = {
+                trainingDiary.getDate(),
+                trainingDiary.getName(),
+                trainingDiary.getLevel()
+        };
+        Cursor cursor = TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this).getWritableDatabase().rawQuery(sql, whereClauseArgs);
+        result = (cursor != null && cursor.getCount() > 0) ? cursor.getInt(0) : 1;
+        if (cursor != null) {
+            cursor.close();
+        }
         return result;
     }
 
@@ -293,7 +314,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
         this.mRxPermissions = null;
         this.mOptions1Items = null;
         this.mOptions2Items = null;
-        this.mOptions3Items = null;
+//        this.mOptions3Items = null;
         this.pvCustomTime = null;
         this.pvOptions = null;
     }
@@ -349,7 +370,8 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 mTxvTdProgram.setText(mOptions1Items.get(mOption1 = options1).getPickerViewText());
                 mTxvTdLevel.setText(mOptions2Items.get(options1).get(mOption2 = options2));
-                mTxvTdGroup.setText("第" + mOptions3Items.get(options1).get(options2).get(mOption3 = options3) + "组");
+                int groupNo = getMGroupNo();
+                // TODO:    mTxvTdGroup.setText("第" + mOptions3Items.get(options1).get(options2).get(mOption3 = options3) + "组");
                 mTxvTdUpRule.setText(mUpRule[options1][options2]);
             }
         })
@@ -384,14 +406,16 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                 .setLabels("", "", "组")
                 .build();
 
-        pvOptions.setPicker(mOptions1Items, mOptions2Items, mOptions3Items);//三级选择器
-        pvOptions.setSelectOptions(mOption1, mOption2, mOption3);
+//        pvOptions.setPicker(mOptions1Items, mOptions2Items, mOptions3Items);//三级选择器
+//        pvOptions.setSelectOptions(mOption1, mOption2, mOption3);
+        pvOptions.setPicker(mOptions1Items, mOptions2Items);//二级选择器
+        pvOptions.setSelectOptions(mOption1, mOption2);
         pvOptions.show();
     }
 
     private void initJsonData() {
         List<String> lvl2List = null;
-        List<List<Integer>> lvl3List = null;
+//        List<List<Integer>> lvl3List = null;
         List<Integer> lvl3ItemList = null;
 
         String jsonData = CharacterHandler.getAssetsJson(this, "training_data.json");
@@ -405,7 +429,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
             //二级数据列表
             lvl2List = new ArrayList<>();
             //三级数据列表
-            lvl3List = new ArrayList<>();
+//            lvl3List = new ArrayList<>();
 
             //遍历二级数据
             for (JsonBean.Level2Bean level2Bean : level1Value.getLevel2List()) {
@@ -413,26 +437,26 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                 lvl2List.add(level2Bean.getLevel2Key());
 
                 //三级数据列表
-                lvl3ItemList = new ArrayList<>();
+//                lvl3ItemList = new ArrayList<>();
 
-                if (level2Bean.getLevel3List() == null || level2Bean.getLevel3List().size() == 0) {
-                    lvl3ItemList.add(0);
-                } else {
-                    //遍历三级数据
-                    for (Integer level3Value : level2Bean.getLevel3List()) {
-                        //添加三级数据
-                        lvl3ItemList.add(level3Value);
-                    }
-                }
-                //添加三级数据列表
-                lvl3List.add(lvl3ItemList);
+//                if (level2Bean.getLevel3List() == null || level2Bean.getLevel3List().size() == 0) {
+//                    lvl3ItemList.add(0);
+//                } else {
+//                    //遍历三级数据
+//                    for (Integer level3Value : level2Bean.getLevel3List()) {
+//                        //添加三级数据
+//                        lvl3ItemList.add(level3Value);
+//                    }
+//                }
+//                //添加三级数据列表
+//                lvl3List.add(lvl3ItemList);
             }
 
             //添加二级数据
             mOptions2Items.add(lvl2List);
 
             //添加三级数据
-            mOptions3Items.add(lvl3List);
+//            mOptions3Items.add(lvl3List);
         }
     }
 

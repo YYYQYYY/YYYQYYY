@@ -43,7 +43,7 @@ public class JsonBean implements IPickerViewData {
          */
 
         private String level2Key;
-        private List<Integer> level3List;
+//        private List<Integer> level3List;
 
         public String getLevel2Key() {
             return level2Key;
@@ -53,13 +53,13 @@ public class JsonBean implements IPickerViewData {
             this.level2Key = level2Key;
         }
 
-        public List<Integer> getLevel3List() {
-            return level3List;
-        }
+//        public List<Integer> getLevel3List() {
+//            return level3List;
+//        }
 
-        public void setLevel3List(List<Integer> level3List) {
-            this.level3List = level3List;
-        }
+//        public void setLevel3List(List<Integer> level3List) {
+//            this.level3List = level3List;
+//        }
 
     }
 
