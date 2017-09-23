@@ -153,7 +153,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
     }
 
     private int getMGroupNo() {
-        int result;
+        int result = 1;
         String date = mTxvTdDate.getText().toString();
         String name = mTxvTdProgram.getText().toString();
         String level = mTxvTdLevel.getText().toString();
@@ -165,10 +165,12 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
                 trainingDiary.getName(),
                 trainingDiary.getLevel()
         };
-        Cursor cursor = TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this).getWritableDatabase().rawQuery(sql, whereClauseArgs);
-        result = (cursor != null && cursor.getCount() > 0) ? cursor.getInt(0) : 1;
-        if (cursor != null) {
-            cursor.close();
+        Cursor c = TrainingDiariesDbHelper.getInstance(SaveTrainingDiaryActivity.this).getWritableDatabase().rawQuery(sql, whereClauseArgs);
+        if (c != null && c.getCount() > 0 && c.moveToNext()) {
+            result = c.getInt(0);
+        }
+        if (c != null) {
+            c.close();
         }
         return result;
     }
