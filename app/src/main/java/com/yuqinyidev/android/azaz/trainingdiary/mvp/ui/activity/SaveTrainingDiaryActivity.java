@@ -370,8 +370,7 @@ public class SaveTrainingDiaryActivity extends BaseActivity<TrainingDiaryPresent
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 mTxvTdProgram.setText(mOptions1Items.get(mOption1 = options1).getPickerViewText());
                 mTxvTdLevel.setText(mOptions2Items.get(options1).get(mOption2 = options2));
-                int groupNo = getMGroupNo();
-                // TODO:    mTxvTdGroup.setText("第" + mOptions3Items.get(options1).get(options2).get(mOption3 = options3) + "组");
+                mTxvTdGroup.setText("第" + getMGroupNo() + "组");
                 mTxvTdUpRule.setText(mUpRule[options1][options2]);
             }
         })
